@@ -12,7 +12,7 @@ export default function IPassClient() {
       
       <main className="pt-16">
         {/* Section 1: iPass Title + Hexagons */}
-        <AnimatedSection className="min-h-[75vh] flex items-start justify-center pt-20 md:pt-24 pb-4 md:pb-6">
+        <AnimatedSection className="min-h-[calc(100vh-4rem)] flex items-start justify-center pt-20 md:pt-24 pb-2 md:pb-2.5">
           <div className="container mx-auto px-4">
             <div className="max-w-7xl mx-auto">
               {/* Title Area */}
@@ -28,7 +28,7 @@ export default function IPassClient() {
               {/* Hexagon Diagram */}
               <div>
                 {/* Hexagons Container - Single Row with Staggered Vertical Positions */}
-                <div className="flex flex-nowrap justify-center items-start gap-x-2 md:gap-x-4 lg:gap-x-6 overflow-x-auto pb-0">
+                <div className="flex flex-nowrap justify-center items-start gap-x-2 md:gap-x-4 lg:gap-x-6 overflow-x-auto pb-4">
                   {/* Hexagon 1: GPA & Activity (down) */}
                   <div className="flex flex-col items-start mt-8 flex-shrink-0">
                     <div className="relative w-28 h-32 md:w-36 md:h-40 flex flex-col items-center justify-center bg-[#952839] text-white shadow-lg mb-3" 
@@ -49,7 +49,7 @@ export default function IPassClient() {
                   </div>
 
                   {/* Hexagon 2: SAT/ACT (up) */}
-                  <div className="flex flex-col items-start mt-16 flex-shrink-0">
+                  <div className="flex flex-col items-start flex-shrink-0">
                     <div className="flex items-start gap-1.5 max-w-[120px] mb-3">
                       <div className="w-0.5 h-full bg-[#952839] flex-shrink-0 mt-1" style={{ minHeight: '2rem' }}></div>
                       <p className="text-xs text-left text-foreground font-bold leading-tight">
@@ -86,7 +86,7 @@ export default function IPassClient() {
                   </div>
 
                   {/* Hexagon 4: AP (up) */}
-                  <div className="flex flex-col items-start mt-16 flex-shrink-0">
+                  <div className="flex flex-col items-start flex-shrink-0">
                     <div className="flex items-start gap-1.5 max-w-[120px] mb-3">
                       <div className="w-0.5 h-full bg-[#952839] flex-shrink-0 mt-1" style={{ minHeight: '2rem' }}></div>
                       <p className="text-xs text-left text-foreground font-bold leading-tight">
@@ -122,7 +122,7 @@ export default function IPassClient() {
                   </div>
 
                   {/* Hexagon 6: IB 디플로마 (up) */}
-                  <div className="flex flex-col items-start mt-16 flex-shrink-0">
+                  <div className="flex flex-col items-start flex-shrink-0">
                     <div className="flex items-start gap-1.5 max-w-[130px] mb-3">
                       <div className="w-0.5 h-full bg-[#952839] flex-shrink-0 mt-1" style={{ minHeight: '2rem' }}></div>
                       <p className="text-xs text-left text-foreground font-bold leading-tight">
@@ -150,7 +150,7 @@ export default function IPassClient() {
             <div className="max-w-4xl mx-auto">
               {/* Section Title with Divider */}
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                   아이패스란?
                 </h2>
                 <div className="flex justify-center">

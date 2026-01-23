@@ -59,12 +59,8 @@ export default function Home() {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-12 text-pretty">
                 인터프렙은 2007년 설립된 국내 대표 SAT 전문 학원입니다.
-                <br />
-                체계적인 교육 프로그램, 지속적인 성적 관리, 그리고 자체 제작한 학습 자료를 통해
-                <br />
-                측정 가능한 점수 향상을 제공합니다.
-                <br />
-                <br />
+                체계적인 교육 프로그램, 지속적인 성적 관리, 그리고 자체 제작한
+                학습 자료를 통해 측정 가능한 점수 향상을 제공합니다.
                 우리는 규칙적인 학습 습관과 데이터 기반 피드백을 중심으로
                 학생들의 SAT 목표 달성을 돕습니다.
               </p>
@@ -151,12 +147,9 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-base leading-relaxed">
-                      Reading, Writing, Math 영역별 전문화된 커리큘럼으로 기초부터 
-                      <br />
-                      고득점까지 단계적으로 학습합니다.
-                      각 영역의 핵심 개념과 문제 
-                      <br />
-                      해결 전략을 체계적으로 습득합니다.
+                      Reading, Writing, Math 영역별 전문화된 커리큘럼으로
+                      기초부터 고득점까지 단계적으로 학습합니다.
+                      각 영역의 핵심 개념과 문제 해결 전략을 체계적으로 습득합니다.
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -180,7 +173,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-base leading-relaxed">
-                      개개인의 학습 수준과 목표에 맞춘 소수 정예 수업으로
+                      학생 개개인의 학습 수준과 목표에 맞춘 소수 정예 수업으로
                       진행됩니다. 강사의 세심한 관리와 피드백으로
                       학습 효율을 극대화합니다.
                     </CardDescription>
@@ -222,13 +215,8 @@ export default function Home() {
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-pretty">
                     2007년 설립 이래, 인터프렙은 한 가지 목표에 집중해 왔습니다.
-                    <br />
-                    바로 SAT 점수 향상입니다. 
-                    <br />
-                    우리는 탄탄한 기본기, 꾸준함,
-                    그리고 피드백 중심의 코칭이 
-                    <br />
-                    신뢰할 수 있는 결과를 만든다고 믿습니다.
+                    바로 SAT 점수 향상입니다. 우리는 탄탄한 기본기, 꾸준함,
+                    그리고 피드백 중심의 코칭이 신뢰할 수 있는 결과를 만든다고 믿습니다.
                   </p>
                   <Link
                     href="/about"
@@ -261,11 +249,8 @@ export default function Home() {
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-pretty">
                     인터프렙의 강사진은 미국 및 해외 명문 대학 출신으로 구성되어 있습니다.
-                    하지만 우리의 채용 기준은 출신 학교가 아닌, 
-                    <br />
-                    강의력과 인성,
-                    그리고 헌신입니다. 
-                    <br />강사들은 단순한 교육자가 아닌,
+                    하지만 우리의 채용 기준은 출신 학교가 아닌, 인성, 교육 능력,
+                    그리고 헌신입니다. 강사들은 단순한 교육자가 아닌,
                     학생들의 학업 멘토로서 함께합니다.
                   </p>
                   <Link

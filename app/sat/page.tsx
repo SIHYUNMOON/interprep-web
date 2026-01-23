@@ -53,7 +53,7 @@ export default function SATPage() {
                 SAT
               </h1>
               <p className="text-xl md:text-2xl text-white mb-12 leading-relaxed text-left">
-                인터프렙은 시험보는 그날까지 책임집니다!
+                인터프렙은 시험보는 그날까지 책임 집니다!
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -105,7 +105,7 @@ export default function SATPage() {
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
                   <h4 className="text-2xl font-bold text-foreground mb-4">자체 출판</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    최신 SAT 트렌드와 기출 분석이 반영된 자체 교재와 학습 자료를 통해 효과적인 학습 환경을 제공합니다.
+                    최신 SAT 트렌드에 맞춘 기출문제 분석을 기반으로 제작된 자체 출판 교재와 학습 자료를 통해 효과적인 학습 환경을 제공합니다.
                   </p>
                 </AnimatedSection>
 

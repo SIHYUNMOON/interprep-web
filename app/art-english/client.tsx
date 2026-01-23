@@ -78,7 +78,7 @@ export default function ArtEnglishPageClient() {
         </section>
 
         {/* Section 02: Why Elements of Writing */}
-        <AnimatedSection id="program-intro" className="pt-32 md:pt-40 pb-20 md:pb-24 bg-[#FFF5F5]">
+        <AnimatedSection id="program-intro" className="pt-32 md:pt-40 pb-32 md:pb-40 bg-[#FFF5F5]">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               {/* Section Title */}
@@ -179,9 +179,9 @@ export default function ArtEnglishPageClient() {
                       01
                     </div>
                     <div className="pt-8 text-center">
-                      <h4 className="text-lg font-bold text-foreground mb-4">미술 학교 자료 이해 능력 강화</h4>
+                      <h4 className="text-lg font-bold text-foreground mb-4">미술 학교 필수 자료 이해 능력 강화</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        학교 수업에서 자주 다루는 텍스트와 자료를 분석하며
+                        미술 학교 수업에서 자주 다루는 텍스트와 자료를 분석하며,
                         작품 설명, 이론 글, 비평문 등 예술 교육 환경에서 사용되는 영어에 익숙해지도록 훈련합니다.
                       </p>
                     </div>

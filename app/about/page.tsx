@@ -9,9 +9,94 @@ import { AnimatedSection } from '@/components/animated-section'
 import { useCountUp } from '@/hooks/use-count-up'
 import { Button } from '@/components/ui/button'
 
+// Add custom styles for animations
+const customStyles = `
+  @keyframes slideInFromLeftNear {
+    from {
+      opacity: 0;
+      transform: translateX(-8%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInFromRightNear {
+    from {
+      opacity: 0;
+      transform: translateX(8%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Initial state: Always start in offset position */
+  .animate-slide-in-left-near {
+    opacity: 0;
+    transform: translateX(-8%);
+  }
+  
+  /* Animation plays only when animate-play class is added */
+  .animate-slide-in-left-near.animate-play {
+    animation: slideInFromLeftNear 1s ease-out 0.15s forwards;
+  }
+  
+  /* Initial state: Always start in offset position */
+  .animate-slide-in-right-near {
+    opacity: 0;
+    transform: translateX(8%);
+  }
+  
+  /* Animation plays only when animate-play class is added */
+  .animate-slide-in-right-near.animate-play {
+    animation: slideInFromRightNear 1s ease-out 0.2s forwards;
+  }
+`
+
 export default function AboutPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [])
+
+  useEffect(() => {
+    // Inject custom styles
+    const style = document.createElement('style')
+    style.textContent = customStyles
+    document.head.appendChild(style)
+
+    if (typeof window === 'undefined') return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>('.animate-slide-in-left-near, .animate-slide-in-right-near'))
+    if (!nodes.length) return
+
+    if (prefersReduced) {
+      nodes.forEach((el) => {
+        el.style.opacity = '1'
+        el.style.transform = 'translateX(0)'
+      })
+      return
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement
+          if (entry.isIntersecting && !el.classList.contains('animate-play')) {
+            // Trigger animation by adding animate-play class
+            el.classList.add('animate-play')
+            io.unobserve(el)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    nodes.forEach((el) => io.observe(el))
+    return () => io.disconnect()
   }, [])
 
   return (
@@ -55,8 +140,8 @@ export default function AboutPage() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                {/* Left: Image */}
-                <div className="relative order-2 lg:order-1">
+                {/* Left: Image - Slide in from left */}
+                <div className="relative order-2 lg:order-1 animate-slide-in-left-near will-change-transform">
                   <div className="aspect-square relative">
                     <Image
                       src="/images/intro-img.png"
@@ -67,8 +152,8 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* Right: 5 Core Features - REDUCED FONT SIZES */}
-                <div className="space-y-7 order-1 lg:order-2">
+                {/* Right: 5 Core Features - Slide in from right */}
+                <div className="space-y-7 order-1 lg:order-2 animate-slide-in-right-near will-change-transform">
                   {[
                     {
                       number: '01',
@@ -129,8 +214,8 @@ export default function AboutPage() {
 
               <div className="space-y-6 text-center text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 <p>
-                  인터프렙은 지난 10여 년간<br />
-                  압구정·대치동 지역에서 합리적인 수강료 정책을 일관되게 유지해 온<br />
+                  인터프렙은 지난 10여 년간 압구정·대치동 지역에서 
+                  <br />합리적인 수강료 정책을 일관되게 유지해 온<br />
                   해외대학 입시 전문 교육기관입니다.
                 </p>
 
@@ -154,8 +239,7 @@ export default function AboutPage() {
 
                 <p>
                   절약된 시간과 비용은<br />
-                  SAT 점수 외에 더 중요한 대학 입시 요소—<br />
-                  에세이, 비교과 활동, 지원 전략—에<br />
+                  SAT 점수 외에 더 중요한 대학 입시 요소에<br />
                   집중할 수 있는 여유로 이어집니다.
                 </p>
 
@@ -337,7 +421,7 @@ export default function AboutPage() {
                       아이비리그 플러스: 아이비리그 8개교 + MIT, Stanford, Caltech, Duke, Johns Hopkins, University of Chicago
                     </p>
                     <p className="text-sm font-semibold text-foreground">
-                      NYU BA/DDS 7년제 치과대학: 1명 합격
+                      NYU BA/DDS 7년제 치과대학 합격
                     </p>
                   </div>
 
@@ -482,7 +566,8 @@ function CountUpSection() {
 
           <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
             인터프렙만의 치밀하게 구성된 시험 대비 코스와
-            풍부한 입시 자료 및 온라인 콘텐츠는
+            풍부한 입시 자료는
+            <br />
             여러분을 탁월함으로 인도합니다.
           </p>
 

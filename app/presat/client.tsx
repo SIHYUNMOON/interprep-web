@@ -27,6 +27,27 @@ export default function PreSATPageClient() {
     }
   }
 
+  useEffect(() => {
+    // Trigger animation for Book Club section when it enters viewport
+    const bookClubSection = document.getElementById('bookclub')
+    if (!bookClubSection) return
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in', 'fade-in', 'duration-1000')
+            io.unobserve(entry.target)
+          }
+        })
+      },
+     { threshold: 0.3 }
+    )
+
+    io.observe(bookClubSection)
+    return () => io.disconnect()
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -53,7 +74,7 @@ export default function PreSATPageClient() {
                 Pre-SAT
               </h1>
               <p className="text-xl md:text-2xl text-white mb-12 leading-relaxed text-left">
-                인터프렙은 시험보는 그날까지 책임 집니다!
+                인터프렙은 시험보는 그날까지 책임집니다!
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
@@ -113,15 +134,19 @@ export default function PreSATPageClient() {
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
                   <h4 className="text-2xl font-bold text-foreground mb-4">학업 성공을 위한 기초</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    독해, 글쓰기, 시험 전략과 같은 핵심 영역을 체계적으로 훈련합니다. SAT·SSAT·TOEFL 등 주요 시험은 물론, 이후 고등학교·대학 학업까지 이어지는 탄탄한 학습 기초를 만드는 데 집중한 프로그램입니다.
+                    독해, 글쓰기, 시험 전략과 같은 핵심 영역을 체계적으로 훈련합니다. SAT·SSAT·TOEFL 등 주요시험은 물론, 이후 고등학교·대학까지 이어지는 학습의 기초를 탄탄하게 만드는 데 
+                    <br />
+                    집중한 프로그램입니다.
                   </p>
                 </AnimatedSection>
 
                 {/* Card 2 */}
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
-                  <h4 className="text-2xl font-bold text-foreground mb-4">연령에 적합한 맞춤형 프로그램</h4>
+                  <h4 className="text-2xl font-bold text-foreground mb-4">연령 맞춤형 프로그램</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    고등학교 진학을 앞둔 학생들의 학습 단계와 사고 수준을 고려해 설계되었습니다. 연령에 맞는 학습 난이도와 목표를 설정하여, 무리 없이 실력을 끌어올릴 수 있도록 단계별로 운영합니다.
+                    고등학교 진학을 앞둔 학생들의 학습 단계와 사고 수준을 고려해 설계되었습니다. 
+                    <br />
+                    연령에 맞는 학습 난이도와 목표를 설정하여, 무리 없이 실력을 끌어올릴 수 있도록 단계별로 운영합니다.
                   </p>
                 </AnimatedSection>
 
@@ -129,7 +154,9 @@ export default function PreSATPageClient() {
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
                   <h4 className="text-2xl font-bold text-foreground mb-4">다양한 학습 기회</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    시험 대비 수업뿐 아니라 학문적 에세이, 독서 기반 토론 등 다양한 학습 활동을 제공합니다. 이를 통해 점수 향상에 그치지 않고, 사고력·표현력·실용적인 학습 역량을 함께 성장시키는 것을 목표로 합니다.
+                    시험 대비 수업뿐 아니라 학문적 에세이, 독서 기반 토론 등 다양한 학습 활동을 제공합니다. 이를 통해 점수 향상에 그치지 않고 사고력,
+                    <br />
+                    표현력, 학습 역량을 함께 성장시키는 것을 <br /> 목표로 합니다.
                   </p>
                 </AnimatedSection>
               </div>
@@ -207,19 +234,19 @@ export default function PreSATPageClient() {
           </div>
         </AnimatedSection>
 
-        {/* Section Divider */}
-        <div className="py-8 bg-blue-50/30">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-2">
-              {[...Array(15)].map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-[#952839]" />
-              ))}
+        {/* Section 4: SSAT Summer Program */}
+        <AnimatedSection id="ssat" className="pt-0 md:pt-0 pb-32 md:pb-40 bg-muted/20">
+          {/* Divider */}
+          <div className="py-8 bg-blue-50/30">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-center gap-2">
+                {[...Array(15)].map((_, i) => (
+                  <div key={i} className="w-2 h-2 rounded-full bg-[#952839]" />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Section 4: SSAT Summer Program */}
-        <AnimatedSection id="ssat" className="pt-12 md:pt-16 pb-32 md:pb-40 bg-muted/20">
+          
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-16">
@@ -428,19 +455,19 @@ export default function PreSATPageClient() {
           </div>
         </AnimatedSection>
 
-        {/* Section Divider */}
-        <div className="py-8 bg-blue-50/40">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-2">
-              {[...Array(15)].map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-[#952839]" />
-              ))}
+        {/* Section 5: Book Club */}
+        <AnimatedSection id="bookclub" className="pt-0 md:pt-0 pb-32 md:pb-40 bg-blue-50/40">
+          {/* Divider */}
+          <div className="py-8 bg-blue-50/40">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-center gap-2">
+                {[...Array(15)].map((_, i) => (
+                  <div key={i} className="w-2 h-2 rounded-full bg-[#952839]" />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Section 5: Book Club */}
-        <AnimatedSection id="bookclub" className="pt-12 md:pt-16 pb-32 md:pb-40 bg-blue-50/40">
+          
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-16">
@@ -451,7 +478,7 @@ export default function PreSATPageClient() {
               <div className="mb-16 text-center max-w-4xl mx-auto">
                 <p className="text-base md:text-lg text-foreground leading-relaxed mb-4">
                   북클럽(Book Club)은 중학교 6·7·8학년 학생을 대상으로<br />
-                  고등학교 영어 수업과 AP English(영어·영문학·작문) 과정에 자연스럽게 대비하고,<br />
+                  고등학교 영어 수업과 AP English 과정에 자연스럽게 대비하고,<br />
                   SAT 학습을 위한 탄탄한 기초를 쌓도록 설계된 프로그램입니다.
                 </p>
                 <p className="text-base md:text-lg text-foreground leading-relaxed">
@@ -475,10 +502,10 @@ export default function PreSATPageClient() {
                       01
                     </div>
                     <div className="pt-8 text-center">
-                      <h4 className="text-lg font-bold text-foreground mb-4">고전부터 현대까지, 폭넓은 문학 탐구</h4>
+                      <h4 className="text-lg font-bold text-foreground mb-4"> 폭넓은 문학 탐구</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        엄선된 고전 소설과 현대 문학 작품을 함께 읽으며,
-                        시대를 대표하는 작품부터 현대적 주제의 텍스트까지 다양한 문체와 장르를 균형 있게 탐구합니다.
+                        엄선된 고전 소설과 현대 문학 작품을 함께 읽으며
+                        시대를 대표하는 작품부터 현대 주제의 텍스트까지 다양한 문체와 장르를 균형 있게 탐구합니다.
                         이를 통해 문학에 대한 폭넓은 이해와 독서 깊이를 동시에 키웁니다.
                       </p>
                     </div>
@@ -492,8 +519,8 @@ export default function PreSATPageClient() {
                     <div className="pt-8 text-center">
                       <h4 className="text-lg font-bold text-foreground mb-4">비판적 읽기·분석 능력 강화</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        텍스트를 단순히 읽는 데서 그치지 않고,
-                        은유·상징·아이러니 등 핵심 문학적 장치를 분석하며
+                        텍스트를 단순히 읽는 데서 그치지 않고
+                        은유, 상징, 아이러니 등 핵심 문학적 장치를 분석하며
                         인물 전개, 주제, 모티프를 논리적으로 해석하는 방법을 체계적으로 학습합니다.
                       </p>
                     </div>
@@ -537,7 +564,7 @@ export default function PreSATPageClient() {
                       05
                     </div>
                     <div className="pt-8 text-center">
-                      <h4 className="text-lg font-bold text-foreground mb-4">시험 대비</h4>
+                      <h4 className="text-lg font-bold text-foreground mb-4">철저한 시험 대비</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
                         SAT, ACT, AP 시험에 자주 출제되는 유형의 지문을 분석하며
                         핵심 아이디어를 빠르게 파악하는 훈련과 함께
@@ -590,7 +617,7 @@ export default function PreSATPageClient() {
                     <tbody>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          1(09:00-09:50)
+                          09:00-09:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Vocab
@@ -601,7 +628,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          2(10:00-10:50)
+                          10:00-10:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Literature
@@ -609,7 +636,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          3(11:00-11:50)
+                          11:00-11:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Writing
@@ -617,7 +644,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          4(12:00-12:50)
+                          12:00-12:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Debate
@@ -625,7 +652,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr>
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-amber-100/30 font-medium text-center">
-                          -(12:50-14:00)
+                          12:50-14:00
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-amber-700 text-center font-medium bg-amber-100/30" colSpan={2}>
                           
@@ -633,7 +660,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          5(14:00-14:50)
+                          14:00-14:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center bg-white" rowSpan={4}>
                           자습
@@ -644,7 +671,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          6(15:00-15:50)
+                          15:00-15:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Literature
@@ -652,7 +679,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          7(16:00-16:50)
+                          16:00-16:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Writing
@@ -660,7 +687,7 @@ export default function PreSATPageClient() {
                       </tr>
                       <tr className="hover:bg-gray-50/50 transition-colors">
                         <td className="border border-gray-200 px-4 py-3 text-sm text-muted-foreground bg-gray-50/50 font-medium text-center">
-                          8(17:00-17:50)
+                          17:00-17:50
                         </td>
                         <td className="border border-gray-200 px-6 py-3 text-sm text-foreground text-center">
                           Debate

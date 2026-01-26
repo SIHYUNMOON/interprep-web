@@ -27,46 +27,66 @@ export default function LocationPage() {
           </div>
         </section>
 
-        {/* Address Information */}
-        <section className="py-16 md:py-20 bg-background">
+        {/* Google Map Section */}
+        <section className="py-8 md:py-10 bg-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white border border-border rounded-lg p-8 md:p-10 space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-[#952839] flex-shrink-0 mt-1" />
-                  <div className="space-y-3 flex-1">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">도로명 주소</p>
-                      <p className="text-base md:text-lg font-medium text-foreground">
-                        서울특별시 강남구 역삼로 424, 진영빌딩 4층
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">지번 주소</p>
-                      <p className="text-base md:text-lg font-medium text-foreground">
-                        서울특별시 강남구 대치동 909-3, 진영빌딩 4층
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">우편번호</p>
-                      <p className="text-base md:text-lg font-medium text-foreground">
-                        06200
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">도로명주소(영문)</p>
-                      <p className="text-base md:text-lg font-medium text-foreground">
-                        4th floor of Jinyoung Building, Yeoksam-ro 424, Gangnam-gu, Seoul
-                      </p>
-                    </div>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Left: Google Map */}
+                <div className="bg-white rounded-lg overflow-hidden shadow-lg p-4">
+                  <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.290965783493!2d127.0485581893951!3d37.5010550558389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca3e94b9ce345%3A0x9dbcb9e8cefb2157!2zKOyjvCkg7J247YSw7ZSE66CZIOyWtO2VmeybkA!5e0!3m2!1sko!2skr!4v1769135652803!5m2!1sko!2skr"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, position: 'absolute', inset: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Interprep Location Map"
+                      className="rounded"
+                    />
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-border">
-                  <p className="text-base md:text-lg text-foreground">
-                    <span className="font-semibold text-[#952839]">2호선/수인분당선 선릉역, 수인분당선 한티역</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">도보 10분 내외</p>
+                {/* Right: Address Information */}
+                <div className="bg-white border border-border rounded-lg p-8 md:p-10 space-y-2 flex flex-col">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-[#952839] flex-shrink-0 mt-1" />
+                    <div className="space-y-3 flex-1">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">도로명 주소</p>
+                        <p className="text-base md:text-lg font-medium text-foreground">
+                          서울특별시 강남구 역삼로 424, 진영빌딩 4층
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">지번 주소</p>
+                        <p className="text-base md:text-lg font-medium text-foreground">
+                          서울특별시 강남구 대치동 909-3, 진영빌딩 4층
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">우편번호</p>
+                        <p className="text-base md:text-lg font-medium text-foreground">
+                          06200
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">도로명주소(영문)</p>
+                        <p className="text-base md:text-lg font-medium text-foreground">
+                          4th floor of Jinyoung Building, Yeoksam-ro 424, Gangnam-gu, Seoul
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-border mt-auto pt-3">
+                    <p className="text-base md:text-lg text-foreground">
+                      <span className="font-semibold text-[#952839]">2호선/수인분당선 선릉역, 수인분당선 한티역</span>
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-0.5">도보 10분 내외</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -74,7 +94,7 @@ export default function LocationPage() {
         </section>
 
         {/* Subway Guide with Map */}
-        <section className="py-16 md:py-20 bg-muted/30">
+        <section className="py-16 md:py-20 bg-background pb-32">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
@@ -182,9 +202,9 @@ export default function LocationPage() {
         </section>
 
         {/* Bus Guide */}
-        <section className="py-16 md:py-20 bg-background">
+        <section className="py-16 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
                 <Bus className="w-6 h-6 text-[#952839]" />
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground">버스</h2>
@@ -193,51 +213,27 @@ export default function LocationPage() {
               <div className="bg-white rounded-lg p-6 md:p-8 shadow-sm border border-border">
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 pb-4 border-b border-border last:border-0 last:pb-0">
-                    <span className="text-[#952839] font-bold text-lg flex-shrink-0">강남07</span>
+                    <span className="text-[#952839] font-bold text-lg flex-shrink-0 w-16">강남07</span>
                     <div>
                       <p className="text-base font-medium text-foreground">도성초등학교앞 하차</p>
                       <p className="text-sm text-muted-foreground">도보 306m</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3 pb-4 border-b border-border last:border-0 last:pb-0">
-                    <span className="text-[#952839] font-bold text-lg flex-shrink-0">3422</span>
+                    <span className="text-[#952839] font-bold text-lg flex-shrink-0 w-16">3422</span>
                     <div>
                       <p className="text-base font-medium text-foreground">도성초교사거리 하차</p>
                       <p className="text-sm text-muted-foreground">도보 140m</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-[#952839] font-bold text-lg flex-shrink-0">472</span>
+                    <span className="text-[#952839] font-bold text-lg flex-shrink-0 w-16">472</span>
                     <div>
                       <p className="text-base font-medium text-foreground">역삼e-편한세상아파트 하차</p>
                       <p className="text-sm text-muted-foreground">도보 387m</p>
                     </div>
                   </li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Google Map Section */}
-        <section className="py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-                오시는 길
-              </h2>
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.089123456789!2d127.05123456789012!3d37.50123456789012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDMwJzA0LjQiTiAxMjfCsDAzJzA0LjQiRQ!5e0!3m2!1sko!2skr!4v1234567890123!5m2!1sko!2skr"
-                  width="100%"
-                  height="450"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Interprep Location Map"
-                  className="rounded"
-                />
               </div>
             </div>
           </div>

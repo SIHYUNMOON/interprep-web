@@ -53,7 +53,7 @@ export default function TOEFLPageClient() {
                 TOEFL
               </h1>
               <p className="text-xl md:text-2xl text-white mb-12 leading-relaxed text-left">
-                인터프렙은 시험보는 그날까지 책임 집니다!
+                인터프렙은 시험보는 그날까지 책임집니다!
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -97,15 +97,19 @@ export default function TOEFLPageClient() {
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
                   <h4 className="text-2xl font-bold text-foreground mb-4">학업 성공을 위한 기초</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    독해, 글쓰기, 시험 전략과 같은 핵심 영역을 체계적으로 훈련합니다. SAT·SSAT·TOEFL 등 주요 시험은 물론, 이후 고등학교·대학 학업까지 이어지는 탄탄한 학습 기초를 만드는 데 집중한 프로그램입니다.
+                    독해, 글쓰기, 시험 전략과 같은 핵심 영역을 체계적으로 훈련합니다. SAT·SSAT·TOEFL 등 주요시험은 물론, 고등학교·대학까지 이어지는 학습의 기초를 탄탄하게 만드는 데 
+                    <br />
+                    집중한 프로그램입니다.
                   </p>
                 </AnimatedSection>
 
                 {/* Card 2 */}
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
-                  <h4 className="text-2xl font-bold text-foreground mb-4">연령에 적합한 맞춤형 프로그램</h4>
+                  <h4 className="text-2xl font-bold text-foreground mb-4">연령 맞춤형 프로그램</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    고등학교 진학을 앞둔 학생들의 학습 단계와 사고 수준을 고려해 설계되었습니다. 연령에 맞는 학습 난이도와 목표를 설정하여, 무리 없이 실력을 끌어올릴 수 있도록 단계별로 운영합니다.
+                    고등학교 진학을 앞둔 학생들의 학습 단계와 사고 수준을 고려해 설계되었습니다. 
+                    <br />
+                    연령에 맞는 학습 난이도와 목표를 설정하여, 무리 없이 실력을 끌어올릴 수 있도록 단계별로 운영합니다.
                   </p>
                 </AnimatedSection>
 
@@ -113,7 +117,9 @@ export default function TOEFLPageClient() {
                 <AnimatedSection className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow border-t-4 border-[#952839]">
                   <h4 className="text-2xl font-bold text-foreground mb-4">다양한 학습 기회</h4>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    시험 대비 수업뿐 아니라 학문적 에세이, 독서 기반 토론 등 다양한 학습 활동을 제공합니다. 이를 통해 점수 향상에 그치지 않고, 사고력·표현력·실용적인 학습 역량을 함께 성장시키는 것을 목표로 합니다.
+                    시험 대비 수업뿐 아니라 학문적 에세이, 독서 기반 토론 등 다양한 학습 활동을 제공합니다. 이를 통해 점수 향상에 그치지 않고 사고력,
+                    <br />
+                    표현력, 학습 역량을 함께 성장시키는 것을 <br /> 목표로 합니다.
                   </p>
                 </AnimatedSection>
               </div>

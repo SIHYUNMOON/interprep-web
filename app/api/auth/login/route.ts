@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const token = await createSession();
     console.log('[v0] Login successful - Session token created:', token ? 'yes' : 'no');
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, token });
     
     // Set cookie with proper settings for v0 preview environment
     const cookieOptions = {

@@ -9,6 +9,7 @@ interface AuthContextType {
   logout: () => Promise<void>
   checkAuthStatus: () => Promise<void>
   isLoading: boolean
+  getAuthToken: () => string | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [authToken, setAuthToken] = useState<string | null>(null)
 
   // Check auth status on mount
   useEffect(() => {
@@ -52,6 +54,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Login failed')
       }
 
+      const data = await response.json()
+      if (data.token) {
+        setAuthToken(data.token)
+        localStorage.setItem('admin_token', data.token)
+        console.log('[v0] Auth token stored in localStorage')
+      }
+
       setIsAdminLoggedIn(true)
     } catch (error) {
       console.error('[v0] Login error:', error)
@@ -66,13 +75,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         credentials: 'include',
       })
       setIsAdminLoggedIn(false)
+      setAuthToken(null)
+      localStorage.removeItem('admin_token')
     } catch (error) {
       console.error('[v0] Logout error:', error)
     }
   }
 
+  const getAuthToken = () => {
+    if (authToken) return authToken
+    const stored = localStorage.getItem('admin_token')
+    if (stored) {
+      setAuthToken(stored)
+      return stored
+    }
+    return null
+  }
+
+  // Load token from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('admin_token')
+    if (stored) {
+      setAuthToken(stored)
+      setIsAdminLoggedIn(true)
+    }
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ isAdminLoggedIn, setIsAdminLoggedIn, login, logout, checkAuthStatus, isLoading }}>
+    <AuthContext.Provider value={{ isAdminLoggedIn, setIsAdminLoggedIn, login, logout, checkAuthStatus, isLoading, getAuthToken }}>
       {children}
     </AuthContext.Provider>
   )

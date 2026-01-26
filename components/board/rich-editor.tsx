@@ -7,6 +7,7 @@ import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import TextAlign from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
+import { useAuth } from '@/lib/auth-context';
 import {
   Bold,
   Italic,
@@ -33,6 +34,8 @@ interface RichEditorProps {
 }
 
 export function RichEditor({ value, onChange, placeholder = '내용을 입력하세요...' }: RichEditorProps) {
+  const { getAuthToken } = useAuth();
+  
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -84,8 +87,15 @@ export function RichEditor({ value, onChange, placeholder = '내용을 입력하
 
         console.log('[v0] Uploading image:', file.name, 'Size:', file.size);
 
+        const token = getAuthToken();
+        const headers: HeadersInit = {};
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch('/api/uploads/image', {
           method: 'POST',
+          headers,
           body: formData,
           credentials: 'include',
         });

@@ -113,7 +113,7 @@ function AccordionItem({ item, isOpen, onToggle }: { item: FAQItem; isOpen: bool
         </span>
       </button>
       {isOpen && (
-        <div id={`answer-${item.id}`} className="px-2 pb-6 md:px-14 animate-in fade-in duration-300">
+        <div id={`answer-${item.id}`} className="px-2 pt-4 pb-6 md:px-14 md:pt-5 animate-in fade-in duration-300">
           <div className="text-sm md:text-base text-foreground/80 leading-relaxed">
             {typeof item.answer === 'string' ? (
               <p>{item.answer}</p>

@@ -23,9 +23,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await createSession();
+    const token = await createSession();
+    console.log('[v0] Login successful - Session token created:', token ? 'yes' : 'no');
 
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    // Explicitly set cookie in response as well
+    response.cookies.set('admin_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60,
+      path: '/',
+    });
+    
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

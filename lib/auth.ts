@@ -50,10 +50,13 @@ export async function clearSession(): Promise<void> {
 
 export async function getSession(): Promise<string | undefined> {
   const cookieStore = await cookies();
-  return cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const session = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  console.log('[v0] getSession - Cookie name:', SESSION_COOKIE_NAME, 'Session exists:', !!session);
+  return session;
 }
 
 export async function isAdminAuthenticated(): Promise<boolean> {
   const session = await getSession();
+  console.log('[v0] isAdminAuthenticated - Session value:', session ? 'exists' : 'missing');
   return !!session;
 }

@@ -27,14 +27,24 @@ export async function POST(request: NextRequest) {
     console.log('[v0] Login successful - Session token created:', token ? 'yes' : 'no');
 
     const response = NextResponse.json({ success: true });
-    // Explicitly set cookie in response as well
-    response.cookies.set('admin_session', token, {
+    
+    // Set cookie with proper settings for v0 preview environment
+    const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: false, // Set to false for v0 preview environment
+      sameSite: 'lax' as const,
       maxAge: 24 * 60 * 60,
       path: '/',
-    });
+    };
+    
+    console.log('[v0] Setting cookie with options:', cookieOptions);
+    response.cookies.set('admin_session', token, cookieOptions);
+    
+    // Also set as header to ensure it's sent
+    response.headers.set(
+      'Set-Cookie',
+      `admin_session=${token}; Path=/; HttpOnly; Max-Age=${24 * 60 * 60}; SameSite=Lax`
+    );
     
     return response;
   } catch (error) {

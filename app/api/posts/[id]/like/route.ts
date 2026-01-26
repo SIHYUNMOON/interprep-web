@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { likePost } from '@/lib/db';
 
+export const runtime = 'nodejs';
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

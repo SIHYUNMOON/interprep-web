@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getPosts, createPost } from '@/lib/db';
 import { isAdminAuthenticated } from '@/lib/auth';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;

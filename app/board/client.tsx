@@ -1,14 +1,14 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
-import { LoginModal } from '@/components/board/login-modal'
 import { WriteModal } from '@/components/board/write-modal'
 import { PostDetailModal } from '@/components/board/post-detail-modal'
 import { Button } from '@/components/ui/button'
-import { Eye, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
+import { useAuth } from '@/lib/auth-context'
 
 interface Post {
   id: string
@@ -37,87 +37,34 @@ const YOUTUBE_VIDEOS = [
 ]
 
 export function BoardClient() {
+  const { isAdminLoggedIn } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
-  const [showLoginModal, setShowLoginModal] = useState(false)
   const [showWriteModal, setShowWriteModal] = useState(false)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'mostViewed' | 'updated'>('latest')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
-  const [isLoadingAuth, setIsLoadingAuth] = useState(false)
   const [isPublishing, setIsPublishing] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
 
-  // Check admin auth on mount
-  useEffect(() => {
-    checkAdminStatus()
-  }, [])
-
-  // Load posts when sort or page changes
   useEffect(() => {
     loadPosts()
   }, [sortBy, currentPage])
 
-  const checkAdminStatus = async () => {
-    try {
-      const response = await fetch('/api/auth/me')
-      const data = await response.json()
-      setIsAdminLoggedIn(data.isAdmin)
-    } catch (error) {
-      console.error('Auth check error:', error)
-      setIsAdminLoggedIn(false)
-    }
-  }
-
   const loadPosts = async () => {
     setIsLoadingPosts(true)
     try {
-      const response = await fetch(
-        `/api/posts?sort=${sortBy}&page=${currentPage}&pageSize=10`
-      )
+      const response = await fetch(`/api/posts?sort=${sortBy}&page=${currentPage}&pageSize=10`)
       const data: PaginatedResponse = await response.json()
       setPosts(data.items)
       setTotalPages(data.totalPages)
       setTotalCount(data.totalCount)
     } catch (error) {
-      console.error('Failed to load posts:', error)
+      console.error('[v0] Failed to load posts:', error)
       setPosts([])
     } finally {
       setIsLoadingPosts(false)
-    }
-  }
-
-  const handleLogin = async (username: string, password: string) => {
-    setIsLoadingAuth(true)
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Login failed')
-      }
-
-      setIsAdminLoggedIn(true)
-      setShowLoginModal(false)
-    } catch (error) {
-      console.error('Login error:', error)
-      throw error
-    } finally {
-      setIsLoadingAuth(false)
-    }
-  }
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-      setIsAdminLoggedIn(false)
-    } catch (error) {
-      console.error('Logout error:', error)
     }
   }
 
@@ -128,6 +75,7 @@ export function BoardClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, contentHtml }),
+        credentials: 'include',
       })
 
       if (!response.ok) {
@@ -139,7 +87,7 @@ export function BoardClient() {
       setTotalCount(totalCount + 1)
       await loadPosts()
     } catch (error) {
-      console.error('Publish error:', error)
+      console.error('[v0] Publish error:', error)
       throw error
     } finally {
       setIsPublishing(false)
@@ -152,7 +100,7 @@ export function BoardClient() {
       const fullPost = await response.json()
       setSelectedPost(fullPost)
     } catch (error) {
-      console.error('Failed to load post:', error)
+      console.error('[v0] Failed to load post:', error)
     }
   }
 
@@ -163,14 +111,10 @@ export function BoardClient() {
     { value: 'updated', label: '업데이트순' },
   ] as const
 
-  const postsPerPage = 10
-  const paginatedPosts = posts
-
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main className="pt-16">
-        {/* Page Title */}
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-foreground mb-2">
@@ -182,11 +126,9 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
 
-        {/* YouTube Section */}
         <AnimatedSection className="py-16 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left: YouTube Embed */}
               <div className="lg:col-span-2">
                 <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-lg" style={{ paddingBottom: '56.25%' }}>
                   <iframe
@@ -199,7 +141,6 @@ export function BoardClient() {
                 </div>
               </div>
 
-              {/* Right: Video List */}
               <div className="bg-black rounded-lg p-6 md:p-8">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-6">
                   Interprep TV - 유학관련 영상 리스트
@@ -225,48 +166,27 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
 
-        {/* Board Section */}
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              {/* Top Controls */}
               <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
                 <div className="text-sm text-foreground font-medium">
                   전체 {totalCount}
                 </div>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => { setSortBy(e.target.value as any); setCurrentPage(1) }}
-                    className="px-4 py-2 text-sm border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors"
-                  >
-                    {sortOptions.map(option => (
-                      <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                  </select>
-
-                  {isAdminLoggedIn ? (
-                    <Button
-                      onClick={handleLogout}
-                      variant="outline"
-                      size="sm"
-                      className="text-red-700 border-red-200 hover:bg-red-50"
-                    >
-                      로그아웃
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => setShowLoginModal(true)}
-                      size="sm"
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      로그인
-                    </Button>
-                  )}
-                </div>
+                <select
+                  value={sortBy}
+                  onChange={(e) => {
+                    setSortBy(e.target.value as any)
+                    setCurrentPage(1)
+                  }}
+                  className="px-4 py-2 text-sm border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
               </div>
 
-              {/* Table */}
               <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
@@ -286,16 +206,16 @@ export function BoardClient() {
                             로딩 중...
                           </td>
                         </tr>
-                      ) : paginatedPosts.length === 0 ? (
+                      ) : posts.length === 0 ? (
                         <tr>
                           <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
                             게시물이 없습니다.
                           </td>
                         </tr>
                       ) : (
-                        paginatedPosts.map((post) => (
-                          <tr 
-                            key={post.id} 
+                        posts.map((post) => (
+                          <tr
+                            key={post.id}
                             className="hover:bg-gray-50/50 transition-colors cursor-pointer"
                             onClick={() => handlePostClick(post)}
                           >
@@ -318,7 +238,6 @@ export function BoardClient() {
                 </div>
               </div>
 
-              {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-center gap-2 mt-8">
                   <button
@@ -356,7 +275,6 @@ export function BoardClient() {
                 </div>
               )}
 
-              {/* Write Button */}
               {isAdminLoggedIn && (
                 <div className="flex justify-end mt-8">
                   <Button
@@ -372,14 +290,6 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
       </main>
-
-      {/* Modals */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLogin={handleLogin}
-        isLoading={isLoadingAuth}
-      />
 
       <WriteModal
         isOpen={showWriteModal}

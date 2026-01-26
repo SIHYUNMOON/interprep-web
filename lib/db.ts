@@ -78,11 +78,32 @@ export async function getPosts(
 
     const offset = (page - 1) * pageSize;
 
-    const result = await sql`
-      SELECT * FROM posts
-      ORDER BY ${sql.raw(orderBy)}
-      LIMIT ${pageSize} OFFSET ${offset}
-    `;
+    let result;
+    if (orderBy === 'created_at DESC') {
+      result = await sql`
+        SELECT * FROM posts
+        ORDER BY created_at DESC
+        LIMIT ${pageSize} OFFSET ${offset}
+      `;
+    } else if (orderBy === 'views DESC') {
+      result = await sql`
+        SELECT * FROM posts
+        ORDER BY views DESC
+        LIMIT ${pageSize} OFFSET ${offset}
+      `;
+    } else if (orderBy === 'updated_at DESC') {
+      result = await sql`
+        SELECT * FROM posts
+        ORDER BY updated_at DESC
+        LIMIT ${pageSize} OFFSET ${offset}
+      `;
+    } else {
+      result = await sql`
+        SELECT * FROM posts
+        ORDER BY created_at DESC
+        LIMIT ${pageSize} OFFSET ${offset}
+      `;
+    }
 
     const countResult = await sql`
       SELECT COUNT(*) as count FROM posts

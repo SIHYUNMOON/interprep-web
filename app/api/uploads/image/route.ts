@@ -40,16 +40,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const contentType = request.headers.get('content-type');
-    if (!contentType || !contentType.includes('multipart/form-data')) {
-      console.warn('[v0] POST /api/uploads/image - Invalid content-type:', contentType);
+    // Try to parse as FormData - Next.js will handle the multipart parsing
+    let formData;
+    try {
+      formData = await request.formData();
+    } catch (error) {
+      console.warn('[v0] POST /api/uploads/image - Failed to parse FormData:', error);
       return NextResponse.json(
-        { error: 'Content-Type must be multipart/form-data' },
+        { error: 'Invalid request format. Expected multipart/form-data' },
         { status: 400 }
       );
     }
-
-    const formData = await request.formData();
     const file = formData.get('file') as File;
 
     if (!file) {

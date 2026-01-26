@@ -37,7 +37,7 @@ const YOUTUBE_VIDEOS = [
 ]
 
 export function BoardClient() {
-  const { isAdminLoggedIn } = useAuth()
+  const { isAdminLoggedIn, getAuthToken } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
   const [showWriteModal, setShowWriteModal] = useState(false)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
@@ -71,9 +71,17 @@ export function BoardClient() {
   const handlePublish = async (title: string, contentHtml: string) => {
     setIsPublishing(true)
     try {
+      const token = getAuthToken();
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
       const response = await fetch('/api/posts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ title, contentHtml }),
         credentials: 'include',
       })

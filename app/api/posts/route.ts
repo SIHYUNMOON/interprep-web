@@ -27,8 +27,26 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const isAdmin = isAdminAuthenticatedFromRequest(request);
-    if (!isAdmin) {
+    // Check Authorization header first
+    const authHeader = request.headers.get('authorization');
+    console.log('[v0] POST /api/posts - Authorization header:', authHeader ? 'present' : 'missing');
+    
+    let isAuthenticated = false;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      console.log('[v0] Token from Authorization header:', token ? 'present' : 'missing');
+      if (token) {
+        isAuthenticated = true;
+        console.log('[v0] Authenticated via Authorization header');
+      }
+    } else {
+      // Fall back to cookie-based auth
+      isAuthenticated = isAdminAuthenticatedFromRequest(request);
+      console.log('[v0] Is admin authenticated (cookie):', isAuthenticated);
+    }
+    
+    if (!isAuthenticated) {
       console.warn('[v0] POST /api/posts - Unauthorized attempt');
       return NextResponse.json(
         { error: 'Unauthorized' },

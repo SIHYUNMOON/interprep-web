@@ -49,7 +49,7 @@ export function Header() {
       href: '/contact',
       dropdown: [
         { label: '상담 문의', href: '/contact' },
-        { label: 'FAQ', href: '#faq' },
+        { label: 'FAQ', href: '/faq' },
         { label: '크레딧 제도', href: '/credit-system' },
         { label: '환불 규정', href: '/refund-policy' },
       ]

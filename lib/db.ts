@@ -21,6 +21,9 @@ export async function initializeDatabase() {
   try {
     const sql = getDb();
     
+    // Create pgcrypto extension for UUID generation
+    await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
+    
     // Create posts table if it doesn't exist
     await sql`
       CREATE TABLE IF NOT EXISTS posts (
@@ -28,6 +31,8 @@ export async function initializeDatabase() {
         title TEXT NOT NULL,
         content_html TEXT NOT NULL,
         author TEXT NOT NULL DEFAULT 'Interprep',
+        thumbnail_url TEXT,
+        published BOOLEAN DEFAULT true,
         created_at TIMESTAMPTZ DEFAULT now(),
         updated_at TIMESTAMPTZ DEFAULT now(),
         views INT DEFAULT 0,
@@ -44,8 +49,9 @@ export async function initializeDatabase() {
     `;
 
     initialized = true;
+    console.log('[v0] Database initialized successfully');
   } catch (error) {
-    console.error('Database initialization error:', error);
+    console.error('[v0] Database initialization error:', error);
   }
 }
 

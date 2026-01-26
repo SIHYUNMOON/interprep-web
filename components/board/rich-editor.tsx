@@ -82,21 +82,30 @@ export function RichEditor({ value, onChange, placeholder = '내용을 입력하
         const formData = new FormData();
         formData.append('file', file);
 
+        console.log('[v0] Uploading image:', file.name, 'Size:', file.size);
+
         const response = await fetch('/api/uploads/image', {
           method: 'POST',
           body: formData,
+          credentials: 'include',
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          alert('이미지 업로드에 실패했습니다.');
+          const errorMsg = data.error || '이미지 업로드에 실패했습니다.';
+          console.error('[v0] Image upload failed:', data);
+          alert(errorMsg);
           return;
         }
 
-        const { url } = await response.json();
+        console.log('[v0] Image uploaded successfully:', data.url);
+        const { url } = data;
         editor.chain().focus().setImage({ src: url }).run();
       } catch (error) {
-        console.error('Image upload error:', error);
-        alert('이미지 업로드에 실패했습니다.');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error('[v0] Image upload error:', errorMessage, error);
+        alert('이미지 업로드에 실패했습니다: ' + errorMessage);
       }
     };
 

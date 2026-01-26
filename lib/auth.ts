@@ -32,11 +32,13 @@ export async function createSession(): Promise<string> {
   
   cookieStore.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === 'production', // Only HTTPS in production
     sameSite: 'lax',
     maxAge: 24 * 60 * 60, // 24 hours
     path: '/',
   });
+
+  console.log('[v0] Session created with secure:', process.env.NODE_ENV === 'production');
 
   return token;
 }

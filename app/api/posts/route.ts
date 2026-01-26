@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPosts, createPost } from '@/lib/db';
-import { isAdminAuthenticated } from '@/lib/auth';
+import { isAdminAuthenticatedFromRequest } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const isAdmin = await isAdminAuthenticated();
+    const isAdmin = isAdminAuthenticatedFromRequest(request);
     if (!isAdmin) {
       console.warn('[v0] POST /api/posts - Unauthorized attempt');
       return NextResponse.json(

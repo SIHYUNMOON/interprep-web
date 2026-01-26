@@ -26,19 +26,21 @@ export async function validateCredentials(username: string, password: string): P
   return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
 }
 
-export async function createSession(): Promise<string> {
-  const token = generateSessionToken();
-  const cookieStore = await cookies();
-  
-  cookieStore.set(SESSION_COOKIE_NAME, token, {
+export function getCookieOptions() {
+  return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Only HTTPS in production
-    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax' as const,
     maxAge: 24 * 60 * 60, // 24 hours
     path: '/',
-  });
+  };
+}
 
-  console.log('[v0] Session created with secure:', process.env.NODE_ENV === 'production');
+export async function createSession(): Promise<string> {
+  const token = generateSessionToken();
+  
+  console.log('[v0] Session token generated:', token.substring(0, 10) + '...');
+  console.log('[v0] Cookie options - secure:', process.env.NODE_ENV === 'production');
 
   return token;
 }
@@ -55,8 +57,36 @@ export async function getSession(): Promise<string | undefined> {
   return session;
 }
 
+export function getSessionFromRequest(request: Request): string | undefined {
+  const cookieHeader = request.headers.get('cookie');
+  console.log('[v0] getSessionFromRequest - Cookie header:', cookieHeader);
+  
+  if (!cookieHeader) {
+    console.log('[v0] getSessionFromRequest - No cookie header');
+    return undefined;
+  }
+  
+  const cookies = cookieHeader.split(';').map(c => c.trim());
+  const sessionCookie = cookies.find(c => c.startsWith(`${SESSION_COOKIE_NAME}=`));
+  
+  if (!sessionCookie) {
+    console.log('[v0] getSessionFromRequest - Session cookie not found in:', cookies);
+    return undefined;
+  }
+  
+  const session = sessionCookie.split('=')[1];
+  console.log('[v0] getSessionFromRequest - Session found:', session ? 'yes' : 'no');
+  return session;
+}
+
 export async function isAdminAuthenticated(): Promise<boolean> {
   const session = await getSession();
   console.log('[v0] isAdminAuthenticated - Session value:', session ? 'exists' : 'missing');
+  return !!session;
+}
+
+export function isAdminAuthenticatedFromRequest(request: Request): boolean {
+  const session = getSessionFromRequest(request);
+  console.log('[v0] isAdminAuthenticatedFromRequest - Session:', session ? 'exists' : 'missing');
   return !!session;
 }

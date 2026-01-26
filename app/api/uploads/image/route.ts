@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
-import { isAdminAuthenticated } from '@/lib/auth';
+import { isAdminAuthenticatedFromRequest } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     console.log('[v0] POST /api/uploads/image - Starting image upload');
     console.log('[v0] BLOB_READ_WRITE_TOKEN exists:', !!process.env.BLOB_READ_WRITE_TOKEN);
     
-    const isAdmin = await isAdminAuthenticated();
+    const isAdmin = isAdminAuthenticatedFromRequest(request);
     console.log('[v0] Is admin authenticated:', isAdmin);
     
     if (!isAdmin) {

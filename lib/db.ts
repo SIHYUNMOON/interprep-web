@@ -65,78 +65,104 @@ export async function getPosts(
   page: number = 1,
   pageSize: number = 10
 ) {
-  await initializeDatabase();
-  const sql = getDb();
+  try {
+    await initializeDatabase();
+    const sql = getDb();
 
-  let orderBy = 'created_at DESC';
-  if (sort === 'recommended' || sort === 'mostViewed') {
-    orderBy = 'views DESC';
-  } else if (sort === 'updated') {
-    orderBy = 'updated_at DESC';
+    let orderBy = 'created_at DESC';
+    if (sort === 'recommended' || sort === 'mostViewed') {
+      orderBy = 'views DESC';
+    } else if (sort === 'updated') {
+      orderBy = 'updated_at DESC';
+    }
+
+    const offset = (page - 1) * pageSize;
+
+    const result = await sql`
+      SELECT * FROM posts
+      ORDER BY ${sql.raw(orderBy)}
+      LIMIT ${pageSize} OFFSET ${offset}
+    `;
+
+    const countResult = await sql`
+      SELECT COUNT(*) as count FROM posts
+    `;
+
+    const totalCount = parseInt((countResult[0] as any).count);
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    return {
+      items: result as Post[],
+      totalCount,
+      page,
+      pageSize,
+      totalPages,
+    };
+  } catch (error) {
+    console.error('[v0] Get posts error:', error);
+    return {
+      items: [],
+      totalCount: 0,
+      page,
+      pageSize,
+      totalPages: 0,
+    };
   }
-
-  const offset = (page - 1) * pageSize;
-
-  const result = await sql(`
-    SELECT * FROM posts
-    ORDER BY ${orderBy}
-    LIMIT ${pageSize} OFFSET ${offset}
-  `);
-
-  const countResult = await sql(`
-    SELECT COUNT(*) as count FROM posts
-  `);
-
-  const totalCount = parseInt((countResult[0] as any).count);
-  const totalPages = Math.ceil(totalCount / pageSize);
-
-  return {
-    items: result as Post[],
-    totalCount,
-    page,
-    pageSize,
-    totalPages,
-  };
 }
 
 export async function getPostById(id: string) {
-  await initializeDatabase();
-  const sql = getDb();
+  try {
+    await initializeDatabase();
+    const sql = getDb();
 
-  // Increment views atomically
-  const result = await sql(`
-    UPDATE posts
-    SET views = views + 1
-    WHERE id = $1
-    RETURNING *
-  `, [id]);
+    // Increment views atomically
+    const result = await sql`
+      UPDATE posts
+      SET views = views + 1
+      WHERE id = ${id}
+      RETURNING *
+    `;
 
-  return result[0] as Post | undefined;
+    return result[0] as Post | undefined;
+  } catch (error) {
+    console.error('[v0] Get post by id error:', error);
+    return undefined;
+  }
 }
 
 export async function createPost(title: string, contentHtml: string) {
-  await initializeDatabase();
-  const sql = getDb();
+  try {
+    await initializeDatabase();
+    const sql = getDb();
 
-  const result = await sql(`
-    INSERT INTO posts (title, content_html, author)
-    VALUES ($1, $2, 'Interprep')
-    RETURNING *
-  `, [title, contentHtml]);
+    const result = await sql`
+      INSERT INTO posts (title, content_html, author)
+      VALUES (${title}, ${contentHtml}, 'Interprep')
+      RETURNING *
+    `;
 
-  return result[0] as Post;
+    return result[0] as Post;
+  } catch (error) {
+    console.error('[v0] Create post error:', error);
+    throw error;
+  }
 }
 
 export async function likePost(id: string) {
-  await initializeDatabase();
-  const sql = getDb();
+  try {
+    await initializeDatabase();
+    const sql = getDb();
 
-  const result = await sql(`
-    UPDATE posts
-    SET likes = likes + 1
-    WHERE id = $1
-    RETURNING *
-  `, [id]);
+    const result = await sql`
+      UPDATE posts
+      SET likes = likes + 1
+      WHERE id = ${id}
+      RETURNING *
+    `;
 
-  return result[0] as Post | undefined;
+    return result[0] as Post | undefined;
+  } catch (error) {
+    console.error('[v0] Like post error:', error);
+    return undefined;
+  }
 }

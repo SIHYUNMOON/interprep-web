@@ -5,11 +5,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
+import { LoginModal } from '@/components/board/login-modal'
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [showBoardLogin, setShowBoardLogin] = useState(false)
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
+  const [isLoadingAuth, setIsLoadingAuth] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +22,38 @@ export function Header() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleBoardLogin = async (username: string, password: string) => {
+    setIsLoadingAuth(true)
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Login failed')
+      }
+
+      setIsAdminLoggedIn(true)
+      setShowBoardLogin(false)
+    } catch (error) {
+      console.error('Login error:', error)
+      throw error
+    } finally {
+      setIsLoadingAuth(false)
+    }
+  }
+
+  const handleBoardLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      setIsAdminLoggedIn(false)
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
 
   const navItems = [
     { 
@@ -161,9 +197,23 @@ export function Header() {
                   )}
                 </div>
               ))}
-              <Button asChild size="lg">
-                <Link href="/login">로그인</Link>
-              </Button>
+              {isAdminLoggedIn ? (
+                <Button 
+                  onClick={handleBoardLogout}
+                  variant="outline"
+                  size="lg"
+                  className="text-red-700 border-red-200"
+                >
+                  로그아웃
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => setShowBoardLogin(true)}
+                  size="lg"
+                >
+                  로그인
+                </Button>
+              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -208,15 +258,40 @@ export function Header() {
                   )}
                 </div>
               ))}
-              <Button asChild className="w-full">
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+              {isAdminLoggedIn ? (
+                <Button 
+                  onClick={() => {
+                    handleBoardLogout()
+                    setMobileMenuOpen(false)
+                  }}
+                  variant="outline"
+                  className="w-full text-red-700 border-red-200"
+                >
+                  로그아웃
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => {
+                    setShowBoardLogin(true)
+                    setMobileMenuOpen(false)
+                  }}
+                  className="w-full"
+                >
                   로그인
-                </Link>
-              </Button>
+                </Button>
+              )}
             </nav>
           )}
         </div>
       </header>
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showBoardLogin}
+        onClose={() => setShowBoardLogin(false)}
+        onLogin={handleBoardLogin}
+        isLoading={isLoadingAuth}
+      />
     </>
   )
 }

@@ -1,66 +1,47 @@
+@import 'tailwindcss';
+
 :root {
-  --background: white;
-  --foreground: black;
-  --card: #f5f5f5;
-  --card-foreground: black;
-  --primary: #000;
-  --primary-foreground: white;
-  --secondary: #e5e5e5;
-  --secondary-foreground: black;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --primary: #8B0000;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #0a0a0a;
   --muted: #f5f5f5;
-  --muted-foreground: #666;
-  --accent: #000;
-  --accent-foreground: white;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #0a0a0a;
   --border: #e5e5e5;
-  --ring: #000;
+  --input: #e5e5e5;
+  --ring: #8B0000;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: #000;
-  --foreground: white;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
   --card: #1a1a1a;
-  --card-foreground: white;
-  --primary: white;
-  --primary-foreground: black;
-  --secondary: #333;
-  --secondary-foreground: white;
+  --card-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #0a0a0a;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
   --muted: #1a1a1a;
-  --muted-foreground: #999;
-  --accent: white;
-  --accent-foreground: black;
-  --border: #333;
-  --ring: white;
+  --muted-foreground: #a3a3a3;
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  --border: #262626;
+  --input: #262626;
+  --ring: #fafafa;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+  border-color: var(--border);
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-}
-
-input, textarea, select {
-  font-family: inherit;
 }

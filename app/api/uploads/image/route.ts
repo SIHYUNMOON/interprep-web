@@ -6,11 +6,16 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('[v0] POST /api/uploads/image - Starting image upload');
+    console.log('[v0] BLOB_READ_WRITE_TOKEN exists:', !!process.env.BLOB_READ_WRITE_TOKEN);
+    
     const isAdmin = await isAdminAuthenticated();
+    console.log('[v0] Is admin authenticated:', isAdmin);
+    
     if (!isAdmin) {
       console.warn('[v0] POST /api/uploads/image - Unauthorized attempt');
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { error: 'Unauthorized - Please log in first' },
         { status: 401 }
       );
     }

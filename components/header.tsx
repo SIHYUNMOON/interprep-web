@@ -58,8 +58,12 @@ export function Header() {
       ]
     },
     { 
-      label: '정보게시판', 
-      href: '/board' 
+      label: '유학 · 입시 가이드', 
+      href: '/board',
+      dropdown: [
+        { label: '정보게시판', href: '/board' },
+        { label: '연도별 입시 결과', href: '/admission-results' },
+      ]
     },
     { 
       label: '상담 및 문의', 

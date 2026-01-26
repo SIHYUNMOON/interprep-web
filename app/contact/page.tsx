@@ -124,12 +124,12 @@ export default function ContactPage() {
 
                 {/* Right Panel - KakaoTalk Image */}
                 <div className="flex justify-center">
-                  <div className="relative w-full max-w-sm aspect-auto">
+                  <div className="relative w-full max-w-2xl aspect-auto">
                     <Image
                       src="/customer-kakao.png"
                       alt="KakaoTalk consultation guide"
-                      width={400}
-                      height={800}
+                      width={800}
+                      height={1600}
                       className="w-full h-auto"
                       priority
                     />

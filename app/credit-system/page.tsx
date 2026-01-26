@@ -57,57 +57,57 @@ export default function CreditSystemPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {/* Section Title */}
-              <div className="mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">특강</h2>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2">특강</h2>
                 <p className="text-sm text-muted-foreground">
                   ▼ 수강료 환불 요청 시 교육청 환불 규정에 따라 처리해 드립니다.
                 </p>
               </div>
 
               {/* Refund Table */}
-              <div className="bg-white rounded-lg overflow-hidden border border-border shadow-sm">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="w-full border-collapse">
                     <thead>
-                      <tr className="border-b border-border bg-muted/50">
-                        <th className="px-6 py-4 text-left text-sm md:text-base font-semibold text-foreground w-1/2">
+                      <tr>
+                        <th className="border border-gray-200 px-6 py-4 text-center font-bold text-foreground bg-[#952839]/10 w-1/2">
                           기준
                         </th>
-                        <th className="px-6 py-4 text-right text-sm md:text-base font-semibold text-foreground w-1/2">
+                        <th className="border border-gray-200 px-6 py-4 text-center font-bold text-foreground bg-[#952839]/10 w-1/2">
                           환불
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b border-border">
-                        <td className="px-6 py-4 text-sm md:text-base text-foreground">
+                      <tr className="hover:bg-gray-50/50 transition-colors">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base text-foreground">
                           수업 시작 전
                         </td>
-                        <td className="px-6 py-4 text-right text-sm md:text-base font-medium text-[#952839]">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base font-medium text-[#952839]">
                           전액 환불
                         </td>
                       </tr>
-                      <tr className="border-b border-border bg-muted/20">
-                        <td className="px-6 py-4 text-sm md:text-base text-foreground">
+                      <tr className="hover:bg-gray-50/50 transition-colors bg-gray-50/50">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base text-foreground">
                           수업 시작 후 1/3 이전
                         </td>
-                        <td className="px-6 py-4 text-right text-sm md:text-base font-medium text-muted-foreground">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base font-medium text-muted-foreground">
                           2/3 환불
                         </td>
                       </tr>
-                      <tr className="border-b border-border">
-                        <td className="px-6 py-4 text-sm md:text-base text-foreground">
+                      <tr className="hover:bg-gray-50/50 transition-colors">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base text-foreground">
                           수업 시작 후 1/2 이전
                         </td>
-                        <td className="px-6 py-4 text-right text-sm md:text-base font-medium text-muted-foreground">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base font-medium text-muted-foreground">
                           1/2 환불
                         </td>
                       </tr>
-                      <tr className="bg-muted/20">
-                        <td className="px-6 py-4 text-sm md:text-base text-foreground">
+                      <tr className="hover:bg-gray-50/50 transition-colors bg-gray-50/50">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base text-foreground">
                           수업 시작 후 1/2 경과
                         </td>
-                        <td className="px-6 py-4 text-right text-sm md:text-base font-medium text-muted-foreground">
+                        <td className="border border-gray-200 px-6 py-4 text-center text-sm md:text-base font-medium text-muted-foreground">
                           환불 불가
                         </td>
                       </tr>
@@ -117,7 +117,7 @@ export default function CreditSystemPage() {
               </div>
 
               {/* Footnote */}
-              <p className="text-xs md:text-sm text-muted-foreground mt-4">
+              <p className="text-xs md:text-sm text-muted-foreground mt-4 text-center">
                 * 3주 이하 등록 시 크레딧이 적용되지 않습니다.
               </p>
             </div>

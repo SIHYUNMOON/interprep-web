@@ -88,10 +88,10 @@ export function RichEditor({ value, onChange, placeholder = '내용을 입력하
         console.log('[v0] Uploading image:', file.name, 'Size:', file.size);
 
         const token = getAuthToken();
-        const headers: HeadersInit = {};
-        if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
-        }
+        // Don't set Content-Type manually - let browser set it with boundary for FormData
+        const headers: HeadersInit | undefined = token ? {
+          'Authorization': `Bearer ${token}`,
+        } : undefined;
 
         const response = await fetch('/api/uploads/image', {
           method: 'POST',

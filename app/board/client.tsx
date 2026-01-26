@@ -4,46 +4,29 @@ import React, { useState, useEffect } from 'react'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
+import { WriteModal } from '@/components/board/write-modal'
+import { PostDetailModal } from '@/components/board/post-detail-modal'
+import { Button } from '@/components/ui/button'
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
+import { useAuth } from '@/lib/auth-context'
 
 interface Post {
-  id: number
+  id: string
   title: string
   author: string
-  date: string
+  created_at: string
   views: number
-  content?: string
+  likes: number
+  content_html: string
 }
 
-const ADMIN_ID = 'adminInPrep2013'
-const ADMIN_PW = 'InterP!Web26#Ops@'
-
-const INITIAL_POSTS: Post[] = [
-  { id: 25, title: '디지털 SAT, 실제 시험장에서 변어지는 일 요약', author: 'interprep', date: '2023.02.08', views: 5261 },
-  { id: 24, title: 'College Board가 SAT시험 다시 바꾸는 이유는 뭣인가!?', author: '인터프렙', date: '2023.02.08', views: 4882 },
-  { id: 23, title: 'SAT시험이 미국대학 입시에 여전히 중요한가? [존재 SAT시험이 미국대학 입시에 여전히 중요한가?', author: '인터프렙', date: '2023.02.08', views: 6052 },
-  { id: 22, title: '디지털 SAT 초연금 단순정리', author: '인터프렙', date: '2023.02.08', views: 5114 },
-  { id: 21, title: '#1 프린스턴대학교 자금 정보', author: 'Interprep', date: '2019.01.30', views: 10667 },
-  { id: 20, title: 'UC대학에 입학하기 위한 중요한 요건들', author: 'Interprep', date: '2019.01.07', views: 11488 },
-  { id: 19, title: '정점 문학지에 있는 UC 입학의 문', author: 'Interprep', date: '2019.01.02', views: 11764 },
-  { id: 18, title: 'SAT/ACT 표준화 점수 정책의 영향은?', author: 'Interprep', date: '2018.12.18', views: 11010 },
-  { id: 17, title: '미국 입시 표준화 점수 제조 페치 좌석 좌상 - 미국 대입 준비는 어떻게?', author: 'Interprep', date: '2018.12.10', views: 10702 },
-  { id: 16, title: '사커교대학 표준화점수(SAT/ACT) 제조 제도 폐지!!', author: 'Interprep', date: '2018.11.13', views: 10714 },
-  { id: 15, title: 'Common App 에세이 주제 완벽 분석', author: '인터프렙', date: '2018.10.25', views: 9342 },
-  { id: 14, title: 'AP 시험 전략 및 대학 입시 반영', author: 'Interprep', date: '2018.09.15', views: 8765 },
-  { id: 13, title: '컬리지 검색 및 선택 기준', author: '인터프렙', date: '2018.08.20', views: 7823 },
-  { id: 12, title: 'GPA의 중요성과 관리 방법', author: 'Interprep', date: '2018.07.10', views: 7456 },
-  { id: 11, title: '과외 활동 선택 가이드', author: '인터프렙', date: '2018.06.05', views: 6789 },
-  { id: 10, title: '재정 지원 및 장학금 안내', author: 'Interprep', date: '2018.05.18', views: 6234 },
-  { id: 9, title: '대학원 지원 준비 과정', author: '인터프렙', date: '2018.04.22', views: 5678 },
-  { id: 8, title: '국제학생 비자 및 입시', author: 'Interprep', date: '2018.03.30', views: 5123 },
-  { id: 7, title: '조기 결정 대 일반 지원', author: '인터프렙', date: '2018.02.14', views: 4567 },
-  { id: 6, title: '캠퍼스 방문 및 면접 팁', author: 'Interprep', date: '2018.01.25', views: 4012 },
-  { id: 5, title: '추천서 확보 전략', author: '인터프렙', date: '2017.12.08', views: 3456 },
-  { id: 4, title: 'SAT vs ACT 선택 가이드', author: 'Interprep', date: '2017.11.20', views: 3234 },
-  { id: 3, title: '대학 입시 타임라인', author: '인터프렙', date: '2017.10.15', views: 2876 },
-  { id: 2, title: '9학년부터 준비하기', author: 'Interprep', date: '2017.09.10', views: 2345 },
-  { id: 1, title: '미국 대학 입시 완벽 가이드', author: '인터프렙', date: '2017.08.01', views: 1234 },
-]
+interface PaginatedResponse {
+  items: Post[]
+  totalCount: number
+  page: number
+  pageSize: number
+  totalPages: number
+}
 
 const YOUTUBE_VIDEOS = [
   { title: '그렇게 준비할거면 하지마라! 미국대학입시 제대로 준비하는 법', url: 'https://www.youtube.com/watch?v=NVQm9aaCjw0&feature=youtu.be' },
@@ -54,82 +37,92 @@ const YOUTUBE_VIDEOS = [
 ]
 
 export function BoardClient() {
-  const [posts, setPosts] = useState<Post[]>(INITIAL_POSTS)
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
-  const [showLoginModal, setShowLoginModal] = useState(false)
+  const { isAdminLoggedIn, getAuthToken } = useAuth()
+  const [posts, setPosts] = useState<Post[]>([])
   const [showWriteModal, setShowWriteModal] = useState(false)
-  const [loginInput, setLoginInput] = useState({ id: '', pw: '' })
-  const [writeInput, setWriteInput] = useState({ title: '', content: '' })
-  const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'views' | 'updated'>('latest')
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
+  const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'mostViewed' | 'updated'>('latest')
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [isLoadingPosts, setIsLoadingPosts] = useState(false)
+  const [isPublishing, setIsPublishing] = useState(false)
+  const [totalCount, setTotalCount] = useState(0)
 
-  // Check localStorage for admin login on mount
   useEffect(() => {
-    const saved = localStorage.getItem('adminLoggedIn')
-    if (saved === 'true') {
-      setIsAdminLoggedIn(true)
-    }
-  }, [])
+    loadPosts()
+  }, [sortBy, currentPage])
 
-  const handleLogin = () => {
-    if (loginInput.id === ADMIN_ID && loginInput.pw === ADMIN_PW) {
-      setIsAdminLoggedIn(true)
-      localStorage.setItem('adminLoggedIn', 'true')
-      setShowLoginModal(false)
-      setLoginInput({ id: '', pw: '' })
-    } else {
-      alert('ID 또는 비밀번호가 올바르지 않습니다.')
+  const loadPosts = async () => {
+    setIsLoadingPosts(true)
+    try {
+      const response = await fetch(`/api/posts?sort=${sortBy}&page=${currentPage}&pageSize=10`)
+      const data: PaginatedResponse = await response.json()
+      setPosts(data.items)
+      setTotalPages(data.totalPages)
+      setTotalCount(data.totalCount)
+    } catch (error) {
+      console.error('[v0] Failed to load posts:', error)
+      setPosts([])
+    } finally {
+      setIsLoadingPosts(false)
     }
   }
 
-  const handleLogout = () => {
-    setIsAdminLoggedIn(false)
-    localStorage.removeItem('adminLoggedIn')
+  const handlePublish = async (title: string, contentHtml: string) => {
+    setIsPublishing(true)
+    try {
+      const token = getAuthToken();
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ title, contentHtml }),
+        credentials: 'include',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to publish post')
+      }
+
+      setShowWriteModal(false)
+      setCurrentPage(1)
+      setTotalCount(totalCount + 1)
+      await loadPosts()
+    } catch (error) {
+      console.error('[v0] Publish error:', error)
+      throw error
+    } finally {
+      setIsPublishing(false)
+    }
   }
 
-  const handleWritePost = () => {
-    if (!writeInput.title.trim() || !writeInput.content.trim()) {
-      alert('제목과 내용을 입력해주세요.')
-      return
+  const handlePostClick = async (post: Post) => {
+    try {
+      const response = await fetch(`/api/posts/${post.id}`)
+      const fullPost = await response.json()
+      setSelectedPost(fullPost)
+    } catch (error) {
+      console.error('[v0] Failed to load post:', error)
     }
-
-    const newPost: Post = {
-      id: Math.max(...posts.map(p => p.id), 0) + 1,
-      title: writeInput.title,
-      author: 'interprep',
-      date: new Date().toISOString().split('T')[0].replace(/-/g, '.'),
-      views: 0,
-      content: writeInput.content,
-    }
-
-    setPosts([newPost, ...posts])
-    setShowWriteModal(false)
-    setWriteInput({ title: '', content: '' })
   }
 
-  const sortedPosts = [...posts].sort((a, b) => {
-    switch (sortBy) {
-      case 'recommended':
-        return b.views - a.views
-      case 'views':
-        return b.views - a.views
-      case 'updated':
-        return new Date(b.date.replace(/\./g, '-')).getTime() - new Date(a.date.replace(/\./g, '-')).getTime()
-      case 'latest':
-      default:
-        return b.id - a.id
-    }
-  })
-
-  const postsPerPage = 10
-  const totalPages = Math.ceil(sortedPosts.length / postsPerPage)
-  const paginatedPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
+  const sortOptions = [
+    { value: 'latest', label: '최신순' },
+    { value: 'recommended', label: '추천순' },
+    { value: 'mostViewed', label: '조회수 많은순' },
+    { value: 'updated', label: '업데이트순' },
+  ] as const
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main className="pt-16">
-        {/* Page Title */}
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-foreground mb-2">
@@ -141,11 +134,9 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
 
-        {/* YouTube Section */}
         <AnimatedSection className="py-16 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left: YouTube Embed */}
               <div className="lg:col-span-2">
                 <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-lg" style={{ paddingBottom: '56.25%' }}>
                   <iframe
@@ -158,7 +149,6 @@ export function BoardClient() {
                 </div>
               </div>
 
-              {/* Right: Video List */}
               <div className="bg-black rounded-lg p-6 md:p-8">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-6">
                   Interprep TV - 유학관련 영상 리스트
@@ -184,104 +174,124 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
 
-        {/* Board Section */}
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              {/* Top Controls */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
                 <div className="text-sm text-foreground font-medium">
-                  전체 {posts.length}
+                  전체 {totalCount}
                 </div>
-                <div className="flex items-center gap-3">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => { setSortBy(e.target.value as any); setCurrentPage(1) }}
-                    className="px-4 py-2 text-sm border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors"
-                  >
-                    <option value="latest">최신순</option>
-                    <option value="recommended">추천순</option>
-                    <option value="views">조회수 많은순</option>
-                    <option value="updated">업데이트순</option>
-                  </select>
-
-                  {isAdminLoggedIn ? (
-                    <button
-                      onClick={handleLogout}
-                      className="px-4 py-2 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
-                    >
-                      로그아웃
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => setShowLoginModal(true)}
-                      className="px-4 py-2 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
-                    >
-                      로그인
-                    </button>
-                  )}
-                </div>
+                <select
+                  value={sortBy}
+                  onChange={(e) => {
+                    setSortBy(e.target.value as any)
+                    setCurrentPage(1)
+                  }}
+                  className="px-4 py-2 text-sm border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
               </div>
 
-              {/* Table */}
               <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     <thead>
                       <tr>
                         <th className="border border-gray-200 px-4 py-3 text-center font-bold text-foreground bg-pink-50/50 w-16">번호</th>
-                        <th className="border border-gray-200 px-6 py-3 text-center font-bold text-foreground bg-pink-50/50">제목</th>
+                        <th className="border border-gray-200 px-6 py-3 text-left font-bold text-foreground bg-pink-50/50">제목</th>
                         <th className="border border-gray-200 px-4 py-3 text-center font-bold text-foreground bg-pink-50/50 w-24">작성자</th>
                         <th className="border border-gray-200 px-4 py-3 text-center font-bold text-foreground bg-pink-50/50 w-24">작성일</th>
                         <th className="border border-gray-200 px-4 py-3 text-center font-bold text-foreground bg-pink-50/50 w-20">조회</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {paginatedPosts.map((post, idx) => (
-                        <tr key={post.id} className="hover:bg-gray-50/50 transition-colors">
-                          <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.id}</td>
-                          <td className="border border-gray-200 px-6 py-3 text-sm text-foreground cursor-pointer hover:text-blue-600 transition-colors">{post.title}</td>
-                          <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.author}</td>
-                          <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.date}</td>
-                          <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.views}</td>
+                      {isLoadingPosts ? (
+                        <tr>
+                          <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
+                            로딩 중...
+                          </td>
                         </tr>
-                      ))}
+                      ) : posts.length === 0 ? (
+                        <tr>
+                          <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
+                            게시물이 없습니다.
+                          </td>
+                        </tr>
+                      ) : (
+                        posts.map((post) => (
+                          <tr
+                            key={post.id}
+                            className="hover:bg-gray-50/50 transition-colors cursor-pointer"
+                            onClick={() => handlePostClick(post)}
+                          >
+                            <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.id.slice(0, 8)}</td>
+                            <td className="border border-gray-200 px-6 py-3 text-sm text-foreground truncate">{post.title}</td>
+                            <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.author}</td>
+                            <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">
+                              {new Date(post.created_at).toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                              })}
+                            </td>
+                            <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.views}</td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              {/* Pagination */}
-              <div className="flex items-center justify-center gap-2 mt-8">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-8">
                   <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1 rounded text-sm transition-colors ${
-                      currentPage === page
-                        ? 'bg-red-700 text-white'
-                        : 'bg-gray-100 text-foreground hover:bg-gray-200'
-                    }`}
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {page}
+                    <ChevronLeft size={20} />
                   </button>
-                ))}
-                {totalPages > 5 && (
-                  <button className="px-3 py-1 text-sm text-foreground hover:text-blue-600">
-                    마지막
-                  </button>
-                )}
-              </div>
 
-              {/* Write Button */}
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    const start = Math.max(1, currentPage - 2)
+                    return start + i
+                  }).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-3 py-1 rounded text-sm transition-colors ${
+                        currentPage === page
+                          ? 'bg-red-700 text-white'
+                          : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              )}
+
               {isAdminLoggedIn && (
                 <div className="flex justify-end mt-8">
-                  <button
+                  <Button
                     onClick={() => setShowWriteModal(true)}
-                    className="px-6 py-2 bg-red-700 text-white rounded hover:bg-red-800 transition-colors font-medium"
+                    className="bg-red-700 hover:bg-red-800 gap-2"
                   >
+                    <Plus size={18} />
                     글쓰기
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
@@ -289,96 +299,18 @@ export function BoardClient() {
         </AnimatedSection>
       </main>
 
-      {/* Login Modal */}
-      {showLoginModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg p-8 max-w-sm w-full">
-            <h2 className="text-2xl font-bold text-foreground mb-6">관리자 로그인</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">ID</label>
-                <input
-                  type="text"
-                  value={loginInput.id}
-                  onChange={(e) => setLoginInput({ ...loginInput, id: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                  placeholder="ID를 입력하세요"
-                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">비밀번호</label>
-                <input
-                  type="password"
-                  value={loginInput.pw}
-                  onChange={(e) => setLoginInput({ ...loginInput, pw: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                  placeholder="비밀번호를 입력하세요"
-                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-                />
-              </div>
-              <div className="flex gap-3 pt-4">
-                <button
-                  onClick={handleLogin}
-                  className="flex-1 px-4 py-2 bg-red-700 text-white rounded hover:bg-red-800 transition-colors font-medium"
-                >
-                  로그인
-                </button>
-                <button
-                  onClick={() => { setShowLoginModal(false); setLoginInput({ id: '', pw: '' }) }}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-foreground rounded hover:bg-gray-50 transition-colors font-medium"
-                >
-                  취소
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <WriteModal
+        isOpen={showWriteModal}
+        onClose={() => setShowWriteModal(false)}
+        onPublish={handlePublish}
+        isLoading={isPublishing}
+      />
 
-      {/* Write Modal */}
-      {showWriteModal && isAdminLoggedIn && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg p-8 max-w-2xl w-full">
-            <h2 className="text-2xl font-bold text-foreground mb-6">글쓰기</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">제목</label>
-                <input
-                  type="text"
-                  value={writeInput.title}
-                  onChange={(e) => setWriteInput({ ...writeInput, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700"
-                  placeholder="제목을 입력하세요"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">내용</label>
-                <textarea
-                  value={writeInput.content}
-                  onChange={(e) => setWriteInput({ ...writeInput, content: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-700 resize-none h-48"
-                  placeholder="내용을 입력하세요"
-                />
-              </div>
-              <div className="flex gap-3 pt-4">
-                <button
-                  onClick={handleWritePost}
-                  className="flex-1 px-4 py-2 bg-red-700 text-white rounded hover:bg-red-800 transition-colors font-medium"
-                >
-                  등록
-                </button>
-                <button
-                  onClick={() => { setShowWriteModal(false); setWriteInput({ title: '', content: '' }) }}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-foreground rounded hover:bg-gray-50 transition-colors font-medium"
-                >
-                  취소
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <PostDetailModal
+        isOpen={!!selectedPost}
+        onClose={() => setSelectedPost(null)}
+        post={selectedPost}
+      />
 
       <Footer />
     </div>

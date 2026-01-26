@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -37,7 +39,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                 <Button size="lg" className="hover:brightness-110 transition-[filter]" asChild>
-                  <Link href="#contact">SAT 상담 문의</Link>
+                  <Link href="/board">정보 게시판 보기</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="bg-white text-[#1a1a1a] border-gray-200 hover:bg-[#f8f8f8] transition-colors" asChild>
                   <Link href="#programs">프로그램 안내 보기</Link>

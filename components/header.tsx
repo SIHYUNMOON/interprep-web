@@ -42,7 +42,7 @@ export function Header() {
     },
     { 
       label: '정보게시판', 
-      href: '#board' 
+      href: '/board' 
     },
     { 
       label: '상담 및 문의', 

@@ -39,10 +39,10 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                 <Button size="lg" className="hover:brightness-110 transition-[filter]" asChild>
-                  <Link href="/board">정보 게시판 보기</Link>
+                  <Link href="/contact">상담 문의하기</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="bg-white text-[#1a1a1a] border-gray-200 hover:bg-[#f8f8f8] transition-colors" asChild>
-                  <Link href="#programs">프로그램 안내 보기</Link>
+                  <Link href="/sat">프로그램 안내</Link>
                 </Button>
               </div>
               <p className="text-sm text-[rgba(245,245,245,0.7)]">

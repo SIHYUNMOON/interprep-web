@@ -9,15 +9,27 @@ import { Input } from '@/components/ui/input'
 import { RichEditor } from '@/components/board/rich-editor'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Plus } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { cn } from '@/lib/utils'
+
+const DEFAULT_CATEGORIES = [
+  '인터프렙 소개',
+  '인터프렙 이야기',
+  'US College',
+  '국내수시',
+  'MBA',
+  '인터프렙 프로그램',
+  '유용한 정보',
+  '잉글스토리',
+]
 
 interface Post {
   id: string
   title: string
   content_html: string
   created_at: string
+  category: string
 }
 
 export function EditClient({ postId }: { postId: string }) {
@@ -26,6 +38,10 @@ export function EditClient({ postId }: { postId: string }) {
   const [title, setTitle] = useState('')
   const [contentHtml, setContentHtml] = useState('')
   const [customDate, setCustomDate] = useState<Date | undefined>(undefined)
+  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0])
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES)
+  const [isAddingCategory, setIsAddingCategory] = useState(false)
+  const [newCategory, setNewCategory] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
@@ -44,11 +60,26 @@ export function EditClient({ postId }: { postId: string }) {
       setTitle(post.title)
       setContentHtml(post.content_html)
       setCustomDate(new Date(post.created_at))
+      setCategory(post.category || DEFAULT_CATEGORIES[0])
+      // Add the post's category to categories list if it's not already there
+      if (post.category && !DEFAULT_CATEGORIES.includes(post.category)) {
+        setCategories([...DEFAULT_CATEGORIES, post.category])
+      }
     } catch (error) {
       console.error('[v0] Failed to load post:', error)
       setError('게시글을 불러오는데 실패했습니다.')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleAddCategory = () => {
+    if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+      const updatedCategories = [...categories, newCategory.trim()]
+      setCategories(updatedCategories)
+      setCategory(newCategory.trim())
+      setNewCategory('')
+      setIsAddingCategory(false)
     }
   }
 
@@ -81,7 +112,8 @@ export function EditClient({ postId }: { postId: string }) {
         body: JSON.stringify({ 
           title, 
           contentHtml,
-          customDate: customDate?.toISOString()
+          customDate: customDate?.toISOString(),
+          category
         }),
         credentials: 'include',
       })
@@ -140,6 +172,68 @@ export function EditClient({ postId }: { postId: string }) {
                   autoFocus
                   className="text-lg py-6"
                 />
+              </div>
+
+              {/* Category Selector */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  카테고리
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    disabled={isSaving}
+                    className="flex-1 px-4 py-2 border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors disabled:opacity-50"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsAddingCategory(!isAddingCategory)}
+                    disabled={isSaving}
+                    className="gap-2"
+                  >
+                    <Plus size={16} />
+                    새 카테고리
+                  </Button>
+                </div>
+                {isAddingCategory && (
+                  <div className="flex gap-2 mt-2">
+                    <Input
+                      type="text"
+                      placeholder="새 카테고리 이름"
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          handleAddCategory()
+                        }
+                      }}
+                      disabled={isSaving}
+                    />
+                    <Button onClick={handleAddCategory} size="sm" disabled={isSaving}>
+                      추가
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsAddingCategory(false)
+                        setNewCategory('')
+                      }}
+                      variant="outline"
+                      size="sm"
+                      disabled={isSaving}
+                    >
+                      취소
+                    </Button>
+                  </div>
+                )}
               </div>
 
               {/* Custom Date Picker */}

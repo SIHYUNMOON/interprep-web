@@ -46,7 +46,7 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { title, contentHtml, customDate } = body;
+    const { title, contentHtml, customDate, category } = body;
 
     if (!title || !contentHtml) {
       return NextResponse.json(
@@ -55,7 +55,7 @@ export async function PUT(
       );
     }
 
-    const post = await updatePost(id, title, contentHtml, customDate);
+    const post = await updatePost(id, title, contentHtml, customDate, category);
 
     if (!post) {
       return NextResponse.json(

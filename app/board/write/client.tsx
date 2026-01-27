@@ -9,9 +9,20 @@ import { Input } from '@/components/ui/input'
 import { RichEditor } from '@/components/board/rich-editor'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Plus } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { cn } from '@/lib/utils'
+
+const DEFAULT_CATEGORIES = [
+  '인터프렙 소개',
+  '인터프렙 이야기',
+  'US College',
+  '국내수시',
+  'MBA',
+  '인터프렙 프로그램',
+  '유용한 정보',
+  '잉글스토리',
+]
 
 export function WriteClient() {
   const router = useRouter()
@@ -19,8 +30,22 @@ export function WriteClient() {
   const [title, setTitle] = useState('')
   const [contentHtml, setContentHtml] = useState('')
   const [customDate, setCustomDate] = useState<Date | undefined>(undefined)
+  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0])
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES)
+  const [isAddingCategory, setIsAddingCategory] = useState(false)
+  const [newCategory, setNewCategory] = useState('')
   const [error, setError] = useState('')
   const [isPublishing, setIsPublishing] = useState(false)
+
+  const handleAddCategory = () => {
+    if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+      const updatedCategories = [...categories, newCategory.trim()]
+      setCategories(updatedCategories)
+      setCategory(newCategory.trim())
+      setNewCategory('')
+      setIsAddingCategory(false)
+    }
+  }
 
   const handlePublish = async () => {
     setError('')
@@ -51,7 +76,8 @@ export function WriteClient() {
         body: JSON.stringify({ 
           title, 
           contentHtml,
-          customDate: customDate?.toISOString()
+          customDate: customDate?.toISOString(),
+          category
         }),
         credentials: 'include',
       })
@@ -95,6 +121,68 @@ export function WriteClient() {
                   autoFocus
                   className="text-lg py-6"
                 />
+              </div>
+
+              {/* Category Selector */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  카테고리
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    disabled={isPublishing}
+                    className="flex-1 px-4 py-2 border border-gray-200 rounded bg-white text-foreground cursor-pointer hover:border-gray-300 transition-colors disabled:opacity-50"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsAddingCategory(!isAddingCategory)}
+                    disabled={isPublishing}
+                    className="gap-2"
+                  >
+                    <Plus size={16} />
+                    새 카테고리
+                  </Button>
+                </div>
+                {isAddingCategory && (
+                  <div className="flex gap-2 mt-2">
+                    <Input
+                      type="text"
+                      placeholder="새 카테고리 이름"
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          handleAddCategory()
+                        }
+                      }}
+                      disabled={isPublishing}
+                    />
+                    <Button onClick={handleAddCategory} size="sm" disabled={isPublishing}>
+                      추가
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsAddingCategory(false)
+                        setNewCategory('')
+                      }}
+                      variant="outline"
+                      size="sm"
+                      disabled={isPublishing}
+                    >
+                      취소
+                    </Button>
+                  </div>
+                )}
               </div>
 
               {/* Custom Date Picker */}

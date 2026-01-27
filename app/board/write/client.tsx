@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
@@ -30,12 +30,41 @@ export function WriteClient() {
   const [title, setTitle] = useState('')
   const [contentHtml, setContentHtml] = useState('')
   const [customDate, setCustomDate] = useState<Date | undefined>(undefined)
-  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0])
-  const [categories, setCategories] = useState(DEFAULT_CATEGORIES)
+  const [category, setCategory] = useState('')
+  const [categories, setCategories] = useState<string[]>([])
   const [isAddingCategory, setIsAddingCategory] = useState(false)
   const [newCategory, setNewCategory] = useState('')
   const [error, setError] = useState('')
   const [isPublishing, setIsPublishing] = useState(false)
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+
+  useEffect(() => {
+    loadCategories()
+  }, [])
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch('/api/categories')
+      const data = await response.json()
+      
+      // Merge default categories with categories from database
+      const dbCategories = data.categories || []
+      const additionalCategories = dbCategories.filter(
+        (cat: string) => !DEFAULT_CATEGORIES.includes(cat)
+      )
+      
+      const allCategories = [...DEFAULT_CATEGORIES, ...additionalCategories]
+      setCategories(allCategories)
+      setCategory(allCategories[0] || DEFAULT_CATEGORIES[0])
+    } catch (error) {
+      console.error('[v0] Failed to load categories:', error)
+      // Fallback to default categories if API fails
+      setCategories(DEFAULT_CATEGORIES)
+      setCategory(DEFAULT_CATEGORIES[0])
+    } finally {
+      setIsLoadingCategories(false)
+    }
+  }
 
   const handleAddCategory = () => {
     if (newCategory.trim() && !categories.includes(newCategory.trim())) {

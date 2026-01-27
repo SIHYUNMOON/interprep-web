@@ -38,8 +38,8 @@ export function EditClient({ postId }: { postId: string }) {
   const [title, setTitle] = useState('')
   const [contentHtml, setContentHtml] = useState('')
   const [customDate, setCustomDate] = useState<Date | undefined>(undefined)
-  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0])
-  const [categories, setCategories] = useState(DEFAULT_CATEGORIES)
+  const [category, setCategory] = useState('')
+  const [categories, setCategories] = useState<string[]>([])
   const [isAddingCategory, setIsAddingCategory] = useState(false)
   const [newCategory, setNewCategory] = useState('')
   const [error, setError] = useState('')
@@ -47,8 +47,28 @@ export function EditClient({ postId }: { postId: string }) {
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
+    loadCategories()
     loadPost()
   }, [postId])
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch('/api/categories')
+      const data = await response.json()
+      
+      // Merge default categories with categories from database
+      const dbCategories = data.categories || []
+      const additionalCategories = dbCategories.filter(
+        (cat: string) => !DEFAULT_CATEGORIES.includes(cat)
+      )
+      
+      setCategories([...DEFAULT_CATEGORIES, ...additionalCategories])
+    } catch (error) {
+      console.error('[v0] Failed to load categories:', error)
+      // Fallback to default categories if API fails
+      setCategories(DEFAULT_CATEGORIES)
+    }
+  }
 
   const loadPost = async () => {
     try {
@@ -61,10 +81,6 @@ export function EditClient({ postId }: { postId: string }) {
       setContentHtml(post.content_html)
       setCustomDate(new Date(post.created_at))
       setCategory(post.category || DEFAULT_CATEGORIES[0])
-      // Add the post's category to categories list if it's not already there
-      if (post.category && !DEFAULT_CATEGORIES.includes(post.category)) {
-        setCategories([...DEFAULT_CATEGORIES, post.category])
-      }
     } catch (error) {
       console.error('[v0] Failed to load post:', error)
       setError('게시글을 불러오는데 실패했습니다.')

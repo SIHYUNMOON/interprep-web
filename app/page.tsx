@@ -46,7 +46,7 @@ export default function Home() {
                 </Button>
               </div>
               <p className="text-sm text-[rgba(245,245,245,0.7)]">
-                2007년 설립 · 누적 수강생 9,215명
+                2013년 설립 · 누적 수강생 9,215명
               </p>
             </div>
           </div>

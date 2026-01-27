@@ -60,7 +60,7 @@ export default function Home() {
                 왜 인터프렙인가요?
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-12 text-pretty">
-                인터프렙은 2007년 설립된 국내 대표 SAT 전문 학원입니다.
+                인터프렙은 2013년 설립된 국내 대표 SAT 전문 학원입니다.
                 체계적인 교육 프로그램, 지속적인 성적 관리, 그리고 자체 제작한
                 학습 자료를 통해 측정 가능한 점수 향상을 제공합니다.
                 우리는 규칙적인 학습 습관과 데이터 기반 피드백을 중심으로

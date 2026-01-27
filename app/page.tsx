@@ -216,7 +216,7 @@ export default function Home() {
                     About Interprep
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-pretty">
-                    2007년 설립 이래, 인터프렙은 한 가지 목표에 집중해 왔습니다.
+                    2013년 설립 이래, 인터프렙은 한 가지 목표에 집중해 왔습니다.
                     바로 SAT 점수 향상입니다. 우리는 탄탄한 기본기, 꾸준함,
                     그리고 피드백 중심의 코칭이 신뢰할 수 있는 결과를 만든다고 믿습니다.
                   </p>

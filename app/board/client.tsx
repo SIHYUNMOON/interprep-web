@@ -46,20 +46,56 @@ export function BoardClient() {
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [categories, setCategories] = useState<string[]>([
-    '인터프렙 소개',
-    '인터프렙 이야기',
-    'US College',
-    '국내수시',
-    'MBA',
-    '인터프렙 프로그램',
-    '유용한 정보',
-    '잉글스토리',
-  ])
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    loadCategories()
+  }, [])
 
   useEffect(() => {
     loadPosts()
   }, [sortBy, currentPage, selectedCategory])
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch('/api/categories')
+      const data = await response.json()
+      
+      // Define default categories in order
+      const defaultCategories = [
+        '인터프렙 소개',
+        '인터프렙 이야기',
+        'US College',
+        '국내수시',
+        'MBA',
+        '인터프렙 프로그램',
+        '유용한 정보',
+        '잉글스토리',
+      ]
+      
+      // Merge default categories with categories from database
+      // Remove duplicates and keep the order: defaults first, then additional ones
+      const dbCategories = data.categories || []
+      const additionalCategories = dbCategories.filter(
+        (cat: string) => !defaultCategories.includes(cat)
+      )
+      
+      setCategories([...defaultCategories, ...additionalCategories])
+    } catch (error) {
+      console.error('[v0] Failed to load categories:', error)
+      // Fallback to default categories if API fails
+      setCategories([
+        '인터프렙 소개',
+        '인터프렙 이야기',
+        'US College',
+        '국내수시',
+        'MBA',
+        '인터프렙 프로그램',
+        '유용한 정보',
+        '잉글스토리',
+      ])
+    }
+  }
 
   const loadPosts = async () => {
     setIsLoadingPosts(true)

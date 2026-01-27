@@ -4,7 +4,7 @@ import { neon } from '@neondatabase/serverless';
 let initialized = false;
 let db: ReturnType<typeof neon> | null = null;
 
-function getDb() {
+export function getDb() {
   if (!db) {
     const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) {

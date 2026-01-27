@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
-import { WriteModal } from '@/components/board/write-modal'
-import { PostDetailModal } from '@/components/board/post-detail-modal'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
@@ -37,15 +36,13 @@ const YOUTUBE_VIDEOS = [
 ]
 
 export function BoardClient() {
-  const { isAdminLoggedIn, getAuthToken } = useAuth()
+  const router = useRouter()
+  const { isAdminLoggedIn } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
-  const [showWriteModal, setShowWriteModal] = useState(false)
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'mostViewed' | 'updated'>('latest')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
-  const [isPublishing, setIsPublishing] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
 
   useEffect(() => {
@@ -68,48 +65,10 @@ export function BoardClient() {
     }
   }
 
-  const handlePublish = async (title: string, contentHtml: string) => {
-    setIsPublishing(true)
-    try {
-      const token = getAuthToken();
-      const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ title, contentHtml }),
-        credentials: 'include',
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to publish post')
-      }
 
-      setShowWriteModal(false)
-      setCurrentPage(1)
-      setTotalCount(totalCount + 1)
-      await loadPosts()
-    } catch (error) {
-      console.error('[v0] Publish error:', error)
-      throw error
-    } finally {
-      setIsPublishing(false)
-    }
-  }
-
-  const handlePostClick = async (post: Post) => {
-    try {
-      const response = await fetch(`/api/posts/${post.id}`)
-      const fullPost = await response.json()
-      setSelectedPost(fullPost)
-    } catch (error) {
-      console.error('[v0] Failed to load post:', error)
-    }
+  const handlePostClick = (post: Post) => {
+    router.push(`/board/${post.id}`)
   }
 
   const sortOptions = [
@@ -286,7 +245,7 @@ export function BoardClient() {
               {isAdminLoggedIn && (
                 <div className="flex justify-end mt-8">
                   <Button
-                    onClick={() => setShowWriteModal(true)}
+                    onClick={() => router.push('/board/write')}
                     className="bg-red-700 hover:bg-red-800 gap-2"
                   >
                     <Plus size={18} />
@@ -298,19 +257,6 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
       </main>
-
-      <WriteModal
-        isOpen={showWriteModal}
-        onClose={() => setShowWriteModal(false)}
-        onPublish={handlePublish}
-        isLoading={isPublishing}
-      />
-
-      <PostDetailModal
-        isOpen={!!selectedPost}
-        onClose={() => setSelectedPost(null)}
-        post={selectedPost}
-      />
 
       <Footer />
     </div>

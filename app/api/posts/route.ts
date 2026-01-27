@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, contentHtml } = body;
+    const { title, contentHtml, customDate } = body;
 
     if (!title || !contentHtml) {
       console.warn('[v0] POST /api/posts - Missing fields. Title:', !!title, 'Content:', !!contentHtml);
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     console.log('[v0] POST /api/posts - Creating post:', { title: title.substring(0, 50) });
 
-    const post = await createPost(title, contentHtml);
+    const post = await createPost(title, contentHtml, customDate);
     
     console.log('[v0] POST /api/posts - Post created:', post.id);
     return NextResponse.json(post, { status: 201 });

@@ -157,21 +157,82 @@ export async function getPostById(id: string) {
   }
 }
 
-export async function createPost(title: string, contentHtml: string) {
+export async function createPost(title: string, contentHtml: string, customDate?: string) {
   try {
     await initializeDatabase();
     const sql = getDb();
 
-    const result = await sql`
-      INSERT INTO posts (title, content_html, author)
-      VALUES (${title}, ${contentHtml}, 'Interprep')
-      RETURNING *
-    `;
+    let result;
+    if (customDate) {
+      result = await sql`
+        INSERT INTO posts (title, content_html, author, created_at)
+        VALUES (${title}, ${contentHtml}, 'interprep official', ${customDate})
+        RETURNING *
+      `;
+    } else {
+      result = await sql`
+        INSERT INTO posts (title, content_html, author)
+        VALUES (${title}, ${contentHtml}, 'interprep official')
+        RETURNING *
+      `;
+    }
 
     return result[0] as Post;
   } catch (error) {
     console.error('[v0] Create post error:', error);
     throw error;
+  }
+}
+
+export async function updatePost(id: string, title: string, contentHtml: string, customDate?: string) {
+  try {
+    await initializeDatabase();
+    const sql = getDb();
+
+    let result;
+    if (customDate) {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now(),
+            created_at = ${customDate}
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now()
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    }
+
+    return result[0] as Post | undefined;
+  } catch (error) {
+    console.error('[v0] Update post error:', error);
+    throw error;
+  }
+}
+
+export async function deletePost(id: string) {
+  try {
+    await initializeDatabase();
+    const sql = getDb();
+
+    const result = await sql`
+      DELETE FROM posts
+      WHERE id = ${id}
+      RETURNING id
+    `;
+
+    return result.length > 0;
+  } catch (error) {
+    console.error('[v0] Delete post error:', error);
+    return false;
   }
 }
 

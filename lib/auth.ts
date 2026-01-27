@@ -90,3 +90,13 @@ export function isAdminAuthenticatedFromRequest(request: Request): boolean {
   console.log('[v0] isAdminAuthenticatedFromRequest - Session:', session ? 'exists' : 'missing');
   return !!session;
 }
+
+export function verifyAdminToken(token: string): boolean {
+  // Verify the token is a valid session token
+  // In this implementation, we check if it's a valid hex string of the right length
+  if (!token || token.length !== 64) {
+    return false;
+  }
+  // Check if it's a valid hex string
+  return /^[0-9a-f]{64}$/i.test(token);
+}

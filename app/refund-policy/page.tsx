@@ -380,10 +380,7 @@ export default function RefundPolicyPage() {
         <AnimatedSection className="py-16 md:py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto flex justify-center">
-              <a
-                href="tel:02-547-2039"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-[#952839] hover:bg-[#7a2030] text-white rounded-full text-lg font-semibold transition-colors shadow-lg hover:shadow-xl"
-              >
+              <div className="inline-flex items-center gap-3 px-8 py-4 bg-[#952839] text-white rounded-full text-lg font-semibold shadow-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -399,7 +396,7 @@ export default function RefundPolicyPage() {
                   />
                 </svg>
                 고객센터 02-547-2039
-              </a>
+              </div>
             </div>
           </div>
         </AnimatedSection>

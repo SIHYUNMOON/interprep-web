@@ -95,9 +95,7 @@ export function BoardClient() {
 
   const sortOptions = [
     { value: 'latest', label: '최신순' },
-    { value: 'recommended', label: '추천순' },
     { value: 'mostViewed', label: '조회수 많은순' },
-    { value: 'updated', label: '업데이트순' },
   ] as const
 
   return (

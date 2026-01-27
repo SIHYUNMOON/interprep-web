@@ -25,6 +25,7 @@ interface Post {
   created_at: string
   views: number
   content_html: string
+  category: string
 }
 
 export function PostViewClient({ postId }: { postId: string }) {
@@ -166,6 +167,15 @@ export function PostViewClient({ postId }: { postId: string }) {
             <div className="text-sm text-muted-foreground mb-8">
               시험 정보
             </div>
+
+            {/* Category Badge */}
+            {post.category && (
+              <div className="mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                  {post.category}
+                </span>
+              </div>
+            )}
 
             {/* Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">

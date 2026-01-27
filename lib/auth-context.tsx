@@ -19,9 +19,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const [authToken, setAuthToken] = useState<string | null>(null)
 
-  // Check auth status on mount
+  // Check auth status on mount and when returning from another page
   useEffect(() => {
-    checkAuthStatus()
+    // First check localStorage for persisted login state
+    const stored = localStorage.getItem('admin_token')
+    if (stored) {
+      setAuthToken(stored)
+      setIsAdminLoggedIn(true)
+      setIsLoading(false)
+    } else {
+      checkAuthStatus()
+    }
   }, [])
 
   const checkAuthStatus = async () => {
@@ -29,13 +37,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await fetch('/api/auth/me', { credentials: 'include' })
       if (response.ok) {
         const data = await response.json()
-        setIsAdminLoggedIn(data.isAdmin === true)
+        const isAdmin = data.isAdmin === true
+        setIsAdminLoggedIn(isAdmin)
+        
+        // If admin is authenticated but token not in localStorage, sync it
+        if (isAdmin && !localStorage.getItem('admin_token')) {
+          console.log('[v0] Auth status synced with server')
+        }
       } else {
         setIsAdminLoggedIn(false)
+        localStorage.removeItem('admin_token')
       }
     } catch (error) {
       console.error('[v0] Auth check error:', error)
-      setIsAdminLoggedIn(false)
+      // Don't clear login state on network errors - maintain localStorage state
+      const stored = localStorage.getItem('admin_token')
+      if (!stored) {
+        setIsAdminLoggedIn(false)
+      }
     } finally {
       setIsLoading(false)
     }
@@ -91,15 +110,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     return null
   }
-
-  // Load token from localStorage on mount
-  useEffect(() => {
-    const stored = localStorage.getItem('admin_token')
-    if (stored) {
-      setAuthToken(stored)
-      setIsAdminLoggedIn(true)
-    }
-  }, [])
 
   return (
     <AuthContext.Provider value={{ isAdminLoggedIn, setIsAdminLoggedIn, login, logout, checkAuthStatus, isLoading, getAuthToken }}>

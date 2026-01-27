@@ -39,14 +39,14 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                 <Button size="lg" className="hover:brightness-110 transition-[filter]" asChild>
-                  <Link href="/board">정보 게시판 보기</Link>
+                  <Link href="/contact">상담 문의하기</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="bg-white text-[#1a1a1a] border-gray-200 hover:bg-[#f8f8f8] transition-colors" asChild>
-                  <Link href="#programs">프로그램 안내 보기</Link>
+                  <Link href="/sat">프로그램 안내</Link>
                 </Button>
               </div>
               <p className="text-sm text-[rgba(245,245,245,0.7)]">
-                2007년 설립 · 누적 수강생 9,215명
+                2013년 설립 · 누적 수강생 9,215명
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
                 왜 인터프렙인가요?
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-12 text-pretty">
-                인터프렙은 2007년 설립된 국내 대표 SAT 전문 학원입니다.
+                인터프렙은 2013년 설립된 국내 대표 SAT 전문 학원입니다.
                 체계적인 교육 프로그램, 지속적인 성적 관리, 그리고 자체 제작한
                 학습 자료를 통해 측정 가능한 점수 향상을 제공합니다.
                 우리는 규칙적인 학습 습관과 데이터 기반 피드백을 중심으로
@@ -216,7 +216,7 @@ export default function Home() {
                     About Interprep
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed mb-6 text-pretty">
-                    2007년 설립 이래, 인터프렙은 한 가지 목표에 집중해 왔습니다.
+                    2013년 설립 이래, 인터프렙은 한 가지 목표에 집중해 왔습니다.
                     바로 SAT 점수 향상입니다. 우리는 탄탄한 기본기, 꾸준함,
                     그리고 피드백 중심의 코칭이 신뢰할 수 있는 결과를 만든다고 믿습니다.
                   </p>

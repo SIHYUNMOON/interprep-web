@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
-import { WriteModal } from '@/components/board/write-modal'
-import { PostDetailModal } from '@/components/board/post-detail-modal'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
@@ -18,6 +17,7 @@ interface Post {
   views: number
   likes: number
   content_html: string
+  category: string
 }
 
 interface PaginatedResponse {
@@ -37,25 +37,80 @@ const YOUTUBE_VIDEOS = [
 ]
 
 export function BoardClient() {
-  const { isAdminLoggedIn, getAuthToken } = useAuth()
+  const router = useRouter()
+  const { isAdminLoggedIn } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
-  const [showWriteModal, setShowWriteModal] = useState(false)
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'mostViewed' | 'updated'>('latest')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
-  const [isPublishing, setIsPublishing] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    loadCategories()
+  }, [])
 
   useEffect(() => {
     loadPosts()
-  }, [sortBy, currentPage])
+  }, [sortBy, currentPage, selectedCategory])
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch('/api/categories')
+      const data = await response.json()
+      
+      // Define default categories in order
+      const defaultCategories = [
+        '인터프렙 소개',
+        '인터프렙 이야기',
+        'US College',
+        '국내수시',
+        'MBA',
+        '인터프렙 프로그램',
+        '유용한 정보',
+        '잉글스토리',
+      ]
+      
+      // Merge default categories with categories from database
+      // Remove duplicates and keep the order: defaults first, then additional ones
+      const dbCategories = data.categories || []
+      const additionalCategories = dbCategories.filter(
+        (cat: string) => !defaultCategories.includes(cat)
+      )
+      
+      setCategories([...defaultCategories, ...additionalCategories])
+    } catch (error) {
+      console.error('[v0] Failed to load categories:', error)
+      // Fallback to default categories if API fails
+      setCategories([
+        '인터프렙 소개',
+        '인터프렙 이야기',
+        'US College',
+        '국내수시',
+        'MBA',
+        '인터프렙 프로그램',
+        '유용한 정보',
+        '잉글스토리',
+      ])
+    }
+  }
 
   const loadPosts = async () => {
     setIsLoadingPosts(true)
     try {
-      const response = await fetch(`/api/posts?sort=${sortBy}&page=${currentPage}&pageSize=10`)
+      const params = new URLSearchParams({
+        sort: sortBy,
+        page: currentPage.toString(),
+        pageSize: '10',
+      })
+      
+      if (selectedCategory !== 'all') {
+        params.append('category', selectedCategory)
+      }
+      
+      const response = await fetch(`/api/posts?${params}`)
       const data: PaginatedResponse = await response.json()
       setPosts(data.items)
       setTotalPages(data.totalPages)
@@ -68,55 +123,15 @@ export function BoardClient() {
     }
   }
 
-  const handlePublish = async (title: string, contentHtml: string) => {
-    setIsPublishing(true)
-    try {
-      const token = getAuthToken();
-      const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ title, contentHtml }),
-        credentials: 'include',
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to publish post')
-      }
 
-      setShowWriteModal(false)
-      setCurrentPage(1)
-      setTotalCount(totalCount + 1)
-      await loadPosts()
-    } catch (error) {
-      console.error('[v0] Publish error:', error)
-      throw error
-    } finally {
-      setIsPublishing(false)
-    }
-  }
-
-  const handlePostClick = async (post: Post) => {
-    try {
-      const response = await fetch(`/api/posts/${post.id}`)
-      const fullPost = await response.json()
-      setSelectedPost(fullPost)
-    } catch (error) {
-      console.error('[v0] Failed to load post:', error)
-    }
+  const handlePostClick = (post: Post) => {
+    router.push(`/board/${post.id}`)
   }
 
   const sortOptions = [
     { value: 'latest', label: '최신순' },
-    { value: 'recommended', label: '추천순' },
     { value: 'mostViewed', label: '조회수 많은순' },
-    { value: 'updated', label: '업데이트순' },
   ] as const
 
   return (
@@ -177,6 +192,39 @@ export function BoardClient() {
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                <button
+                  onClick={() => {
+                    setSelectedCategory('all')
+                    setCurrentPage(1)
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategory === 'all'
+                      ? 'bg-red-700 text-white'
+                      : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                  }`}
+                >
+                  전체
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      setSelectedCategory(category)
+                      setCurrentPage(1)
+                    }}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      selectedCategory === category
+                        ? 'bg-red-700 text-white'
+                        : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+
               <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
                 <div className="text-sm text-foreground font-medium">
                   전체 {totalCount}
@@ -228,7 +276,14 @@ export function BoardClient() {
                             onClick={() => handlePostClick(post)}
                           >
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.id.slice(0, 8)}</td>
-                            <td className="border border-gray-200 px-6 py-3 text-sm text-foreground truncate">{post.title}</td>
+                            <td className="border border-gray-200 px-6 py-3 text-sm text-foreground">
+                              <div className="flex items-center gap-2">
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 whitespace-nowrap">
+                                  {post.category || '인터프렙 소개'}
+                                </span>
+                                <span className="truncate">{post.title}</span>
+                              </div>
+                            </td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.author}</td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">
                               {new Date(post.created_at).toLocaleDateString('ko-KR', {
@@ -256,22 +311,32 @@ export function BoardClient() {
                     <ChevronLeft size={20} />
                   </button>
 
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const start = Math.max(1, currentPage - 2)
-                    return start + i
-                  }).map((page) => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1 rounded text-sm transition-colors ${
-                        currentPage === page
-                          ? 'bg-red-700 text-white'
-                          : 'bg-gray-100 text-foreground hover:bg-gray-200'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      if (page === 1 || page === totalPages) return true
+                      if (Math.abs(page - currentPage) <= 2) return true
+                      return false
+                    })
+                    .map((page, idx, arr) => {
+                      // Add ellipsis if there's a gap
+                      const showEllipsis = idx > 0 && page - arr[idx - 1] > 1
+                      return (
+                        <React.Fragment key={page}>
+                          {showEllipsis && <span className="px-2 text-gray-400">...</span>}
+                          <button
+                            onClick={() => setCurrentPage(page)}
+                            className={`px-3 py-1 rounded text-sm transition-colors ${
+                              currentPage === page
+                                ? 'bg-red-700 text-white'
+                                : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        </React.Fragment>
+                      )
+                    })}
 
                   <button
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
@@ -286,7 +351,7 @@ export function BoardClient() {
               {isAdminLoggedIn && (
                 <div className="flex justify-end mt-8">
                   <Button
-                    onClick={() => setShowWriteModal(true)}
+                    onClick={() => router.push('/board/write')}
                     className="bg-red-700 hover:bg-red-800 gap-2"
                   >
                     <Plus size={18} />
@@ -298,19 +363,6 @@ export function BoardClient() {
           </div>
         </AnimatedSection>
       </main>
-
-      <WriteModal
-        isOpen={showWriteModal}
-        onClose={() => setShowWriteModal(false)}
-        onPublish={handlePublish}
-        isLoading={isPublishing}
-      />
-
-      <PostDetailModal
-        isOpen={!!selectedPost}
-        onClose={() => setSelectedPost(null)}
-        post={selectedPost}
-      />
 
       <Footer />
     </div>

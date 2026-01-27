@@ -59,12 +59,12 @@ The `/board` page has been upgraded to a production-ready system with Neon Postg
 ## Environment Setup
 
 ### Required Environment Variables
-```env
+\`\`\`env
 DATABASE_URL=postgresql://...  # From Neon integration
 ADMIN_USERNAME=adminInPrep2013 # Optional (uses default if not set)
 ADMIN_PASSWORD=InterP!Web26#Ops@ # Optional (uses default if not set)
 SESSION_SECRET=your-secret-key  # Optional (generates default if not set)
-```
+\`\`\`
 
 ### Integration Setup
 1. **Neon**: Connect your Neon database via Vercel integration panel
@@ -73,7 +73,7 @@ SESSION_SECRET=your-secret-key  # Optional (generates default if not set)
 
 ## File Structure
 
-```
+\`\`\`
 /app/api/
   /auth/
     login/route.ts         # POST login handler
@@ -100,7 +100,7 @@ SESSION_SECRET=your-secret-key  # Optional (generates default if not set)
 /lib/
   db.ts                    # Neon database utilities
   auth.ts                  # Session management
-```
+\`\`\`
 
 ## Features
 
@@ -130,7 +130,7 @@ SESSION_SECRET=your-secret-key  # Optional (generates default if not set)
 
 ## Database Schema
 
-```sql
+\`\`\`sql
 CREATE TABLE posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
@@ -144,14 +144,14 @@ CREATE TABLE posts (
 
 CREATE INDEX idx_posts_created_at ON posts(created_at DESC);
 CREATE INDEX idx_posts_views ON posts(views DESC);
-```
+\`\`\`
 
 ## How to Use
 
 ### Starting the App
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 The database tables will be automatically created on the first API request.
 

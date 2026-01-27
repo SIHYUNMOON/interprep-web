@@ -31,7 +31,7 @@ export function getCookieOptions() {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax' as const,
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 7 * 24 * 60 * 60, // 7 days - extended session duration
     path: '/',
   };
 }
@@ -89,4 +89,14 @@ export function isAdminAuthenticatedFromRequest(request: Request): boolean {
   const session = getSessionFromRequest(request);
   console.log('[v0] isAdminAuthenticatedFromRequest - Session:', session ? 'exists' : 'missing');
   return !!session;
+}
+
+export function verifyAdminToken(token: string): boolean {
+  // Verify the token is a valid session token
+  // In this implementation, we check if it's a valid hex string of the right length
+  if (!token || token.length !== 64) {
+    return false;
+  }
+  // Check if it's a valid hex string
+  return /^[0-9a-f]{64}$/i.test(token);
 }

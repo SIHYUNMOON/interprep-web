@@ -4,7 +4,7 @@ import { neon } from '@neondatabase/serverless';
 let initialized = false;
 let db: ReturnType<typeof neon> | null = null;
 
-function getDb() {
+export function getDb() {
   if (!db) {
     const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) {
@@ -64,12 +64,14 @@ export interface Post {
   updated_at: string;
   views: number;
   likes: number;
+  category: string;
 }
 
 export async function getPosts(
   sort: 'latest' | 'recommended' | 'mostViewed' | 'updated' = 'latest',
   page: number = 1,
-  pageSize: number = 10
+  pageSize: number = 10,
+  category?: string
 ) {
   try {
     await initializeDatabase();
@@ -85,35 +87,76 @@ export async function getPosts(
     const offset = (page - 1) * pageSize;
 
     let result;
-    if (orderBy === 'created_at DESC') {
-      result = await sql`
-        SELECT * FROM posts
-        ORDER BY created_at DESC
-        LIMIT ${pageSize} OFFSET ${offset}
-      `;
-    } else if (orderBy === 'views DESC') {
-      result = await sql`
-        SELECT * FROM posts
-        ORDER BY views DESC
-        LIMIT ${pageSize} OFFSET ${offset}
-      `;
-    } else if (orderBy === 'updated_at DESC') {
-      result = await sql`
-        SELECT * FROM posts
-        ORDER BY updated_at DESC
-        LIMIT ${pageSize} OFFSET ${offset}
+    let countResult;
+    
+    if (category) {
+      // Filter by category
+      if (orderBy === 'created_at DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          WHERE category = ${category}
+          ORDER BY created_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else if (orderBy === 'views DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          WHERE category = ${category}
+          ORDER BY views DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else if (orderBy === 'updated_at DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          WHERE category = ${category}
+          ORDER BY updated_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else {
+        result = await sql`
+          SELECT * FROM posts
+          WHERE category = ${category}
+          ORDER BY created_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      }
+      
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM posts
+        WHERE category = ${category}
       `;
     } else {
-      result = await sql`
-        SELECT * FROM posts
-        ORDER BY created_at DESC
-        LIMIT ${pageSize} OFFSET ${offset}
+      // No category filter
+      if (orderBy === 'created_at DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          ORDER BY created_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else if (orderBy === 'views DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          ORDER BY views DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else if (orderBy === 'updated_at DESC') {
+        result = await sql`
+          SELECT * FROM posts
+          ORDER BY updated_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      } else {
+        result = await sql`
+          SELECT * FROM posts
+          ORDER BY created_at DESC
+          LIMIT ${pageSize} OFFSET ${offset}
+        `;
+      }
+      
+      countResult = await sql`
+        SELECT COUNT(*) as count FROM posts
       `;
     }
-
-    const countResult = await sql`
-      SELECT COUNT(*) as count FROM posts
-    `;
 
     const totalCount = parseInt((countResult[0] as any).count);
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -157,21 +200,105 @@ export async function getPostById(id: string) {
   }
 }
 
-export async function createPost(title: string, contentHtml: string) {
+export async function createPost(title: string, contentHtml: string, customDate?: string, category?: string) {
   try {
     await initializeDatabase();
     const sql = getDb();
 
-    const result = await sql`
-      INSERT INTO posts (title, content_html, author)
-      VALUES (${title}, ${contentHtml}, 'Interprep')
-      RETURNING *
-    `;
+    const finalCategory = category || '인터프렙 소개';
+    
+    let result;
+    if (customDate) {
+      result = await sql`
+        INSERT INTO posts (title, content_html, author, created_at, category)
+        VALUES (${title}, ${contentHtml}, 'interprep official', ${customDate}, ${finalCategory})
+        RETURNING *
+      `;
+    } else {
+      result = await sql`
+        INSERT INTO posts (title, content_html, author, category)
+        VALUES (${title}, ${contentHtml}, 'interprep official', ${finalCategory})
+        RETURNING *
+      `;
+    }
 
     return result[0] as Post;
   } catch (error) {
     console.error('[v0] Create post error:', error);
     throw error;
+  }
+}
+
+export async function updatePost(id: string, title: string, contentHtml: string, customDate?: string, category?: string) {
+  try {
+    await initializeDatabase();
+    const sql = getDb();
+
+    let result;
+    if (customDate && category) {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now(),
+            created_at = ${customDate},
+            category = ${category}
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else if (customDate) {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now(),
+            created_at = ${customDate}
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else if (category) {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now(),
+            category = ${category}
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    } else {
+      result = await sql`
+        UPDATE posts
+        SET title = ${title}, 
+            content_html = ${contentHtml}, 
+            updated_at = now()
+        WHERE id = ${id}
+        RETURNING *
+      `;
+    }
+
+    return result[0] as Post | undefined;
+  } catch (error) {
+    console.error('[v0] Update post error:', error);
+    throw error;
+  }
+}
+
+export async function deletePost(id: string) {
+  try {
+    await initializeDatabase();
+    const sql = getDb();
+
+    const result = await sql`
+      DELETE FROM posts
+      WHERE id = ${id}
+      RETURNING id
+    `;
+
+    return result.length > 0;
+  } catch (error) {
+    console.error('[v0] Delete post error:', error);
+    return false;
   }
 }
 

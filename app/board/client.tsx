@@ -17,6 +17,7 @@ interface Post {
   views: number
   likes: number
   content_html: string
+  category: string
 }
 
 interface PaginatedResponse {
@@ -44,15 +45,36 @@ export function BoardClient() {
   const [totalPages, setTotalPages] = useState(1)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [categories, setCategories] = useState<string[]>([
+    '인터프렙 소개',
+    '인터프렙 이야기',
+    'US College',
+    '국내수시',
+    'MBA',
+    '인터프렙 프로그램',
+    '유용한 정보',
+    '잉글스토리',
+  ])
 
   useEffect(() => {
     loadPosts()
-  }, [sortBy, currentPage])
+  }, [sortBy, currentPage, selectedCategory])
 
   const loadPosts = async () => {
     setIsLoadingPosts(true)
     try {
-      const response = await fetch(`/api/posts?sort=${sortBy}&page=${currentPage}&pageSize=10`)
+      const params = new URLSearchParams({
+        sort: sortBy,
+        page: currentPage.toString(),
+        pageSize: '10',
+      })
+      
+      if (selectedCategory !== 'all') {
+        params.append('category', selectedCategory)
+      }
+      
+      const response = await fetch(`/api/posts?${params}`)
       const data: PaginatedResponse = await response.json()
       setPosts(data.items)
       setTotalPages(data.totalPages)
@@ -136,6 +158,39 @@ export function BoardClient() {
         <AnimatedSection className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                <button
+                  onClick={() => {
+                    setSelectedCategory('all')
+                    setCurrentPage(1)
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategory === 'all'
+                      ? 'bg-red-700 text-white'
+                      : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                  }`}
+                >
+                  전체
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      setSelectedCategory(category)
+                      setCurrentPage(1)
+                    }}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      selectedCategory === category
+                        ? 'bg-red-700 text-white'
+                        : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+
               <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
                 <div className="text-sm text-foreground font-medium">
                   전체 {totalCount}
@@ -187,7 +242,14 @@ export function BoardClient() {
                             onClick={() => handlePostClick(post)}
                           >
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.id.slice(0, 8)}</td>
-                            <td className="border border-gray-200 px-6 py-3 text-sm text-foreground truncate">{post.title}</td>
+                            <td className="border border-gray-200 px-6 py-3 text-sm text-foreground">
+                              <div className="flex items-center gap-2">
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 whitespace-nowrap">
+                                  {post.category || '인터프렙 소개'}
+                                </span>
+                                <span className="truncate">{post.title}</span>
+                              </div>
+                            </td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.author}</td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">
                               {new Date(post.created_at).toLocaleDateString('ko-KR', {
@@ -215,22 +277,32 @@ export function BoardClient() {
                     <ChevronLeft size={20} />
                   </button>
 
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const start = Math.max(1, currentPage - 2)
-                    return start + i
-                  }).map((page) => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1 rounded text-sm transition-colors ${
-                        currentPage === page
-                          ? 'bg-red-700 text-white'
-                          : 'bg-gray-100 text-foreground hover:bg-gray-200'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      if (page === 1 || page === totalPages) return true
+                      if (Math.abs(page - currentPage) <= 2) return true
+                      return false
+                    })
+                    .map((page, idx, arr) => {
+                      // Add ellipsis if there's a gap
+                      const showEllipsis = idx > 0 && page - arr[idx - 1] > 1
+                      return (
+                        <React.Fragment key={page}>
+                          {showEllipsis && <span className="px-2 text-gray-400">...</span>}
+                          <button
+                            onClick={() => setCurrentPage(page)}
+                            className={`px-3 py-1 rounded text-sm transition-colors ${
+                              currentPage === page
+                                ? 'bg-red-700 text-white'
+                                : 'bg-gray-100 text-foreground hover:bg-gray-200'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        </React.Fragment>
+                      )
+                    })}
 
                   <button
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}

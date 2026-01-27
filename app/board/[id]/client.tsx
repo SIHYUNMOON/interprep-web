@@ -163,11 +163,6 @@ export function PostViewClient({ postId }: { postId: string }) {
       <main className="pt-16">
         <article className="container mx-auto px-4 py-12 md:py-20">
           <div className="max-w-4xl mx-auto">
-            {/* Breadcrumb */}
-            <div className="text-sm text-muted-foreground mb-8">
-              시험 정보
-            </div>
-
             {/* Category Badge */}
             {post.category && (
               <div className="mb-4">

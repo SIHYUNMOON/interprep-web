@@ -20,7 +20,7 @@ export default function AdmissionResultsPage() {
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/pexels-pixabay-267885.jpg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-pixabay-267885-UEmkU4mNQfzVbjs7cIyfRFNGqrKT6K.jpg"
               alt="Admission Results"
               fill
               className="object-cover"
@@ -163,6 +163,30 @@ export default function AdmissionResultsPage() {
                     ].map((school, idx) => (
                       <div key={idx} className="flex items-center gap-2">
                         <span className="text-[#7a2030]">•</span>
+                        <span>{school}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Art School Results */}
+              <div className="mt-8">
+                <div className="bg-gray-100 p-6 rounded-lg">
+                  <h4 className="font-bold text-foreground mb-4">Art School Admission Results</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-muted-foreground">
+                    {[
+                      'Rhode Island School of Design (RISD)',
+                      'Parsons School of Design',
+                      'Pratt Institute',
+                      'School of Visual Arts (SVA)',
+                      'California Institute of the Arts (CalArts)',
+                      'Art Center College of Design',
+                      'Savannah College of Art and Design (SCAD)',
+                      'Fashion Institute of Technology (FIT)',
+                    ].map((school, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="text-[#952839]">•</span>
                         <span>{school}</span>
                       </div>
                     ))}

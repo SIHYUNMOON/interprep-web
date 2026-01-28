@@ -212,8 +212,7 @@ export default function PhilosophyPage() {
               인터프렙이 추구하는 교육
             </h2>
             <div className="space-y-4 text-center text-lg md:text-xl leading-relaxed text-muted-foreground">
-              <p>인터프렙은</p>
-              <p>비싸 보이는 학원이 되기보다,</p>
+              <p>인터프렙은 비싸 보이는 학원이 되기보다,</p>
               <p>오래 믿을 수 있는 학원이 되고자 합니다.</p>
               <p className="mt-8">합리적인 수강료,</p>
               <p>검증된 규모,</p>

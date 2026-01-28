@@ -77,10 +77,8 @@ export default function PhilosophyPage() {
                       많은 학생이 오래 선택해 왔다는 사실 자체가 검증입니다.
                     </p>
                     <div className="space-y-3 text-muted-foreground leading-relaxed">
-                      <p>인터프렙은 13년간 누적 수강생 수 기준</p>
-                      <p>업계 최대 규모를 유지해 왔습니다.</p>
-                      <p className="mt-4">이는 단기적인 홍보가 아니라</p>
-                      <p>재등록, 지인 추천, 성적 데이터의 반복적인 축적으로 만들어진 결과입니다.</p>
+                      <p>인터프렙은 13년간 누적 수강생 수 기준, 업계 최대 규모를 유지해 왔습니다.</p>
+                      <p className="mt-4">이는 단기적인 홍보가 아니라 재등록, 지인 추천, 성적 데이터의 축적으로 만들어진 결과입니다.</p>
                       <p className="mt-4">많다는 것은 우연이 아니라,</p>
                       <p>실패 확률이 낮다는 가장 현실적인 증거입니다.</p>
                     </div>

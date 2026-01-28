@@ -16,21 +16,8 @@ export default function PhilosophyPage() {
       <Header />
       <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <AnimatedSection className="relative text-white py-24 md:py-32 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-calil-encarnacion-30667006-34923522-RIykeH7ok2d9hRx7kXiRd7AQ3H5uPK.jpg"
-            alt="Educational Philosophy Background"
-            fill
-            className="object-cover blur-[2px]"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-
-        {/* Content */}
-        <div className="container mx-auto px-4 relative z-10">
+      <AnimatedSection className="bg-gradient-to-b from-[#952839] to-[#7a2030] text-white py-24 md:py-32">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               인터프렙의 교육 이념
@@ -41,8 +28,8 @@ export default function PhilosophyPage() {
               <p className="mt-6">13년 동안 수많은 학생을 지도하며 쌓아온 경험은 하나의 결론으로 이어졌습니다.</p>
               <p>SAT는 요령이나 운이 아니라,</p>
               <p>합리적인 구조와 검증된 데이터, 사람 중심의 관계 위에서 가장 안정적으로 결과가 만들어진다는 사실입니다.</p>
-              <p className="mt-6">이 기준은 지금도, 그리고 앞으로도</p>
-              <p>인터프렙 교육의 중심에 놓여 있습니다.</p>
+              <p className="mt-12 font-bold text-white">이 기준은 지금도, 그리고 앞으로도</p>
+              <p className="font-bold text-white">인터프렙 교육의 중심에 놓여 있습니다.</p>
             </div>
           </div>
         </div>

@@ -218,8 +218,21 @@ export default function PhilosophyPage() {
       </AnimatedSection>
 
       {/* Section 4: Closing */}
-      <AnimatedSection className="py-24 md:py-32 bg-[#FFF5F5]">
-        <div className="container mx-auto px-4">
+      <AnimatedSection className="relative py-24 md:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-pixabay-51159-M69MauHqcg8jw1lbIJ6rEZNKpAPlSw.jpg"
+            alt="Educational Philosophy Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-white/85" />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#952839]">
               인터프렙이 추구하는 교육

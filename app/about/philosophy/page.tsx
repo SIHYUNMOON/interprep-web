@@ -194,7 +194,7 @@ export default function PhilosophyPage() {
                 </div>
                 <div className="space-y-3 text-muted-foreground leading-relaxed">
                   <p>인터프렙의 공식 색상은 차분하면서도 신뢰감을 주는 레드 컬러입니다.</p>
-                  <p className="mt-4">이 색상은 로고, 주요 버튼, 핵심 정보에만 제한적으로 사용되어</p>
+                  <p className="mt-4">이 색상은 로고, 주요 UI, 핵심 정보에만 제한적으로 사용되어</p>
                   <p>사용자의 집중을 돕고 화면의 복잡함을 줄이는 역할을 합니다.</p>
                   <p className="mt-4">눈에 띄기 위한 색이 아니라 신뢰를 유지하기 위한 색입니다.</p>
                 </div>

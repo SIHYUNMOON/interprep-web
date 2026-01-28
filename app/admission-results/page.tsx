@@ -66,7 +66,7 @@ export default function AdmissionResultsPage() {
                     rel="noopener noreferrer"
                     className="block text-white text-sm leading-relaxed hover:underline transition-all"
                   >
-                    UPenn 합격생의 스펙과 활동내역은 어떨까? - 인터프렙 인터뷰
+                    UPenn 합격생의 스펙과 활동내역은 어떨까?
                   </a>
                   <a
                     href="https://www.youtube.com/watch?v=dOY6UJuYQiw"
@@ -74,7 +74,7 @@ export default function AdmissionResultsPage() {
                     rel="noopener noreferrer"
                     className="block text-white text-sm leading-relaxed hover:underline transition-all"
                   >
-                    SAT 1520점 달성! 전효재 인터프렙 수강생 인터뷰 #1
+                    SAT 1520점 달성! 전효재 수강생 인터뷰
                   </a>
                   <a
                     href="https://www.youtube.com/watch?v=s071XV3tEXA"
@@ -82,7 +82,7 @@ export default function AdmissionResultsPage() {
                     rel="noopener noreferrer"
                     className="block text-white text-sm leading-relaxed hover:underline transition-all"
                   >
-                    ACT Composite 36점 만점 달성! 민규철 인터프렙 수강생 인터뷰 #1
+                    ACT Composite 36점 만점 달성! 민규철 수강생 인터뷰
                   </a>
                   <a
                     href="https://www.youtube.com/watch?v=TIaOXlfoZMc"
@@ -90,7 +90,7 @@ export default function AdmissionResultsPage() {
                     rel="noopener noreferrer"
                     className="block text-white text-sm leading-relaxed hover:underline transition-all"
                   >
-                    온라인 클래스 수강만으로 1440점 달성! 김00 수강생 Zoom 인터뷰 #1
+                    온라인 클래스 수강만으로 1440점 달성! 김00 수강생 인터뷰
                   </a>
                   <a
                     href="https://www.youtube.com/watch?v=EzrPa5bPtP0"
@@ -98,7 +98,7 @@ export default function AdmissionResultsPage() {
                     rel="noopener noreferrer"
                     className="block text-white text-sm leading-relaxed hover:underline transition-all"
                   >
-                    스탠포드 합격 스펙 대공개!? 인터프렙 인터뷰 - ACT/SAT학원 인터프렙
+                    스탠포드 합격 스펙 대공개!? 인터프렙 인터뷰
                   </a>
                 </div>
                 <p className="text-xs text-gray-400 mt-6">

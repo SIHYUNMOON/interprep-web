@@ -130,7 +130,7 @@ export function Header() {
                 alt="Interprep 인터프렙"
                 width={240}
                 height={80}
-                className="h-8 md:h-10 w-auto max-w-[160px] md:max-w-[240px]"
+                className="h-10 md:h-12 w-auto max-w-[180px] md:max-w-[260px]"
                 priority
               />
             </Link>

@@ -52,7 +52,7 @@ export function PostDetailModal({ isOpen, onClose, post }: PostDetailModalProps)
           </div>
 
           <div
-            className="prose prose-sm max-w-none mb-8 text-foreground"
+            className="prose prose-sm max-w-none mb-8 text-foreground prose-p:mb-4 whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: post.content_html }}
           />
         </article>

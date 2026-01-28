@@ -39,6 +39,75 @@ export default function AdmissionResultsPage() {
           </div>
         </section>
 
+        {/* YouTube Videos Section */}
+        <AnimatedSection className="py-16 md:py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-lg" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/ztBIY96bH44"
+                    title="SAT 1510점 학생의 공부 방법은? 강태윤 수강생 Zoom 인터뷰 #1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+
+              <div className="bg-black rounded-lg p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-6">
+                  Interprep TV - 수강생 인터뷰 리스트
+                </h3>
+                <div className="space-y-4">
+                  <a
+                    href="https://www.youtube.com/watch?v=FuAesNCpbd8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white text-sm leading-relaxed hover:underline transition-all"
+                  >
+                    UPenn 합격생의 스펙과 활동내역은 어떨까? - 인터프렙 인터뷰
+                  </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=dOY6UJuYQiw"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white text-sm leading-relaxed hover:underline transition-all"
+                  >
+                    SAT 1520점 달성! 전효재 인터프렙 수강생 인터뷰 #1
+                  </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=s071XV3tEXA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white text-sm leading-relaxed hover:underline transition-all"
+                  >
+                    ACT Composite 36점 만점 달성! 민규철 인터프렙 수강생 인터뷰 #1
+                  </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=TIaOXlfoZMc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white text-sm leading-relaxed hover:underline transition-all"
+                  >
+                    온라인 클래스 수강만으로 1440점 달성! 김00 수강생 Zoom 인터뷰 #1
+                  </a>
+                  <a
+                    href="https://www.youtube.com/watch?v=EzrPa5bPtP0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white text-sm leading-relaxed hover:underline transition-all"
+                  >
+                    스탠포드 합격 스펙 대공개!? 인터프렙 인터뷰 - ACT/SAT학원 인터프렙
+                  </a>
+                </div>
+                <p className="text-xs text-gray-400 mt-6">
+                  *클릭하면 유튜브로 연결됩니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
         
         {/* 2025 Results */}
         <AnimatedSection className="bg-white py-24 md:py-32">

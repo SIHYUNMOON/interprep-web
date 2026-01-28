@@ -571,39 +571,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-                <div className="bg-gray-50 p-8 rounded-b-lg">
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
-                    {[
-                      'Harvard University',
-                      'Yale University',
-                      'Princeton University',
-                      'Stanford University',
-                      'MIT',
-                      'Columbia University',
-                      'UPenn',
-                      'Cornell University',
-                      'Brown University',
-                      'Dartmouth College',
-                      'Duke University',
-                      'Northwestern University',
-                      'Johns Hopkins University',
-                      'UC Berkeley',
-                      'UCLA',
-                      'Carnegie Mellon',
-                      'Emory University',
-                      'Georgetown University',
-                      'NYU',
-                      'Boston University',
-                    ].map((school, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <span className="text-[#952839]">•</span>
-                        <span>{school}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
               {/* Art School Results */}
               <div className="mt-8 bg-gray-100 p-6 rounded-lg">
                 <h4 className="font-bold text-foreground mb-4">Art School Admission Results</h4>

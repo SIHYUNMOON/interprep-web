@@ -282,7 +282,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild>
-                  <Link href="#contact">SAT 상담 신청</Link>
+                  <a href="https://pf.kakao.com/_hxnxexfC" target="_blank" rel="noopener noreferrer">SAT 상담 신청</a>
                 </Button>
                 <Button
                   size="lg"
@@ -290,7 +290,7 @@ export default function Home() {
                   className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
                   asChild
                 >
-                  <Link href="#contact">상담 및 문의로 이동</Link>
+                  <Link href="/contact">상담 및 문의로 이동</Link>
                 </Button>
               </div>
             </div>

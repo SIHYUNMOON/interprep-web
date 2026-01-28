@@ -441,7 +441,7 @@ export default function AboutPage() {
                         'Dartmouth College (1명)',
                         'Duke University (2명)',
                         'Northwestern University (2명)',
-                        'Johns Hopkins Universit (3명)',
+                        'Johns Hopkins University (3명)',
                         'University of Chicago (1명)',
                         'Vanderbilt University (1명)',
                         'Rice University (1명)',

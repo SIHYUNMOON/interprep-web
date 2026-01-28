@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
 
 export default function PhilosophyPage() {
@@ -10,7 +12,9 @@ export default function PhilosophyPage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <Header />
+      <main className="min-h-screen bg-background">
       {/* Hero Section */}
       <AnimatedSection className="relative bg-gradient-to-b from-[#952839] to-[#7a2030] text-white py-24 md:py-32">
         <div className="container mx-auto px-4">
@@ -235,5 +239,7 @@ export default function PhilosophyPage() {
         </div>
       </AnimatedSection>
     </main>
+    <Footer />
+    </>
   )
 }

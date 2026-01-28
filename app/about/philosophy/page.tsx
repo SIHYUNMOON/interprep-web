@@ -23,9 +23,10 @@ export default function PhilosophyPage() {
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-calil-encarnacion-30667006-34923522-RIykeH7ok2d9hRx7kXiRd7AQ3H5uPK.jpg"
             alt="Educational Philosophy Background"
             fill
-            className="object-cover grayscale brightness-50"
+            className="object-cover blur-sm"
             priority
           />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
         {/* Content */}
@@ -224,12 +225,9 @@ export default function PhilosophyPage() {
               인터프렙이 추구하는 교육
             </h2>
             
-            {/* Decorative Divider - Rotated curly brace */}
+            {/* Decorative Divider */}
             <div className="flex justify-center mb-12">
-              <div className="relative w-32 h-1 bg-foreground rounded-full">
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-foreground rounded-full -translate-x-1" />
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-foreground rounded-full translate-x-1" />
-              </div>
+              <div className="w-64 h-0.5 bg-[#952839]"></div>
             </div>
 
             <div className="space-y-4 text-center text-lg md:text-xl leading-relaxed text-muted-foreground">

@@ -332,14 +332,19 @@ export default function AdmissionResultsPage() {
                   <h4 className="font-bold text-foreground mb-4">Art School Admission Results</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-muted-foreground">
                     {[
+                      'Cornell University',
                       'Rhode Island School of Design (RISD)',
-                      'Parsons School of Design',
-                      'Pratt Institute',
                       'School of Visual Arts (SVA)',
-                      'California Institute of the Arts (CalArts)',
-                      'Art Center College of Design',
-                      'Savannah College of Art and Design (SCAD)',
-                      'Fashion Institute of Technology (FIT)',
+                      'Parsons School of Design',
+                      'UC Berkeley',
+                      'UC San Diego',
+                      'UC Davis',
+                      'University of Michigan, Ann Arbor',
+                      'UCLA',
+                      'University College London (UK)',
+                      "King’s College London (UK)",
+                      'University of Manchester (UK)',
+                      'University of Toronto (Canada)',
                     ].map((school, idx) => (
                       <div key={idx} className="flex items-center gap-2">
                         <span className="text-[#952839]">•</span>

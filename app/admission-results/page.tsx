@@ -63,12 +63,12 @@ export default function AdmissionResultsPage() {
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">11명</div>
                       <div className="text-sm text-muted-foreground">Top 20 School 합격자</div>
-                      <div className="text-xs text-muted-foreground mt-1">아이비리그 외 Top 20</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 4명</div>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">9명</div>
                       <div className="text-sm text-muted-foreground">Top 30 School 합격자</div>
-                      <div className="text-xs text-muted-foreground mt-1">동복합격 8명</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
                     </div>
                   </div>
 

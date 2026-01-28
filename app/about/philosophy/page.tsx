@@ -23,10 +23,10 @@ export default function PhilosophyPage() {
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-calil-encarnacion-30667006-34923522-RIykeH7ok2d9hRx7kXiRd7AQ3H5uPK.jpg"
             alt="Educational Philosophy Background"
             fill
-            className="object-cover blur-sm"
+            className="object-cover blur-[2px]"
             priority
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
 
         {/* Content */}

@@ -147,7 +147,7 @@ export default function PhilosophyPage() {
               {/* Logo Section */}
               <div>
                 <h3 className="text-2xl font-bold mb-6 text-foreground">공식 로고</h3>
-                <div className="bg-white p-8 rounded-lg shadow-sm mb-6 flex items-center justify-center">
+                <div className="bg-white p-8 rounded-lg shadow-sm mb-6 flex items-center justify-center min-h-[272px]">
                   <div className="relative h-24 w-full max-w-[300px]">
                     <Image
                       src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-APqVrRCxPVj3hq3xeXkCE72Dm8Zl4h.png"
@@ -170,7 +170,7 @@ export default function PhilosophyPage() {
               {/* Color Section */}
               <div>
                 <h3 className="text-2xl font-bold mb-6 text-foreground">공식 색상</h3>
-                <div className="bg-white p-8 rounded-lg shadow-sm mb-6">
+                <div className="bg-white p-8 rounded-lg shadow-sm mb-6 min-h-[272px] flex items-center justify-center">
                   <div className="flex flex-col items-center gap-4">
                     <div 
                       className="w-32 h-32 rounded-lg shadow-md"

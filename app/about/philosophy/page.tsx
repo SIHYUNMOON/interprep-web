@@ -23,11 +23,9 @@ export default function PhilosophyPage() {
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-calil-encarnacion-30667006-34923522-RIykeH7ok2d9hRx7kXiRd7AQ3H5uPK.jpg"
             alt="Educational Philosophy Background"
             fill
-            className="object-cover grayscale"
+            className="object-cover grayscale brightness-50"
             priority
           />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#952839]/85 to-[#7a2030]/85" />
         </div>
 
         {/* Content */}
@@ -222,9 +220,18 @@ export default function PhilosophyPage() {
       <AnimatedSection className="py-24 md:py-32 bg-[#FFF5F5]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#952839]">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#952839]">
               인터프렙이 추구하는 교육
             </h2>
+            
+            {/* Decorative Divider - Rotated curly brace */}
+            <div className="flex justify-center mb-12">
+              <div className="relative w-32 h-1 bg-foreground rounded-full">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-foreground rounded-full -translate-x-1" />
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-foreground rounded-full translate-x-1" />
+              </div>
+            </div>
+
             <div className="space-y-4 text-center text-lg md:text-xl leading-relaxed text-muted-foreground">
               <p>인터프렙은 비싸 보이는 학원이 되기보다,</p>
               <p>오래 믿을 수 있는 학원이 되고자 합니다.</p>

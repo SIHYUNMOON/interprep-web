@@ -118,7 +118,7 @@ export function Header() {
             {/* Logo - INCREASED SIZE */}
             <Link 
               href="/" 
-              className="flex items-center"
+              className="flex items-center shrink-0"
               onClick={() => {
                 setTimeout(() => {
                   window.scrollTo({ top: 0, behavior: 'auto' })
@@ -130,7 +130,7 @@ export function Header() {
                 alt="Interprep 인터프렙"
                 width={240}
                 height={80}
-                className="h-10 md:h-12 w-auto"
+                className="h-8 md:h-10 w-auto max-w-[160px] md:max-w-[240px]"
                 priority
               />
             </Link>

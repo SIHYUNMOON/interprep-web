@@ -23,6 +23,7 @@ export default function PhilosophyPage() {
               인터프렙의 교육 이념
             </h1>
             <div className="space-y-4 text-lg md:text-xl leading-relaxed opacity-90">
+              <p> </p>
               <p>인터프렙은 SAT 점수를 단기간에 올리는 방법보다</p>
               <p>왜, 어떤 구조로 교육해야 안정적인 성과가 나오는가를 먼저 고민해 온 학원입니다.</p>
               <p className="mt-6">13년 동안 수많은 학생을 지도하며 쌓아온 경험은 하나의 결론으로 이어졌습니다.</p>

@@ -118,21 +118,22 @@ export function Header() {
             {/* Logo - INCREASED SIZE */}
             <Link 
               href="/" 
-              className="flex items-center shrink-0"
+              className="flex items-center shrink-0 relative h-10 md:h-12"
               onClick={() => {
                 setTimeout(() => {
                   window.scrollTo({ top: 0, behavior: 'auto' })
                 }, 50)
               }}
             >
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-obVEsGaey9zZ9vzpYvC9OtvABeDVGk.png"
-                alt="Interprep 인터프렙"
-                width={240}
-                height={80}
-                className="h-10 md:h-12 w-auto max-w-[180px] md:max-w-[260px]"
-                priority
-              />
+              <div className="relative h-full w-[180px] md:w-[220px]">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-obVEsGaey9zZ9vzpYvC9OtvABeDVGk.png"
+                  alt="Interprep 인터프렙"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
             </Link>
 
             {/* Desktop Navigation - INCREASED SIZE */}

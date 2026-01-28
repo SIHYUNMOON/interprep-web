@@ -234,7 +234,7 @@ export default function AdmissionResultsPage() {
 
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                      디아이프렙 아이비리그 프로그램 등록 학생 총 17명 기준
+                      디아이프렙 '아이비리그 프로그램' 등록 학생 총 17명 기준
                     </p>
                     <p className="text-sm text-muted-foreground">
                       아이비리그 플러스: 아이비리그 8개교 + MIT, Stanford, Caltech, Duke, Johns Hopkins, University of Chicago
@@ -248,30 +248,26 @@ export default function AdmissionResultsPage() {
                     <h4 className="font-bold text-foreground mb-4">Top 30 대학 합격 리스트</h4>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
                       {[
-                        'Harvard University',
-                        'Yale University',
-                        'Princeton University',
-                        'Stanford University',
-                        'MIT',
-                        'Columbia University',
-                        'UPenn',
-                        'Cornell University',
-                        'Brown University',
-                        'Dartmouth College',
-                        'Duke University',
-                        'Northwestern University',
-                        'Johns Hopkins University',
-                        'University of Chicago',
-                        'Caltech',
-                        'UC Berkeley',
-                        'UCLA',
-                        'USC',
-                        'Carnegie Mellon',
-                        'NYU',
-                        'Emory University',
-                        'Georgetown University',
-                        'Boston University',
-                        'Tufts University',
+                        'Harvard University (3명)',
+                        'Yale University (1명)',
+                        'Stanford University (3명)',
+                        'MIT (1명)',
+                        'Columbia University (2명)',
+                        'University of Oxford, UK (1명)',
+                        'UPenn (4명)',
+                        'Cornell University (1명)',
+                        'Brown University (3명)',
+                        'Dartmouth College (1명)',
+                        'Duke University (2명)',
+                        'Northwestern University (2명)',
+                        'Johns Hopkins Universit (3명)',
+                        'University of Chicago (1명)',
+                        'Vanderbilt University (1명)',
+                        'Rice University (1명)',
+                        'UCLA (4명)',
+                        'Carnegie Mellon (1명)',
+                        'NYU (1명)',
+                        'Georgetown University (2명)',
                       ].map((school, idx) => (
                         <div key={idx} className="flex items-center gap-2">
                           <span className="text-[#952839]">•</span>

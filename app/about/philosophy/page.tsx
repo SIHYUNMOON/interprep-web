@@ -16,13 +16,27 @@ export default function PhilosophyPage() {
       <Header />
       <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <AnimatedSection className="relative bg-gradient-to-b from-[#952839] to-[#7a2030] text-white py-24 md:py-32">
-        <div className="container mx-auto px-4">
+      <AnimatedSection className="relative text-white py-24 md:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-calil-encarnacion-30667006-34923522-RIykeH7ok2d9hRx7kXiRd7AQ3H5uPK.jpg"
+            alt="Educational Philosophy Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#952839]/85 to-[#7a2030]/85" />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               인터프렙의 교육 이념
             </h1>
-            <div className="space-y-4 text-lg md:text-xl leading-relaxed opacity-90">
+            <div className="space-y-4 text-lg md:text-xl leading-relaxed opacity-95">
               <p>인터프렙은 SAT 점수를 단기간에 올리는 방법보다</p>
               <p>왜, 어떤 구조로 교육해야 안정적인 성과가 나오는가를 먼저 고민해 온 학원입니다.</p>
               <p className="mt-6">13년 동안 수많은 학생을 지도하며 쌓아온 경험은 하나의 결론으로 이어졌습니다.</p>

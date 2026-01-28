@@ -56,12 +56,10 @@ export default function PhilosophyPage() {
                       교육의 가치는 가격이 아니라 구조로 증명됩니다.
                     </p>
                     <div className="space-y-3 text-muted-foreground leading-relaxed">
-                      <p>인터프렙은 SAT 교육 시장에 관행처럼 자리 잡은</p>
-                      <p>고가 수강료 구조를 따르지 않습니다.</p>
+                      <p>인터프렙은 SAT 교육 시장에 관행처럼 자리 잡은 고가 수강료 구조를 따르지 않습니다.</p>
                       <p className="mt-4">불법 기출, 과도한 마케팅, 강사 네임밸류에 비용을 쓰기보다</p>
                       <p>커리큘럼, 관리 시스템, 데이터 축적에 집중해 왔습니다.</p>
-                      <p className="mt-4">합리적인 수강료는</p>
-                      <p>저가 전략이 아니라 교육 구조에 대한 자신감의 결과입니다.</p>
+                      <p className="mt-4">합리적인 수강료는 저가 전략이 아니라 교육 구조에 대한 자신감의 결과입니다.</p>
                     </div>
                   </div>
                 </div>

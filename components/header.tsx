@@ -41,8 +41,8 @@ export function Header() {
       label: '학원 소개', 
       href: '/about',
       dropdown: [
-        { label: '학원 소개', href: '/about' },
         { label: '교육 이념', href: '/about/philosophy' },
+        { label: '학원 소개', href: '/about' },
         { label: '강사진', href: '/team' },
         { label: '찾아오시는 길', href: '/location' },
       ]

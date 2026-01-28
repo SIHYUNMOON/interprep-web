@@ -211,16 +211,18 @@ export default function PhilosophyPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#952839]">
               인터프렙이 추구하는 교육
             </h2>
-            <div className="space-y-4 text-center text-lg md:text-xl leading-relaxed text-muted-foreground">
-              <p>인터프렙은 비싸 보이는 학원이 되기보다,</p>
-              <p>오래 믿을 수 있는 학원이 되고자 합니다.</p>
-              <p className="mt-8">합리적인 수강료,</p>
-              <p>검증된 규모,</p>
-              <p>사람 중심의 관계,</p>
-              <p>데이터로 축적된 문제 구조.</p>
-              <p className="mt-8">이 네 가지 원칙은</p>
-              <p>13년 동안 변하지 않았고,</p>
-              <p>앞으로도 변하지 않을 인터프렙의 기준입니다.</p>
+            <div className="border-2 border-[#952839] rounded-2xl p-12 md:p-16">
+              <div className="space-y-4 text-center text-lg md:text-xl leading-relaxed text-muted-foreground">
+                <p>인터프렙은 비싸 보이는 학원이 되기보다,</p>
+                <p>오래 믿을 수 있는 학원이 되고자 합니다.</p>
+                <p className="mt-8">합리적인 수강료,</p>
+                <p>검증된 규모,</p>
+                <p>사람 중심의 관계,</p>
+                <p>데이터로 축적된 문제 구조.</p>
+                <p className="mt-8">이 네 가지 원칙은</p>
+                <p>13년 동안 변하지 않았고,</p>
+                <p>앞으로도 변하지 않을 인터프렙의 기준입니다.</p>
+              </div>
             </div>
           </div>
         </div>

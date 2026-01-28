@@ -160,8 +160,8 @@ export default function PhilosophyPage() {
                 <div className="space-y-3 text-muted-foreground leading-relaxed">
                   <p>인터프렙의 로고는 학생 중심의 교육 태도를 담고 있습니다.</p>
                   <p className="mt-4">소문자 기반의 워드마크와 'i' 심볼은 과장되지 않고</p>
-                  <p>디지털 환경에 안정적으로 어울리도록 설계되었습니다.</p>
-                  <p>심볼은 학생을 상징하는 점과 그 옆을 지탱하는 교육의 역할을 간결하게 표현합니다.</p>
+                  <p>디지털 환경에 어울리도록 설계되었습니다. 심볼은 학생을 상징하는 점과</p>
+                  <p>그 옆을 지탱하는 교육의 역할을 간결하게 표현합니다.</p>
                 </div>
               </div>
 

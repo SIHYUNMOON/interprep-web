@@ -122,8 +122,7 @@ export default function PhilosophyPage() {
                       <p>장기간 축적된 합법적 문제 데이터와 자체 제작 문항을 기반으로 수업을 설계합니다.</p>
                       <p className="mt-4">모든 문제는 출제 의도와 반복되는 유형을 기준으로 관리되며,</p>
                       <p>무작위가 아닌 의도된 순서로 학생에게 제공됩니다.</p>
-                      <p className="mt-4">문제의 양보다 중요한 것은</p>
-                      <p>문제를 다루는 방식입니다.</p>
+                      <p className="mt-4">문제의 양보다 중요한 것은 문제를 다루는 방식입니다.</p>
                     </div>
                   </div>
                 </div>

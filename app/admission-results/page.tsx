@@ -39,6 +39,115 @@ export default function AdmissionResultsPage() {
           </div>
         </section>
 
+        {/* 2026 Results */}
+        <AnimatedSection className="bg-white py-24 md:py-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="mb-16">
+                <div className="bg-[#952839] text-white p-6 rounded-t-lg">
+                  <h3 className="text-2xl md:text-3xl font-bold">
+                    2026 The I Prep Admission Results
+                  </h3>
+                  <p className="text-sm mt-2 opacity-90">
+                    2026년 4월 7일 기준 확정 데이터
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 p-8 rounded-b-lg space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">69명</div>
+                      <div className="text-sm text-muted-foreground">Top 50 School 합격자</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 기재</div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">3명</div>
+                      <div className="text-sm text-muted-foreground">미술 전공반</div>
+                      <div className="text-xs text-muted-foreground mt-1">전원 Top tier School 합격</div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-border">
+                    <h4 className="font-bold text-foreground mb-4">미국 대학 합격 리스트</h4>
+                    
+                    <div className="mb-6">
+                      <p className="font-semibold text-foreground mb-3">아이비리그 / HYPS</p>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground ml-4">
+                        {[
+                          'Harvard University (2명)',
+                          'Princeton University (1명)',
+                          'Stanford University (1명)',
+                          'Columbia University (3명)',
+                          'University of Pennsylvania (1명)',
+                          'Brown University (1명)',
+                          'Cornell University (2명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-6">
+                      <p className="font-semibold text-foreground mb-3">Top 15 School</p>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground ml-4">
+                        {[
+                          'University of Chicago (1명)',
+                          'Johns Hopkins University (1명)',
+                          'Vanderbilt University (1명)',
+                          'Washington University in St. Louis (3명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-foreground mb-3">Top 50 School</p>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground ml-4">
+                        {[
+                          'University of Notre Dame (1명)',
+                          'UC Berkeley (5명)',
+                          'UCLA (5명)',
+                          'University of California (28명)',
+                          'Carnegie Mellon University (1명)',
+                          'Georgetown University (2명)',
+                          'New York University (1명)',
+                          'University of Michigan, Ann Arbor (2명)',
+                          'University of Southern California (2명)',
+                          'University of North Carolina at Chapel Hill (3명)',
+                          'Boston College (1명)',
+                          'University of Texas at Austin (1명)',
+                          'University of Wisconsin–Madison (1명)',
+                          'Boston University (3명)',
+                          'University of Illinois Urbana-Champaign (7명)',
+                          'Case Western Reserve University (2명)',
+                          'Georgia Institute of Technology (2명)',
+                          'Ohio State University (1명)',
+                          'University of Georgia (1명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-2 ml-4 italic">
+                        * University of California (28명): Berkeley·LA 제외 UC 전체
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
         {/* 2025 Results */}
         <AnimatedSection className="bg-white py-24 md:py-32">
           <div className="container mx-auto px-4">

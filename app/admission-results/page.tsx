@@ -58,7 +58,7 @@ export default function AdmissionResultsPage() {
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">8명</div>
                       <div className="text-sm text-muted-foreground">HYPS 합격자</div>
-                      <div className="text-xs text-muted-foreground mt-1">아이비리그 HYPS 총 8명</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">11명</div>

@@ -108,7 +108,7 @@ export default function LocationPage() {
                 <div className="rounded-lg overflow-hidden shadow-lg">
                   <div className="relative w-full aspect-square">
                     <Image
-                      src="/images/map.jpg"
+                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Bd8HwW9zGAqBsyQEJhKLvYwXVupW03.png"
                       alt="인터프렙 위치 지도"
                       fill
                       className="object-contain"

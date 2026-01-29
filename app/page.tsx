@@ -22,15 +22,20 @@ export default function Home() {
               backgroundImage: 'url(/images/student-hands.jpg)',
             }}
           />
-          <div className="absolute inset-0 bg-black/[0.32]" />
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.48), rgba(0,0,0,0.52))'
+            }}
+          />
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#F5F5F5] mb-6 text-balance">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 text-balance" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.35)' }}>
                 SAT 전문 학원 <span className="text-[#C63A3A]">인터프렙</span>
                 <br />
                 점수로 실력을 증명합니다
               </h1>
-              <p className="text-lg md:text-xl text-[rgba(245,245,245,0.85)] font-medium mb-8 leading-relaxed text-pretty">
+              <p className="text-lg md:text-xl text-[rgba(255,255,255,0.85)] font-medium mb-8 text-pretty" style={{ lineHeight: '1.6' }}>
                 <span className="text-[#C63A3A]">인터프렙</span>은 SAT 점수 향상을 목표로 한 전문 학원입니다.
                 <br />
                 체계적인 커리큘럼, 철저한 관리, 검증된 학습 자료로
@@ -45,7 +50,7 @@ export default function Home() {
                   <Link href="/sat">프로그램 안내</Link>
                 </Button>
               </div>
-              <p className="text-sm text-[rgba(245,245,245,0.7)]">
+              <p className="text-sm text-[rgba(255,255,255,0.7)] font-medium">
                 2013년 설립 · 누적 수강생 9,215명
               </p>
             </div>

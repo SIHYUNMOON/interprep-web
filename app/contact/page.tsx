@@ -28,20 +28,25 @@ export default function ContactPage() {
               priority
             />
             {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/50" />
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.48), rgba(0,0,0,0.52))'
+              }}
+            />
           </div>
 
           {/* Content */}
           <div className="relative z-10 container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center text-white">
               {/* Headline */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.35)' }}>
                 수강생이 선택한<br />
                 <span className="text-[#952839]">인터프렙</span>
               </h1>
 
               {/* Body Text */}
-              <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl font-medium mb-8" style={{ color: 'rgba(255,255,255,0.85)', lineHeight: '1.6' }}>
                 인터프렙만의 치밀하게 구성된 시험 대비 코스와<br />
                 풍부한 입시자료 및 온라인 콘텐츠는 여러분을 탁월함으로 인도합니다
               </p>

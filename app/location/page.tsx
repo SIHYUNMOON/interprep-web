@@ -94,7 +94,7 @@ export default function LocationPage() {
         </section>
 
         {/* Subway Guide with Map */}
-        <section className="py-16 md:py-20 bg-background pb-32">
+        <section className="py-16 md:py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
@@ -103,19 +103,18 @@ export default function LocationPage() {
               </div>
 
               {/* Map and Directions Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 {/* Left: Map Image */}
                 <div className="rounded-lg overflow-hidden shadow-lg">
-                  <div className="relative w-full aspect-square">
-                    <Image
-                      src="/images/map.jpg"
-                      alt="인터프렙 위치 지도"
-                      fill
-                      className="object-contain"
-                      quality={100}
-                      priority
-                    />
-                  </div>
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/map-qQ3Rn3mmN3Hp1ApL67Jysg0CEmWGLL.jpg"
+                    alt="인터프렙 위치 지도"
+                    width={800}
+                    height={800}
+                    className="w-full h-auto"
+                    quality={100}
+                    priority
+                  />
                 </div>
 
                 {/* Right: Subway Directions */}

@@ -235,7 +235,7 @@ export function PostViewClient({ postId }: { postId: string }) {
 
             {/* Content */}
             <div
-              className="prose prose-lg max-w-none mb-12 text-foreground prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground"
+              className="mb-12 text-foreground [&_p]:mb-4 [&_p]:leading-relaxed [&_p]:min-h-[1.5em] [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-2 [&_strong]:font-bold [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:mb-4 [&_li]:mb-1"
               dangerouslySetInnerHTML={{ __html: post.content_html }}
             />
 

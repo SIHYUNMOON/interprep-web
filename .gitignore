@@ -25,3 +25,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# guideline
+git rm --cached BOARD_UPGRADE_README.md

@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { PostViewClient } from './client'
 
 type Post = {
@@ -37,6 +38,35 @@ async function fetchPost(id: string): Promise<Post | null> {
     return (await response.json()) as Post
   } catch {
     return null
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  const { id } = await params
+  const post = await fetchPost(id)
+
+  if (!post) {
+    return {
+      title: 'Not Found',
+    }
+  }
+
+  const textContent = post.content_html
+    .replace(/<[^>]*>/g, '')
+    .substring(0, 160)
+
+  return {
+    title: post.title,
+    description: textContent,
+    openGraph: {
+      title: post.title,
+      description: textContent,
+      url: `https://interprep.academy/board/${id}`,
+    },
   }
 }
 

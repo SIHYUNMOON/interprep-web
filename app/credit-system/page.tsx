@@ -27,7 +27,7 @@ export default function CreditSystemPage() {
         </AnimatedSection>
 
         {/* Credit System Description */}
-        <AnimatedSection className="pt-6 pb-8 md:pt-8 md:pb-10 bg-background">
+        <AnimatedSection className="pt-6 pb-8 md:pt-8 md:pb-12 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="prose prose-sm md:prose-base max-w-none text-foreground leading-relaxed space-y-4">

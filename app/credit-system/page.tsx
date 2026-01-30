@@ -15,7 +15,7 @@ export default function CreditSystemPage() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <AnimatedSection className="bg-background py-6 md:py-10">
+        <AnimatedSection className="bg-background py-6 md:py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">

@@ -383,6 +383,160 @@ export default function AboutPage() {
                 </p>
               </div>
 
+              {/* 2025 Results */}
+              <div className="mb-16">
+                <div className="bg-[#952839] text-white p-6 rounded-t-lg">
+                  <h3 className="text-2xl md:text-3xl font-bold">
+                    2025 The I Prep Admission Results
+                  </h3>
+                  <p className="text-sm mt-2 opacity-90">
+                    2025년 4월 7일 기준 확정 데이터
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 p-8 rounded-b-lg space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">8명</div>
+                      <div className="text-sm text-muted-foreground">HYPS 합격자</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">11명</div>
+                      <div className="text-sm text-muted-foreground">Top 20 School 합격자</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 4명</div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">9명</div>
+                      <div className="text-sm text-muted-foreground">Top 30 School 합격자</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-sm font-semibold text-foreground">
+                      아이비리그 HYPS: Harvard, Stanford, Princeton, Dartmouth, Cornell, Brown, University of Chicago
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      이 외에 Accelerated Medical Program (의대), Accelerated Dental Program (치대), Pharmacy Program (약대) 등 다양한 professional school 합격
+                    </p>
+                  </div>
+
+                  <div className="pt-6 border-t border-border">
+                    <h4 className="font-bold text-foreground mb-4">보딩 스쿨 합격 리스트</h4>
+                    <div className="space-y-3 text-sm">
+                      <div>
+                        <p className="font-semibold text-foreground mb-2">Top 10위 총 3명</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-muted-foreground ml-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Philips Exeter Academy (2명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>The Lawrenceville School (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>The Loomis Chaffee School (1명)</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="font-semibold text-foreground mb-2">Top 25위 School 총 4명</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-muted-foreground ml-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Milton Academy (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Cranbrook Schools (2명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Blair Academy (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Webb Schools (1명)</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="font-semibold text-foreground mb-2">Top 10위 Junior Boarding School</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-muted-foreground ml-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Eaglebrook School (2명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Fay School (4명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Fessenden School (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Indian Mountain School (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Rumsey Hall School (1명)</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>Rectory School (1명)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-border">
+                    <h4 className="font-bold text-foreground mb-4">미국 대학 합격 리스트</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                      {[
+                        'Harvard University (1명)',
+                        'Stanford University (2명)',
+                        'Princeton University (1명)',
+                        'Dartmouth College (1명)',
+                        'Cornell University (1명)',
+                        'Brown University (1명)',
+                        'University of Chicago (1명)',
+                        'Carnegie Mellon (1명)',
+                        'Pomona College (1명)',
+                        'Northwestern University (3명)',
+                        'Vanderbilt University (1명)',
+                        'Johns Hopkins University (1명)',
+                        'Georgia Tech (1명)',
+                        'USC (4명)',
+                        'University of Michigan (1명)',
+                        'UC Berkeley (1명)',
+                        'UCLA (1명)',
+                        'Emory University (2명)',
+                        'Washington University (1명)',
+                        'UVA (1명)',
+                        'Notre Dame (1명)',
+                        'Boston University (1명)',
+                        'NYU (3명)',
+                        'UC San Diego (1명)',
+                        'UNC Chapel Hill (1명)',
+                      ].map((school, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <span className="text-[#952839]">•</span>
+                          <span>{school}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* 2024 Results */}
               <div className="mb-16">
                 <div className="bg-[#952839] text-white p-6 rounded-t-lg">
@@ -606,7 +760,7 @@ export default function AboutPage() {
 }
 
 function CountUpSection() {
-  const { ref, count } = useCountUp(12762, 2500, true)
+  const { ref, count } = useCountUp(12802, 2500, true)
 
   return (
     <div ref={ref} className="relative bg-[#1a1d24] text-white py-24 md:py-32 overflow-hidden">

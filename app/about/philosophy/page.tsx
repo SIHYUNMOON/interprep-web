@@ -115,88 +115,16 @@ export default function PhilosophyPage() {
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold mb-3 text-foreground">많은 기출문제 확보</h3>
                     <p className="text-lg font-semibold mb-4 text-[#952839]">
-                      SAT는 많이 푸는 시험이 아니라, 맞게 푸는 시험입니다.
+                      SAT는 충분한 문제 풀이를 통해 정확도를 완성하는 시험입니다.
                     </p>
                     <div className="space-y-3 text-muted-foreground leading-relaxed">
-                      <p>인터프렙은 불법 기출에 의존하지 않고</p>
-                      <p>장기간 축적된 합법적 문제 데이터와 자체 제작 문항을 기반으로 수업을 설계합니다.</p>
-                      <p className="mt-4">모든 문제는 출제 의도와 반복되는 유형을 기준으로 관리되며,</p>
-                      <p>무작위가 아닌 의도된 순서로 학생에게 제공됩니다.</p>
-                      <p className="mt-4">문제의 양보다 중요한 것은 문제를 다루는 방식입니다.</p>
+                      <p>인터프렙은 축적된 기출 유형 데이터와</p>
+                      <p>자체 제작 문항을 기반으로 충분한 양의 문제를 제공합니다.</p>
+                      <p className="mt-4">문제는 출제 의도와 유형에 따라 정리되어</p>
+                      <p>학습 효과를 높이는 순서로 제시됩니다.</p>
+                      <p className="mt-4">중요한 것은 많은 문제를 반복해 풀고 정리하는 방식입니다.</p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Section 3: Brand Design */}
-      <AnimatedSection className="py-24 md:py-32 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#952839]">
-              교육 철학을 담은 브랜드 디자인
-            </h2>
-            <p className="text-center text-lg text-muted-foreground mb-16">
-              인터프렙의 교육 철학은 수업 방식뿐 아니라, 브랜드 디자인에도 동일하게 반영되어 있습니다.
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-12 mb-16">
-              {/* Logo Section */}
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-foreground">공식 로고</h3>
-                <div className="bg-white p-8 rounded-lg shadow-sm mb-6 flex items-center justify-center min-h-[272px]">
-                  <div className="relative h-24 w-full max-w-[300px]">
-                    <Image
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-APqVrRCxPVj3hq3xeXkCE72Dm8Zl4h.png"
-                      alt="Interprep Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-3 text-muted-foreground leading-relaxed">
-                  <p>인터프렙의 로고는 학생 중심의 교육 태도를 담고 있습니다.</p>
-                  <p className="mt-4">소문자 기반의 워드마크와 'i' 심볼은 과장되지 않고</p>
-                  <p>디지털 환경에 어울리도록 설계되었습니다. 심볼은 학생을 상징하는 점과</p>
-                  <p>그 옆을 지탱하는 교육의 역할을 간결하게 표현합니다.</p>
-                </div>
-              </div>
-
-              {/* Color Section */}
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-foreground">공식 색상</h3>
-                <div className="bg-white p-8 rounded-lg shadow-sm mb-6 min-h-[272px] flex items-center justify-center">
-                  <div className="flex flex-col items-center gap-4">
-                    <div 
-                      className="w-32 h-32 rounded-lg shadow-md"
-                      style={{ backgroundColor: 'rgb(172, 33, 48)' }}
-                    />
-                    <div className="text-center">
-                      <div className="font-mono text-sm space-y-1 text-muted-foreground">
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="font-semibold text-foreground">빨강(R):</span>
-                          <span>172</span>
-                        </div>
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="font-semibold text-foreground">녹색(G):</span>
-                          <span>33</span>
-                        </div>
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="font-semibold text-foreground">파랑(B):</span>
-                          <span>48</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-3 text-muted-foreground leading-relaxed">
-                  <p>인터프렙의 공식 색상은 차분하면서도 신뢰감을 주는 레드 컬러입니다.</p>
-                  <p className="mt-4">이 색상은 로고, 주요 UI, 핵심 정보에만 제한적으로 사용되어</p>
-                  <p>사용자의 집중을 돕고 화면의 복잡함을 줄이는 역할을 합니다.</p>
-                  <p className="mt-4">눈에 띄기 위한 색이 아니라 신뢰를 유지하기 위한 색입니다.</p>
                 </div>
               </div>
             </div>

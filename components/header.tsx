@@ -79,8 +79,7 @@ export function Header() {
   ]
 
   const familySites = [
-    { label: '인터프렙 어학원', href: '#' },
-    { label: '잉글스토리 인강', href: 'https://englstory.co.kr/' },
+    { label: '인터프렙 어학원', href: '/', isInternal: true },
     { label: '인터프렙TV', href: 'https://www.youtube.com/channel/UCn2YirQit1wbD1vpflBIkIw/featured' },
     { label: '컨설팅', href: 'https://theiprep.com/' },
   ]
@@ -95,8 +94,7 @@ export function Header() {
               <Link
                 key={idx}
                 href={site.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(!site.isInternal && { target: '_blank', rel: 'noopener noreferrer' })}
                 className="hover:text-foreground transition-colors"
               >
                 {site.label}

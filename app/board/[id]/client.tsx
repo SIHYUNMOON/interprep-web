@@ -28,18 +28,48 @@ interface Post {
   category: string
 }
 
-export function PostViewClient({ postId }: { postId: string }) {
+export function PostViewClient({
+  postId,
+  initialData,
+  initialLoading = true,
+}: {
+  postId: string
+  initialData?: Post | null
+  initialLoading?: boolean
+}) {
   const router = useRouter()
   const { isAdminLoggedIn, getAuthToken } = useAuth()
-  const [post, setPost] = useState<Post | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [post, setPost] = useState<Post | null>(initialData ?? null)
+  const [isLoading, setIsLoading] = useState(initialLoading)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const viewPingedRef = useRef<Record<string, boolean>>({})
 
   useEffect(() => {
+    if (initialData && initialData.id === postId) {
+      setPost(initialData)
+      setIsLoading(false)
+      pingView(postId)
+      return
+    }
+
+    setIsLoading(true)
     loadPost()
   }, [postId])
+
+  const pingView = (id: string) => {
+    if (viewPingedRef.current[id]) {
+      return
+    }
+
+    viewPingedRef.current[id] = true
+    fetch(`/api/posts/${id}/view`, {
+      method: 'POST',
+      credentials: 'include',
+    }).catch(() => {
+      // Silently fail if view tracking fails
+    })
+  }
 
   const loadPost = async () => {
     try {
@@ -49,17 +79,8 @@ export function PostViewClient({ postId }: { postId: string }) {
       }
       const data = await response.json()
       setPost(data)
-      
-      // Ping view endpoint exactly once per navigation
-      if (!viewPingedRef.current[postId]) {
-        viewPingedRef.current[postId] = true
-        fetch(`/api/posts/${postId}/view`, { 
-          method: 'POST', 
-          credentials: 'include' 
-        }).catch(() => {
-          // Silently fail if view tracking fails
-        })
-      }
+
+      pingView(postId)
     } catch (error) {
       console.error('[v0] Failed to load post:', error)
     } finally {

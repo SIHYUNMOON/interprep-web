@@ -10,16 +10,24 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const post = await getPostById(id);
+    const result = await getPostById(id);
 
-    if (!post) {
+    if (!result.ok) {
+      console.error('[post] db fetch failed:', { error: 'db_unavailable', route: '/api/posts/[id]', id });
+      return NextResponse.json(
+        { error: 'db_unavailable' },
+        { status: 503 }
+      );
+    }
+
+    if (!result.data) {
       return NextResponse.json(
         { error: 'Post not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(post);
+    return NextResponse.json(result.data);
   } catch (error) {
     console.error('Get post error:', error);
     return NextResponse.json(

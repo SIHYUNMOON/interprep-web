@@ -17,19 +17,34 @@ export async function GET(request: NextRequest) {
     
     // Fetch posts using the same method as /api/posts
     const result = await getPosts('latest', 1, 10);
+    if (!result.ok) {
+      console.error('[board] db fetch failed:', { error: 'db_unavailable', route: '/api/diag/board-visibility' });
+      return NextResponse.json(
+        {
+          timestamp: new Date().toISOString(),
+          runtime: 'nodejs',
+          userAgent: userAgent || 'unknown',
+          isBot: isRequestBot,
+          dbAvailable: false,
+          postsCount: 0,
+          samplePostId: null,
+        },
+        { status: 503 }
+      );
+    }
     
     const response = {
       timestamp: new Date().toISOString(),
       runtime: 'nodejs',
       userAgent: userAgent || 'unknown',
       isBot: isRequestBot,
-      postsCount: result.totalCount,
-      samplePostId: result.items.length > 0 ? result.items[0].id : null,
+      postsCount: result.data.totalCount,
+      samplePostId: result.data.items.length > 0 ? result.data.items[0].id : null,
       pageInfo: {
-        currentPage: result.page,
-        pageSize: result.pageSize,
-        totalPages: result.totalPages,
-        itemsReturned: result.items.length,
+        currentPage: result.data.page,
+        pageSize: result.data.pageSize,
+        totalPages: result.data.totalPages,
+        itemsReturned: result.data.items.length,
       }
     };
 

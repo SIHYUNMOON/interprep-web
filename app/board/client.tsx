@@ -41,12 +41,14 @@ interface BoardClientProps {
   initialPosts?: Post[]
   initialTotalCount?: number
   initialTotalPages?: number
+  initialDbUnavailable?: boolean
 }
 
 export function BoardClient({ 
   initialPosts = [], 
   initialTotalCount = 0, 
-  initialTotalPages = 1 
+  initialTotalPages = 1,
+  initialDbUnavailable = false
 }: BoardClientProps) {
   const router = useRouter()
   const { isAdminLoggedIn } = useAuth()
@@ -58,6 +60,7 @@ export function BoardClient({
   const [totalCount, setTotalCount] = useState(initialTotalCount)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [categories, setCategories] = useState<string[]>([])
+  const [dbUnavailable, setDbUnavailable] = useState(initialDbUnavailable)
 
   useEffect(() => {
     loadCategories()
@@ -122,12 +125,22 @@ export function BoardClient({
       }
       
       const response = await fetch(`/api/posts?${params}`)
+      if (response.status === 503) {
+        setDbUnavailable(true)
+        setPosts([])
+        setTotalPages(1)
+        setTotalCount(0)
+        return
+      }
+
       const data: PaginatedResponse = await response.json()
+      setDbUnavailable(false)
       setPosts(data.items)
       setTotalPages(data.totalPages)
       setTotalCount(data.totalCount)
     } catch (error) {
       console.error('[v0] Failed to load posts:', error)
+      setDbUnavailable(true)
       setPosts([])
     } finally {
       setIsLoadingPosts(false)
@@ -238,7 +251,7 @@ export function BoardClient({
 
               <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
                 <div className="text-sm text-foreground font-medium">
-                  전체 {totalCount}
+                  {dbUnavailable ? '전체 -' : `전체 ${totalCount}`}
                 </div>
                 <select
                   value={sortBy}
@@ -271,6 +284,12 @@ export function BoardClient({
                         <tr>
                           <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
                             로딩 중...
+                          </td>
+                        </tr>
+                      ) : dbUnavailable ? (
+                        <tr>
+                          <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
+                            일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해 주세요. SERVICE_TEMP_UNAVAILABLE
                           </td>
                         </tr>
                       ) : posts.length === 0 ? (

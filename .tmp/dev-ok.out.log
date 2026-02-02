@@ -1,0 +1,29 @@
+
+> my-v0-project@0.1.0 dev:3001
+> set PORT=3001 && next dev
+
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Local:         http://localhost:3001
+   - Network:       http://172.30.1.11:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1295ms
+[board] Database initialized successfully
+[board] getPosts success {
+  page: 1,
+  pageSize: 10,
+  totalCount: 82,
+  sort: 'latest',
+  category: undefined
+}
+ GET /board 200 in 5.6s (compile: 2.4s, render: 3.2s)
+[sitemap] fetched posts { count: 82 }
+ GET /sitemap.xml 200 in 507ms (compile: 275ms, render: 232ms)
+ GET /api/diag/public-board 200 in 721ms (compile: 114ms, render: 608ms)
+[board] getPostById success { id: '8926b73a-3ea0-4926-804f-3ccf79761fcf' }
+[board] getPostById success { id: '8926b73a-3ea0-4926-804f-3ccf79761fcf' }
+ GET /board/8926b73a-3ea0-4926-804f-3ccf79761fcf 200 in 1357ms (compile: 1038ms, render: 319ms)
+[sitemap] fetched posts { count: 82 }
+ GET /sitemap.xml 200 in 210ms (compile: 3ms, render: 206ms)
+ GET /api/diag/public-board 200 in 605ms (compile: 4ms, render: 601ms)

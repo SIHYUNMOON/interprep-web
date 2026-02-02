@@ -5,12 +5,15 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "dev:3001": "PORT=3001 next dev",
+    "dev:3001": "set PORT=3001 && next dev",
+    "dev:faildb": "set SIMULATE_DB_FAIL=1 && set PORT=3001 && next dev",
     "lint": "eslint .",
     "start": "next start",
     "diag:bot": "node scripts/compare-bot-human.mjs",
     "verify:crawl": "node scripts/verify-crawl-criteria.mjs",
-    "verify:sitemap": "node scripts/verify-sitemap.mjs",
+    "verify:sitemap": "node scripts/verify-sitemap-200.mjs",
+    "verify:local": "node scripts/verify-local-evidence.mjs",
+    "verify:db-failure": "node scripts/verify-db-failure-semantics.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },

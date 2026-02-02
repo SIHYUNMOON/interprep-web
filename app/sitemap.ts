@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 
+export const runtime = 'nodejs'
+
 const BASE_URL = 'https://interprep.academy'
 
 // Revalidate every 1 hour
@@ -34,8 +36,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   try {
     posts = await getPosts()
+    console.log('[sitemap] fetched posts', { count: posts.length })
   } catch (error) {
-    console.error('[sitemap] Failed to get posts, using static pages only:', error)
+    const errorMsg = error instanceof Error ? error.message : String(error)
+    console.error('[sitemap] Failed to get posts:', { error: errorMsg })
   }
 
   // Static pages

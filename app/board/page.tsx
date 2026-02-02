@@ -2,6 +2,7 @@ import { BoardClient } from './client'
 import { getPosts } from '@/lib/db'
 import Link from 'next/link'
 
+export const runtime = 'nodejs'
 export const metadata = {
   title: '유학 관련 정보 게시판 | 인터프렙',
   description: '인터프렙 유학 관련 정보 게시판, 유학 팁, 대학 입시 정보 등을 확인하세요.',
@@ -25,15 +26,21 @@ export default async function BoardPage() {
   let initialPosts: Post[] = []
   let initialTotalCount = 0
   let initialTotalPages = 1
+  let dbUnavailable = false
 
   try {
     const result = await getPosts('latest', 1, 10)
-    initialPosts = result.items as Post[]
-    initialTotalCount = result.totalCount
-    initialTotalPages = result.totalPages
+    if (!result.ok) {
+      dbUnavailable = true
+      console.error('[board] db fetch failed:', { error: 'db_unavailable', route: '/board' })
+    } else {
+      initialPosts = result.data.items as Post[]
+      initialTotalCount = result.data.totalCount
+      initialTotalPages = result.data.totalPages
+    }
   } catch (error) {
     console.error('[board page] Failed to fetch initial posts:', error)
-    // Continue with empty initial data
+    dbUnavailable = true
   }
 
   return (
@@ -72,7 +79,7 @@ export default async function BoardPage() {
 
                 <div className="mb-6">
                   <div className="text-sm text-foreground font-medium mb-4">
-                    전체 {initialTotalCount}
+                    {dbUnavailable ? '전체 -' : `전체 ${initialTotalCount}`}
                   </div>
                 </div>
 
@@ -89,7 +96,13 @@ export default async function BoardPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        {initialPosts.length === 0 ? (
+                        {dbUnavailable ? (
+                          <tr>
+                            <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
+                              일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해 주세요. SERVICE_TEMP_UNAVAILABLE
+                            </td>
+                          </tr>
+                        ) : initialPosts.length === 0 ? (
                           <tr>
                             <td colSpan={5} className="border border-gray-200 px-4 py-8 text-center text-gray-400">
                               게시물이 없습니다.
@@ -147,6 +160,7 @@ export default async function BoardPage() {
         initialPosts={initialPosts}
         initialTotalCount={initialTotalCount}
         initialTotalPages={initialTotalPages}
+        initialDbUnavailable={dbUnavailable}
       />
     </>
   )

@@ -15,7 +15,15 @@ export async function GET(request: NextRequest) {
     console.log('[v0] GET /api/posts - sort:', sort, 'page:', page, 'pageSize:', pageSize, 'category:', category);
 
     const result = await getPosts(sort, page, pageSize, category);
-    return NextResponse.json(result);
+    if (!result.ok) {
+      console.error('[board] db fetch failed:', { error: 'db_unavailable', route: '/api/posts' });
+      return NextResponse.json(
+        { error: 'db_unavailable' },
+        { status: 503 }
+      );
+    }
+
+    return NextResponse.json(result.data);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('[v0] GET /api/posts error:', errorMessage, error);

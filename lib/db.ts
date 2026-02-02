@@ -49,9 +49,10 @@ export async function initializeDatabase() {
     `;
 
     initialized = true;
-    console.log('[v0] Database initialized successfully');
+    console.log('[board] Database initialized successfully');
   } catch (error) {
-    console.error('[v0] Database initialization error:', error);
+    console.error('[board] Database initialization error:', error instanceof Error ? error.message : String(error));
+    throw error;
   }
 }
 
@@ -67,12 +68,31 @@ export interface Post {
   category: string;
 }
 
+export type DbResult<T> =
+  | { ok: true; data: T }
+  | { ok: false; error: 'db_unavailable' };
+
+function shouldSimulateDbFailure() {
+  return process.env.SIMULATE_DB_FAIL === '1';
+}
+
 export async function getPosts(
   sort: 'latest' | 'recommended' | 'mostViewed' | 'updated' = 'latest',
   page: number = 1,
   pageSize: number = 10,
   category?: string
-) {
+): Promise<DbResult<{
+  items: Post[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}>> {
+  if (shouldSimulateDbFailure()) {
+    console.error('[board] db fetch failed:', { error: 'SIMULATE_DB_FAIL enabled', sort, page, pageSize, category });
+    return { ok: false, error: 'db_unavailable' } as const;
+  }
+
   try {
     await initializeDatabase();
     const sql = getDb();
@@ -161,26 +181,31 @@ export async function getPosts(
     const totalCount = parseInt((countResult[0] as any).count);
     const totalPages = Math.ceil(totalCount / pageSize);
 
+    console.log('[board] getPosts success', { page, pageSize, totalCount, sort, category });
+    
     return {
-      items: result as Post[],
-      totalCount,
-      page,
-      pageSize,
-      totalPages,
-    };
+      ok: true,
+      data: {
+        items: result as Post[],
+        totalCount,
+        page,
+        pageSize,
+        totalPages,
+      },
+    } as const;
   } catch (error) {
-    console.error('[v0] Get posts error:', error);
-    return {
-      items: [],
-      totalCount: 0,
-      page,
-      pageSize,
-      totalPages: 0,
-    };
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('[board] db fetch failed:', { error: errorMsg, sort, page, pageSize, category });
+    return { ok: false, error: 'db_unavailable' } as const;
   }
 }
 
-export async function getPostById(id: string) {
+export async function getPostById(id: string): Promise<DbResult<Post | null>> {
+  if (shouldSimulateDbFailure()) {
+    console.error('[post] db fetch failed:', { error: 'SIMULATE_DB_FAIL enabled', id });
+    return { ok: false, error: 'db_unavailable' } as const;
+  }
+
   try {
     await initializeDatabase();
     const sql = getDb();
@@ -191,10 +216,17 @@ export async function getPostById(id: string) {
       WHERE id = ${id}
     `;
 
-    return result[0] as Post | undefined;
+    if (result.length === 0) {
+      console.log('[board] getPostById: post not found', { id });
+      return { ok: true, data: null } as const;
+    }
+
+    console.log('[board] getPostById success', { id });
+    return { ok: true, data: result[0] as Post } as const;
   } catch (error) {
-    console.error('[v0] Get post by id error:', error);
-    return undefined;
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('[post] db fetch failed:', { error: errorMsg, id });
+    return { ok: false, error: 'db_unavailable' } as const;
   }
 }
 

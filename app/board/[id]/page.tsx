@@ -1,5 +1,9 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { PostViewClient } from './client'
+import { getPostById } from '@/lib/db'
+
+export const runtime = 'nodejs'
 
 type Post = {
   id: string
@@ -11,35 +15,7 @@ type Post = {
   category: string
 }
 
-const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL
-  }
-
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`
-  }
-
-  return 'http://localhost:3000'
-}
-
 export const revalidate = 60
-
-async function fetchPost(id: string): Promise<Post | null> {
-  try {
-    const response = await fetch(`${getBaseUrl()}/api/posts/${id}`, {
-      next: { revalidate },
-    })
-
-    if (!response.ok) {
-      return null
-    }
-
-    return (await response.json()) as Post
-  } catch {
-    return null
-  }
-}
 
 export async function generateMetadata({
   params,
@@ -47,13 +23,20 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
   const { id } = await params
-  const post = await fetchPost(id)
+  const result = await getPostById(id)
+  if (!result.ok) {
+    return {
+      title: 'Temporarily unavailable',
+    }
+  }
 
-  if (!post) {
+  if (!result.data) {
     return {
       title: 'Not Found',
     }
   }
+
+  const post = result.data
 
   const textContent = post.content_html
     .replace(/<[^>]*>/g, '')
@@ -76,7 +59,25 @@ export default async function PostViewPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const initialData = await fetchPost(id)
+  const result = await getPostById(id)
+
+  if (!result.ok) {
+    console.error('[post] db fetch failed:', { error: 'db_unavailable', route: '/board/[id]', id })
+    return (
+      <PostViewClient
+        postId={id}
+        initialData={null}
+        initialError="db_unavailable"
+        initialLoading={false}
+      />
+    )
+  }
+
+  if (!result.data) {
+    notFound()
+  }
+
+  const initialData = result.data
 
   return (
     <PostViewClient

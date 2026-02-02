@@ -31,16 +31,19 @@ interface Post {
 export function PostViewClient({
   postId,
   initialData,
+  initialError,
   initialLoading = true,
 }: {
   postId: string
   initialData?: Post | null
+  initialError?: 'db_unavailable' | null
   initialLoading?: boolean
 }) {
   const router = useRouter()
   const { isAdminLoggedIn, getAuthToken } = useAuth()
   const [post, setPost] = useState<Post | null>(initialData ?? null)
   const [isLoading, setIsLoading] = useState(initialData ? false : initialLoading)
+  const [errorType, setErrorType] = useState<'db_unavailable' | null>(initialError ?? null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const viewPingedRef = useRef<Record<string, boolean>>({})
@@ -49,6 +52,7 @@ export function PostViewClient({
     if (initialData && initialData.id === postId) {
       setPost(initialData)
       setIsLoading(false)
+      setErrorType(null)
       pingView(postId)
       return
     }
@@ -74,11 +78,18 @@ export function PostViewClient({
   const loadPost = async () => {
     try {
       const response = await fetch(`/api/posts/${postId}`)
+      if (response.status === 503) {
+        setErrorType('db_unavailable')
+        setPost(null)
+        return
+      }
+
       if (!response.ok) {
         throw new Error('Failed to fetch post')
       }
       const data = await response.json()
       setPost(data)
+      setErrorType(null)
 
       pingView(postId)
     } catch (error) {
@@ -152,6 +163,28 @@ export function PostViewClient({
           <div className="container mx-auto px-4 py-20">
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-muted-foreground">로딩 중...</p>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (errorType === 'db_unavailable') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main className="pt-16">
+          <div className="container mx-auto px-4 py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              <p className="text-muted-foreground">일시적으로 이용할 수 없습니다. 잠시 후 다시 시도해 주세요. SERVICE_TEMP_UNAVAILABLE</p>
+              <Button
+                onClick={() => router.push('/board')}
+                className="mt-4"
+              >
+                목록으로 돌아가기
+              </Button>
             </div>
           </div>
         </main>

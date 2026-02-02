@@ -40,7 +40,7 @@ export function PostViewClient({
   const router = useRouter()
   const { isAdminLoggedIn, getAuthToken } = useAuth()
   const [post, setPost] = useState<Post | null>(initialData ?? null)
-  const [isLoading, setIsLoading] = useState(initialLoading)
+  const [isLoading, setIsLoading] = useState(initialData ? false : initialLoading)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const viewPingedRef = useRef<Record<string, boolean>>({})

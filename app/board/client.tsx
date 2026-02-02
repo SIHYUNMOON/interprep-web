@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
@@ -36,15 +37,25 @@ const YOUTUBE_VIDEOS = [
   { title: '미국 탑스쿨에 들어가려면 에세이, 이렇게 쓰세요', url: 'https://www.youtube.com/watch?v=w1McOBjCP6c&feature=youtu.be' },
 ]
 
-export function BoardClient() {
+interface BoardClientProps {
+  initialPosts?: Post[]
+  initialTotalCount?: number
+  initialTotalPages?: number
+}
+
+export function BoardClient({ 
+  initialPosts = [], 
+  initialTotalCount = 0, 
+  initialTotalPages = 1 
+}: BoardClientProps) {
   const router = useRouter()
   const { isAdminLoggedIn } = useAuth()
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [sortBy, setSortBy] = useState<'latest' | 'recommended' | 'mostViewed' | 'updated'>('latest')
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
+  const [totalPages, setTotalPages] = useState(initialTotalPages)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
-  const [totalCount, setTotalCount] = useState(0)
+  const [totalCount, setTotalCount] = useState(initialTotalCount)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [categories, setCategories] = useState<string[]>([])
 
@@ -272,17 +283,16 @@ export function BoardClient() {
                         posts.map((post) => (
                           <tr
                             key={post.id}
-                            className="hover:bg-gray-50/50 transition-colors cursor-pointer"
-                            onClick={() => handlePostClick(post)}
+                            className="hover:bg-gray-50/50 transition-colors"
                           >
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.id.slice(0, 8)}</td>
                             <td className="border border-gray-200 px-6 py-3 text-sm text-foreground">
-                              <div className="flex items-center gap-2">
+                              <Link href={`/board/${post.id}`} className="flex items-center gap-2 hover:text-red-700 transition-colors">
                                 <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 whitespace-nowrap">
                                   {post.category || '인터프렙 소개'}
                                 </span>
                                 <span className="truncate">{post.title}</span>
-                              </div>
+                              </Link>
                             </td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">{post.author}</td>
                             <td className="border border-gray-200 px-4 py-3 text-center text-sm text-foreground">

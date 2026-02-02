@@ -1,33 +1,42 @@
 import { MetadataRoute } from 'next'
-import { neon } from '@neondatabase/serverless'
 
 const BASE_URL = 'https://interprep.academy'
 
 // Revalidate every 1 hour
 export const revalidate = 3600
 
-async function getPosts() {
+async function getPosts(): Promise<Array<{ id: string; updated_at: string }>> {
   try {
     const databaseUrl = process.env.DATABASE_URL
     if (!databaseUrl) {
-      console.warn('DATABASE_URL not set, returning empty posts')
+      console.warn('[sitemap] DATABASE_URL not set, returning empty posts')
       return []
     }
 
+    // Import neon inside the function to avoid connection issues
+    const { neon } = await import('@neondatabase/serverless')
     const sql = neon(databaseUrl)
-    const result = await sql<{ id: string; updated_at: string }[]>`
+    
+    const result = await sql`
       SELECT id, updated_at FROM posts ORDER BY updated_at DESC
-    `
+    ` as Array<{ id: string; updated_at: string }>
 
-    return result
+    return result || []
   } catch (error) {
-    console.error('Failed to fetch posts for sitemap:', error)
+    console.error('[sitemap] Failed to fetch posts:', error)
+    // Return empty array instead of failing - sitemap must always return 200
     return []
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getPosts()
+  let posts: Array<{ id: string; updated_at: string }> = []
+  
+  try {
+    posts = await getPosts()
+  } catch (error) {
+    console.error('[sitemap] Failed to get posts, using static pages only:', error)
+  }
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

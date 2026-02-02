@@ -3,6 +3,14 @@ import { getDb, initializeDatabase } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
+function envHasDbUrl() {
+  return Boolean(
+    process.env.DATABASE_URL ?? 
+    process.env.NEON_DATABASE_URL ?? 
+    process.env.POSTGRES_URL
+  );
+}
+
 export async function GET() {
   try {
     await initializeDatabase();
@@ -20,10 +28,16 @@ export async function GET() {
 
     return NextResponse.json({ categories });
   } catch (error) {
-    console.error('[v0] Get categories error:', error);
+    const hasDbUrl = envHasDbUrl();
+    console.error('[api/categories] db failed', {
+      code: 'db_unavailable',
+      hasDbUrl,
+      runtime: 'nodejs',
+      error: error instanceof Error ? error.message : String(error)
+    });
     return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
+      { error: 'db_unavailable', code: 'db_unavailable' },
+      { status: 503 }
     );
   }
 }

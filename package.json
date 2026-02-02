@@ -14,6 +14,7 @@
     "verify:sitemap": "node scripts/verify-sitemap-200.mjs",
     "verify:local": "node scripts/verify-local-evidence.mjs",
     "verify:db-failure": "node scripts/verify-db-failure-semantics.mjs",
+    "verify:prod:apis": "node scripts/verify-prod-apis.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },

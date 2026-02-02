@@ -4,6 +4,14 @@ import { isAdminAuthenticatedFromRequest } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
+function envHasDbUrl() {
+  return Boolean(
+    process.env.DATABASE_URL ?? 
+    process.env.NEON_DATABASE_URL ?? 
+    process.env.POSTGRES_URL
+  );
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -16,9 +24,15 @@ export async function GET(request: NextRequest) {
 
     const result = await getPosts(sort, page, pageSize, category);
     if (!result.ok) {
-      console.error('[board] db fetch failed:', { error: 'db_unavailable', route: '/api/posts' });
+      const hasDbUrl = envHasDbUrl();
+      console.error('[api/posts] db failed', {
+        code: 'db_unavailable',
+        hasDbUrl,
+        runtime: 'nodejs',
+        route: '/api/posts'
+      });
       return NextResponse.json(
-        { error: 'db_unavailable' },
+        { error: 'db_unavailable', code: 'db_unavailable' },
         { status: 503 }
       );
     }

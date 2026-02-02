@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "start": "next start",
     "generate:sitemaps": "tsx scripts/generate-sitemaps.ts",
+    "verify:sitemaps": "node scripts/verify-sitemaps.mjs",
     "diag:bot": "node scripts/compare-bot-human.mjs",
     "verify:crawl": "node scripts/verify-crawl-criteria.mjs",
     "verify:sitemap": "node scripts/verify-sitemap-200.mjs",

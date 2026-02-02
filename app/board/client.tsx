@@ -126,20 +126,10 @@ export function BoardClient({
       
       const response = await fetch(`/api/posts?${params}`)
       if (response.status === 503) {
-        // API failure: preserve SSR posts if available
-        if (initialPosts.length > 0 && posts.length === 0) {
-          // Keep initial SSR content, just show non-blocking error
-          console.warn('[board/client] API unavailable, preserving SSR posts')
-          setDbUnavailable(true)
-          return
-        }
-        // Full outage only when both SSR and API failed (no initial posts)
         setDbUnavailable(true)
-        if (initialPosts.length === 0) {
-          setPosts([])
-          setTotalPages(1)
-          setTotalCount(0)
-        }
+        setPosts([])
+        setTotalPages(1)
+        setTotalCount(0)
         return
       }
 
@@ -150,16 +140,8 @@ export function BoardClient({
       setTotalCount(data.totalCount)
     } catch (error) {
       console.error('[v0] Failed to load posts:', error)
-      // Preserve SSR posts on transient fetch failure
-      if (initialPosts.length > 0 && posts.length === 0) {
-        console.warn('[board/client] Fetch error, preserving SSR posts')
-        setDbUnavailable(true)
-        return
-      }
       setDbUnavailable(true)
-      if (initialPosts.length === 0) {
-        setPosts([])
-      }
+      setPosts([])
     } finally {
       setIsLoadingPosts(false)
     }

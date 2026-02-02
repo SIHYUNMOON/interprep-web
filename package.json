@@ -9,6 +9,7 @@
     "dev:faildb": "set SIMULATE_DB_FAIL=1 && set PORT=3001 && next dev",
     "lint": "eslint .",
     "start": "next start",
+    "generate:sitemaps": "tsx scripts/generate-sitemaps.ts",
     "diag:bot": "node scripts/compare-bot-human.mjs",
     "verify:crawl": "node scripts/verify-crawl-criteria.mjs",
     "verify:sitemap": "node scripts/verify-sitemap-200.mjs",

@@ -1,41 +1,25 @@
 import { MetadataRoute } from 'next'
+import { getPosts } from '@/lib/db'
 
 const BASE_URL = 'https://interprep.academy'
 
+export const runtime = 'nodejs'
 // Revalidate every 1 hour
 export const revalidate = 3600
 
-async function getPosts(): Promise<Array<{ id: string; updated_at: string }>> {
-  try {
-    const databaseUrl = process.env.DATABASE_URL
-    if (!databaseUrl) {
-      console.warn('[sitemap] DATABASE_URL not set, returning empty posts')
-      return []
-    }
-
-    // Import neon inside the function to avoid connection issues
-    const { neon } = await import('@neondatabase/serverless')
-    const sql = neon(databaseUrl)
-    
-    const result = await sql<{ id: string; updated_at: string }[]>`
-      SELECT id, updated_at FROM posts ORDER BY updated_at DESC
-    `
-
-    return result || []
-  } catch (error) {
-    console.error('[sitemap] Failed to fetch posts:', error)
-    // Return empty array instead of failing - sitemap must always return 200
-    return []
-  }
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let posts: Array<{ id: string; updated_at: string }> = []
-  
-  try {
-    posts = await getPosts()
-  } catch (error) {
-    console.error('[sitemap] Failed to get posts, using static pages only:', error)
+  let posts: Array<{ id: string; updated_at: string; created_at: string }> = []
+
+  const result = await getPosts('latest', 1, 1000)
+  if (!result.ok) {
+    console.log('[sitemap] db_unavailable, returning static-only sitemap')
+  } else {
+    posts = result.data.items.map((post) => ({
+      id: post.id,
+      updated_at: post.updated_at,
+      created_at: post.created_at,
+    }))
+    console.log('[sitemap] fetched posts', { count: posts.length })
   }
 
   // Static pages
@@ -130,14 +114,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.6,
     },
+    {
+      url: `${BASE_URL}/board/archive`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ]
 
   // Dynamic post pages
   const postPages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${BASE_URL}/board/${post.id}`,
-    lastModified: new Date(post.updated_at),
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
+    lastModified: new Date(post.updated_at || post.created_at),
+    changeFrequency: 'yearly' as const,
+    priority: 0.6,
   }))
 
   return [...staticPages, ...postPages]

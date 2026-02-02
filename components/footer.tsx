@@ -60,6 +60,11 @@ export function Footer() {
         {/* Copyright */}
         <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Interprep. All rights reserved.</p>
+          <div className="mt-2">
+            <Link href="/board/archive" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              게시판 전체 아카이브
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

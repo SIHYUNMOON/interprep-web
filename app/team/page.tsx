@@ -36,11 +36,6 @@ export default function TeamPage() {
       ],
     },
     {
-      name: 'Joe Shim',
-      subject: 'Consulting / College Essay / Competitions',
-      credentials: ['Harvard University, BA (Economics)'],
-    },
-    {
       name: 'Grace',
       subject: 'Boarding School Consulting, Boarding School Advising Consulting',
       credentials: [
@@ -104,15 +99,6 @@ export default function TeamPage() {
         '(현) Lehman College, Faculty',
         '(현) New York University, Instructor',
         '(전) Columbia University, Instructor',
-      ],
-    },
-    {
-      name: '박지혜',
-      subject: 'College Counselling, College Essay, Competition Advisor',
-      credentials: [
-        'UIUC (BA, Global Studies; French)',
-        'Columbia Teachers College (Certificate of College Counseling)',
-        '(전) Crimson Education (ANZ and APAC regional manager)',
       ],
     },
     {

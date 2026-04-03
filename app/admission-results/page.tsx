@@ -109,6 +109,143 @@ export default function AdmissionResultsPage() {
           </div>
         </AnimatedSection>
         
+        {/* 2026 Results */}
+        <AnimatedSection className="bg-white py-24 md:py-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="mb-16">
+                <div className="bg-[#952839] text-white p-6 rounded-t-lg">
+                  <h3 className="text-2xl md:text-3xl font-bold">
+                    2026 The I Prep Admission Results
+                  </h3>
+                  <p className="text-sm mt-2 opacity-90">
+                    2025년 4월 3일 기준
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 p-8 rounded-b-lg space-y-6">
+                  {/* Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">13명</div>
+                      <div className="text-sm text-muted-foreground">미국 TOP15 합격</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">8명</div>
+                      <div className="text-sm text-muted-foreground">아이비리그 플러스 합격자</div>
+                      <div className="text-xs text-muted-foreground mt-1">&nbsp;</div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                      <div className="text-4xl font-bold text-[#952839] mb-2">7명</div>
+                      <div className="text-sm text-muted-foreground">미국 외 글로벌 명문대 합격</div>
+                      <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold text-foreground">
+                      STEM 강세 대학 Caltech, Michigan, UIUC, Georgia Tech 등 최상위 공학·이공계 대학 합격
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      국내고, 미국고, 해외고, 편입 등 다양한 입시 경로에서 합격자 배출
+                    </p>
+                  </div>
+
+                  {/* College Lists */}
+                  <div className="pt-6 border-t border-border space-y-6">
+
+                    <div>
+                      <h4 className="font-bold text-foreground mb-4">미국 TOP 15대학교</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                        {[
+                          'Caltech (2명)', 'Brown (2명)', 'Cornell (1명)',
+                          'Northwestern (1명)', 'Duke (2명)', 'Johns Hopkins (1명)',
+                          'Vanderbilt (1명)', 'UC Berkeley (1명)', 'UCLA (2명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-foreground mb-4">미국 TOP30대학교</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                        {[
+                          'University of Michigan (4명)', 'University of Virginia (2명)', 'Georgetown (1명)',
+                          'UNC Chapel Hill (1명)', 'Washington University in St. Louis (2명)', 'University of Southern California (1명)',
+                          'Georgia Tech (2명)', 'New York University (3명)', 'Boston University (2명)',
+                          'Northeastern (1명)', 'University of Illinois Urbana-Champaign (3명)', 'Emory University (1명)',
+                          'UCSD (4명)', 'UC Davis (2명)', 'University of Texas at Austin (1명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-foreground mb-4">미국 TOP50대학교</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                        {[
+                          'UC Irvine (3명)', 'UC Santa Barbara (1명)', 'Case Western Reserve University (1명)',
+                          'University of Florida (1명)', 'University of Georgia (1명)', 'Rensselaer Polytechnic Institute (1명)',
+                          'Penn State (1명)', 'Syracuse (1명)', 'George Washington (1명)',
+                          'Purdue University (1명)', 'University of Miami (1명)', 'Indiana University (1명)',
+                          'Ohio State University (1명)', 'Texas A&M University (1명)', 'Stony Brook University (1명)',
+                          'Florida State University (1명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-foreground mb-4">Art School</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                        {[
+                          'Rhode Island School of Design (1명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-foreground mb-4">미국 외 글로벌 명문대</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                        {[
+                          'Kings College (1명)', 'University College London (1명)', 'University of British Columbia (1명)',
+                          'University of Hong Kong (1명)', 'Hong Kong University of Science and Technology (1명)', 'University of Toronto (1명)',
+                          'University of Toronto Mississauga (1명)',
+                        ].map((school, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <span className="text-[#952839]">•</span>
+                            <span>{school}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
         {/* 2025 Results */}
         <AnimatedSection className="bg-white py-24 md:py-32">
           <div className="container mx-auto px-4">

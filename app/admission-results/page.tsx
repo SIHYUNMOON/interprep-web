@@ -119,7 +119,7 @@ export default function AdmissionResultsPage() {
                     2026 The I Prep Admission Results
                   </h3>
                   <p className="text-sm mt-2 opacity-90">
-                    2025년 4월 3일 기준
+                    2026년 4월 기준
                   </p>
                 </div>
 

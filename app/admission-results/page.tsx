@@ -128,11 +128,13 @@ export default function AdmissionResultsPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">14명</div>
+
                       <div className="text-sm text-muted-foreground">미국 TOP15 합격</div>
                       <div className="text-xs text-muted-foreground mt-1">중복합격 없음</div>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                       <div className="text-4xl font-bold text-[#952839] mb-2">9명</div>
+
                       <div className="text-sm text-muted-foreground">아이비리그 플러스 합격자</div>
                       <div className="text-xs text-muted-foreground mt-1">&nbsp;</div>
                     </div>
@@ -163,6 +165,7 @@ export default function AdmissionResultsPage() {
                           'Caltech (2명)', 'Brown (2명)', 'Cornell (1명)',
                           'Northwestern (1명)', 'Duke (2명)', 'Johns Hopkins (1명)',
                           'Vanderbilt (1명)', 'UC Berkeley (1명)', 'UCLA (2명)', 'University of pennsylvania (1명)',
+
                         ].map((school, idx) => (
                           <div key={idx} className="flex items-center gap-2">
                             <span className="text-[#952839]">•</span>

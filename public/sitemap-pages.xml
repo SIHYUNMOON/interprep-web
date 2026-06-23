@@ -1,73 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://interprep.academy/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/about</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/about/philosophy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/about/philosophy</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/team</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/team</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/location</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/location</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/sat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/sat</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/presat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/presat</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/toefl</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/toefl</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/art-english</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/art-english</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/ipass</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/ipass</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/admission-results</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/admission-results</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/faq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/faq</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/credit-system</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/credit-system</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
   <url>
-    <loc>https://interprep.academy/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.interprep.academy/contact</loc>
+    <lastmod>2026-06-23</lastmod>
   </url>
 </urlset>

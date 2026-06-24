@@ -4,6 +4,9 @@ import IPassClient from './client'
 export const metadata: Metadata = {
   title: '인터프렙 iPass | Interprep',
   description: '대학 진학을 위한 최적의 패키지 프로그램',
+  alternates: {
+    canonical: '/ipass',
+  },
 }
 
 export default function IPassPage() {

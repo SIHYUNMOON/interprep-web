@@ -8,6 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Board Archive | Interprep',
     description: 'Complete archive of all Interprep board posts and articles.',
+    alternates: {
+      canonical: '/board/archive',
+    },
   }
 }
 

@@ -4,6 +4,9 @@ import PreSATPageClient from './client'
 export const metadata: Metadata = {
   title: 'Pre-SAT | Interprep',
   description: 'SAT를 위한 첫 걸음, Pre-SAT 프로그램 - Interprep',
+  alternates: {
+    canonical: '/presat',
+  },
 }
 
 export default function PreSATPage() {

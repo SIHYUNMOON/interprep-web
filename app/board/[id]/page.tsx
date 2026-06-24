@@ -45,10 +45,13 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: textContent,
+    alternates: {
+      canonical: `/board/${id}`,
+    },
     openGraph: {
       title: post.title,
       description: textContent,
-      url: `https://interprep.academy/board/${id}`,
+      url: `https://www.interprep.academy/board/${id}`,
     },
   }
 }

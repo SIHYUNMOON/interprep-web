@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
@@ -46,6 +47,7 @@ export default function RootLayout({
         </AuthProvider>
         <Analytics />
       </body>
+      <GoogleAnalytics gaId="G-9N70PP5YV0" />
     </html>
   )
 }
